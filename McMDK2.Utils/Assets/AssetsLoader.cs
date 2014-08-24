@@ -8,6 +8,9 @@ namespace McMDK2.Utils.Assets
 {
     public class AssetsLoader
     {
+        public static void Load()
+        {
 
+        }
     }
 }

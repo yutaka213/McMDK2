@@ -36,6 +36,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="FileController.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="Patcher.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
     <Compile Include="Plugin\Internal\UI\Controls\ImageControl.cs" />
     <Compile Include="Plugin\Internal\UI\Controls\SelectionControl.cs" />
@@ -61,6 +63,10 @@
     <Compile Include="Plugin\PluginLoader.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegExp.cs" />
+    <Compile Include="ValueChecker.cs" />
+    <Compile Include="Win32\WinApi.cs" />
+    <Compile Include="WindowSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
