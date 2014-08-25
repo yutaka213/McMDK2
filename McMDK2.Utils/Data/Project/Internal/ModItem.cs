@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 using McMDK2.Plugin;
 
-namespace McMDK2.Utils.Data
+namespace McMDK2.Utils.Data.Project.Internal
 {
     /// <summary>
     /// McMDK2でのModのアイテムのうち、Mod本体(BlockやItemなど)を管理します。

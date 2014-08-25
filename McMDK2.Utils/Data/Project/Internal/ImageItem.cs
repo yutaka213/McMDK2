@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace McMDK2.Utils.Data
+namespace McMDK2.Utils.Data.Project.Internal
 {
     /// <summary>
     /// McMDK2でのModのアイテムのうち、テクスチャを管理します。
