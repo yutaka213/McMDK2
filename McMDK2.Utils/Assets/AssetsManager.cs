@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Utils.Assets
 {
-    class AssetsManager
+    public class AssetsManager
     {
+        public static void RegisterAssets(string x)
+        {
+
+        }
+
+        public static void RegisterTexture(string x)
+        {
+
+        }
     }
 }

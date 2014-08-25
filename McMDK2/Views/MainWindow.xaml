@@ -7,6 +7,7 @@
                       xmlns:v="clr-namespace:McMDK2.Views"
                       xmlns:vm="clr-namespace:McMDK2.ViewModels"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:Data="clr-namespace:McMDK2.Utils.Data;assembly=McMDK2.Utils"
                       Title="McMDK BETA"
                       Height="820" Width="1350"
                       TitleCaps="False"
@@ -37,7 +38,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    
     <!-- Keyborad Bindings -->
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" />
@@ -176,14 +177,110 @@
                           Background="{DynamicResource WindowGlowBrush}"
                           BorderBrush="{DynamicResource WindowTitleForeground}">
                     <TreeView>
-                        <TreeViewItem Header="Foo">
-                            <TreeViewItem Header="Textures">
-                                <TreeViewItem Header="01.png"/>
-                                <TreeViewItem Header="02.png"/>
+                        <TreeViewItem Header="PROJECT NAME">
+                            <TreeViewItem>
+                                <TreeViewItem.Style>
+                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
+                                        <Setter Property="Header">
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Resources/Folder_6222.png" Height="16px" Width="16px" />
+                                                    <TextBlock Padding="5,0,0,0" Text="Mods"/>
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsExpanded" Value="True">
+                                                <Setter Property="Header">
+                                                    <Setter.Value>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Resources/Folder_6221.png" Height="16px" Width="16px" />
+                                                            <TextBlock Padding="5,0,0,0" Text="Mods"/>
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeViewItem.Style>
                             </TreeViewItem>
-                            <TreeViewItem Header="Items">
-                                <TreeViewItem Header="Block01" />
-                                <TreeViewItem Header="Item01" />
+                            <TreeViewItem>
+                                <TreeViewItem.Style>
+                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
+                                        <Setter Property="Header">
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Resources/Folder_6222.png" Height="16px" Width="16px" />
+                                                    <TextBlock Padding="5,0,0,0" Text="Textures"/>
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsExpanded" Value="True">
+                                                <Setter Property="Header">
+                                                    <Setter.Value>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Resources/Folder_6221.png" Height="16px" Width="16px" />
+                                                            <TextBlock Padding="5,0,0,0" Text="Textures"/>
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeViewItem.Style>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Style>
+                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
+                                        <Setter Property="Header">
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Resources/Folder_6222.png" Height="16px" Width="16px" />
+                                                    <TextBlock Padding="5,0,0,0" Text="Sounds"/>
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsExpanded" Value="True">
+                                                <Setter Property="Header">
+                                                    <Setter.Value>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Resources/Folder_6221.png" Height="16px" Width="16px" />
+                                                            <TextBlock Padding="5,0,0,0" Text="Sounds"/>
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeViewItem.Style>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Style>
+                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">
+                                        <Setter Property="Header">
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Resources/Folder_6222.png" Height="16px" Width="16px" />
+                                                    <TextBlock Padding="5,0,0,0" Text="Items"/>
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsExpanded" Value="True">
+                                                <Setter Property="Header">
+                                                    <Setter.Value>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="/Resources/Folder_6221.png" Height="16px" Width="16px" />
+                                                            <TextBlock Padding="5,0,0,0" Text="Items"/>
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeViewItem.Style>
                             </TreeViewItem>
                         </TreeViewItem>
                     </TreeView>
