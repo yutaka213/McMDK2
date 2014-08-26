@@ -13,6 +13,8 @@ using System.Xml.Linq;
 using McMDK2.Plugin;
 
 using McMDK2.Core.Converter;
+using McMDK2.Core.Data.Project;
+using McMDK2.Core.Plugin;
 using McMDK2.Core.Plugin.Internal;
 using McMDK2.Core.Plugin.Internal.UI;
 using McMDK2.Core.Plugin.Internal.UI.Controls;
@@ -29,6 +31,13 @@ namespace McMDK2.Core.Plugin
                 foreach (var p in asmPlugins.plugins)
                 {
                     PluginManager.Register(p);
+                }
+            }
+            if (asmPlugins.templates != null)
+            {
+                foreach (var p in asmPlugins.templates)
+                {
+                    TemplateManager.Register(p);
                 }
             }
 
@@ -48,6 +57,9 @@ namespace McMDK2.Core.Plugin
         {
             [ImportMany()]
             public List<IPlugin> plugins = null;
+
+            [ImportMany()]
+            public List<IProjectTemplate> templates = null;
 
             public AssemblyPluginLoader()
             {

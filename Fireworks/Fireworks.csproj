@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E0A8197-AAC7-472D-B753-B713EEEEE0C8}</ProjectGuid>
+    <ProjectGuid>{A31A995E-3BCD-451E-8B6E-943FDC5542BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Recipe</RootNamespace>
-    <AssemblyName>Recipe</AssemblyName>
+    <RootNamespace>Fireworks</RootNamespace>
+    <AssemblyName>Fireworks</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\McMDK2\bin\Debug\plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,19 +42,17 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\StandardTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\McMDK2.Plugin\McMDK2.Plugin.csproj">
-      <Project>{98df5682-c721-45cb-804f-50409d3aff84}</Project>
-      <Name>McMDK2.Plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\McMDK2.Core\McMDK2.Core.csproj">
+    <ProjectReference Include="..\McMDK2.Core\McMDK2.Core.csproj">
       <Project>{e935f123-1b66-4ef2-9790-13fd5340f3be}</Project>
       <Name>McMDK2.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Readme.txt" />
+    <ProjectReference Include="..\McMDK2.Plugin\McMDK2.Plugin.csproj">
+      <Project>{98df5682-c721-45cb-804f-50409d3aff84}</Project>
+      <Name>McMDK2.Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

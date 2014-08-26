@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{72FB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CraftingRecipe", "Plugins\CraftingRecipe\CraftingRecipe.csproj", "{4E0A8197-AAC7-472D-B753-B713EEEEE0C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks", "Fireworks\Fireworks.csproj", "{A31A995E-3BCD-451E-8B6E-943FDC5542BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,16 @@ Global
 		{4E0A8197-AAC7-472D-B753-B713EEEEE0C8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4E0A8197-AAC7-472D-B753-B713EEEEE0C8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4E0A8197-AAC7-472D-B753-B713EEEEE0C8}.Release|x86.ActiveCfg = Release|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,5 +113,6 @@ Global
 		{942D11C4-29F5-46C4-8C14-4B976D56C637} = {3DCA28AF-33B1-4FFF-9563-F6B529BD5447}
 		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2} = {3DCA28AF-33B1-4FFF-9563-F6B529BD5447}
 		{4E0A8197-AAC7-472D-B753-B713EEEEE0C8} = {72FB22FA-4B43-4717-ACE9-B8FE68ED089C}
+		{A31A995E-3BCD-451E-8B6E-943FDC5542BA} = {72FB22FA-4B43-4717-ACE9-B8FE68ED089C}
 	EndGlobalSection
 EndGlobal

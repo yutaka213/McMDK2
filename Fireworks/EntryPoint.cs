@@ -5,21 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using McMDK2.Core;
+using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
 
-namespace Recipe
+using Fireworks.Templates;
+
+namespace Fireworks
 {
+
     [Export(typeof(IPlugin))]
     public class EntryPoint : IPlugin
     {
         public string Name
         {
-            get { return "Crafting Recipe"; }
+            get { return "Fireworks"; }
         }
 
         public string Version
         {
-            get { return "1.0.0"; }
+            get { return Define.Version; }
         }
 
         public string Author
@@ -29,7 +34,7 @@ namespace Recipe
 
         public string Id
         {
-            get { return "McMDK.CraftingRecipe"; }
+            get { return "McMDK.Fireworks"; }
         }
 
         public string Dependents
@@ -44,17 +49,15 @@ namespace Recipe
 
         public string Description
         {
-            get { return "Crafting Recipeプラグインは、McMDKにおけるCrafting Tableでのレシピ追加の機能を提供します。"; }
+            get { return "Fireworksプラグインは、McMDKの基本的なプロジェクトテンプレート、リソース、ユーザーインターフェースを提供します。"; }
         }
 
         public void Loaded()
         {
-
+            //テンプレートの登録
+            TemplateManager.Register(new StandardTemplate());
         }
 
-        public void Updated()
-        {
-
-        }
+        public void Updated() { }
     }
 }

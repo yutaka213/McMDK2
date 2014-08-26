@@ -7,6 +7,9 @@ using System.Windows;
 
 using Livet;
 
+using McMDK2.Core;
+using McMDK2.Core.Plugin;
+
 namespace McMDK2
 {
     /// <summary>
@@ -18,6 +21,15 @@ namespace McMDK2
         {
             DispatcherHelper.UIDispatcher = Dispatcher;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+            //
+            FileController.CreateDirectory(Define.AssetsDirectory);
+            FileController.CreateDirectory(Define.CacheDirectory);
+            FileController.CreateDirectory(Define.LogDirectory);
+            FileController.CreateDirectory(Define.PluginDirectory);
+            FileController.CreateDirectory(Define.ProjectsDirectory);
+
+            PluginLoader.Load();
         }
 
         //集約エラーハンドラ
