@@ -27,6 +27,7 @@ namespace McMDK2.Utils.Data.Project.Internal
         public ModItem()
             : base(ItemCategory.Mod)
         {
+            this.Properties = new Dictionary<string, string>();
         }
 
         public override string ToString()

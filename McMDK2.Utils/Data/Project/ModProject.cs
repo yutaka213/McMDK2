@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,19 @@ namespace McMDK2.Utils.Data.Project
 
         public string Path { set; get; }
 
-        public List<Item> Items { set; get; }
+        public ObservableCollection<Item> Items { set; get; }
 
         public List<string> ItemsPath { set; get; }
 
         public string Type
         {
             get { return "Mod"; }
+        }
+
+        public ModProject()
+        {
+            this.Items = new ObservableCollection<Item>();
+            this.ItemsPath = new List<string>();
         }
 
         public void Build()

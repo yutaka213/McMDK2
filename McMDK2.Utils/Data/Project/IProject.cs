@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,8 @@ namespace McMDK2.Utils.Data.Project
         /// <summary>
         /// プロジェクトに含まれるアイテム
         /// </summary>
-        List<Item> Items { get; }
+        [JsonIgnore]
+        ObservableCollection<Item> Items { get; }
 
         /// <summary>
         /// プロジェクトに含まれるアイテムが定義されているそれぞれのJSONへのパス

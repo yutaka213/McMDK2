@@ -18,6 +18,8 @@ namespace McMDK2.Utils.Data.Project.Internal
         Sound,
 
         // ./Resources/Textfile_818_16x.png
-        Text
+        Text,
+
+        Folder,
     }
 }

@@ -28,10 +28,14 @@ namespace McMDK2.Utils.Data.Project.Internal
         [JsonIgnore]
         public bool CanPreview { private set; get; }
 
+        [JsonIgnore]
+        public ObservableCollection<Item> Children { set; get; }
+
         public Item(ItemCategory category, bool canPreview = true)
         {
             this.ItemType = category;
             this.CanPreview = canPreview;
+            this.Children = new ObservableCollection<Item>();
         }
     }
 }
