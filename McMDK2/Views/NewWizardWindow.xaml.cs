@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using McMDK2.Utils.Win32;
+using McMDK2.Core.Win32;
 
 namespace McMDK2.Views
 {
@@ -30,9 +30,9 @@ namespace McMDK2.Views
             base.OnSourceInitialized(e);
 
             var hWnd = new WindowInteropHelper(this).Handle;
-            var windowStyke = WinApi.GetWindowLong(hWnd, WinApi.GWL_STYLE);
-            windowStyke &= ~(int)(WinApi.WindowStyles.MAXIMIZEBOX | WinApi.WindowStyles.MINIMIZEBOX);
-            WinApi.SetWindowLong(hWnd, WinApi.GWL_STYLE, windowStyke);
+            var windowStyle = WinApi.GetWindowLong(hWnd, WinApi.GWL_STYLE);
+            windowStyle &= ~(int)(WinApi.WindowStyles.MAXIMIZEBOX | WinApi.WindowStyles.MINIMIZEBOX);
+            WinApi.SetWindowLong(hWnd, WinApi.GWL_STYLE, windowStyle);
         }
     }
 }

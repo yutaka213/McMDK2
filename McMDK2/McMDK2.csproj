@@ -164,9 +164,9 @@
       <Project>{98df5682-c721-45cb-804f-50409d3aff84}</Project>
       <Name>McMDK2.Plugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\McMDK2.Utils\McMDK2.Utils.csproj">
+    <ProjectReference Include="..\McMDK2.Core\McMDK2.Core.csproj">
       <Project>{e935f123-1b66-4ef2-9790-13fd5340f3be}</Project>
-      <Name>McMDK2.Utils</Name>
+      <Name>McMDK2.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

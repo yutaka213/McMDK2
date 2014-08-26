@@ -14,8 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using McMDK2.Utils;
-using McMDK2.Utils.Win32;
+using McMDK2.Core;
+using McMDK2.Core.Win32;
 
 namespace McMDK2.Views
 {

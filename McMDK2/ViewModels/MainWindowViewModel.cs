@@ -14,8 +14,8 @@ using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
 using McMDK2.Models;
-using McMDK2.Utils.Data.Project;
-using McMDK2.Utils.Data.Project.Internal;
+using McMDK2.Core.Data.Project;
+using McMDK2.Core.Data.Project.Internal;
 
 namespace McMDK2.ViewModels
 {
