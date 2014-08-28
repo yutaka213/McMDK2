@@ -42,6 +42,8 @@ namespace McMDK2
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
 
+            Console.WriteLine(e.ExceptionObject);
+
             Environment.Exit(1);
         }
     }

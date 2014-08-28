@@ -28,8 +28,9 @@ namespace McMDK2.Core.Plugin
                 plugin.Loaded();
                 plugins.Add(plugin);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 throw new Exception("プラグインの読み込みに失敗しました。 : " + plugin.Id);
             }
         }

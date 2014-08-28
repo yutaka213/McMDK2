@@ -12,7 +12,7 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
-using McMDK2.Core.Data.Project;
+using McMDK2.Plugin;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
 
@@ -22,7 +22,7 @@ namespace McMDK2.ViewModels
     {
         public NewWizardWindowViewModel()
         {
-            this.ProjectTemplates = new ObservableCollection<IProjectTemplate>(TemplateManager.Templates);
+            this.ProjectTemplates = new ObservableCollection<ITemplate>(TemplateManager.Templates);
         }
 
         public void Initialize()
@@ -32,9 +32,9 @@ namespace McMDK2.ViewModels
 
 
         #region ProjectTemplates変更通知プロパティ
-        private ObservableCollection<IProjectTemplate> _ProjectTemplates;
+        private ObservableCollection<ITemplate> _ProjectTemplates;
 
-        public ObservableCollection<IProjectTemplate> ProjectTemplates
+        public ObservableCollection<ITemplate> ProjectTemplates
         {
             get
             { return _ProjectTemplates; }

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using McMDK2.Core.Data.Project;
+using McMDK2.Plugin;
+using McMDK2.Core;
 
 namespace McMDK2.Core.Plugin
 {
     public class TemplateManager
     {
-        private static List<IProjectTemplate> templates = new List<IProjectTemplate>();
+        private static List<ITemplate> templates = new List<ITemplate>();
 
-        public static IEnumerable<IProjectTemplate> Templates
+        public static IEnumerable<ITemplate> Templates
         {
             get
             {
@@ -20,8 +21,9 @@ namespace McMDK2.Core.Plugin
             }
         }
 
-        public static void Register(IProjectTemplate template)
+        public static void Register(ITemplate template)
         {
+            Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
             templates.Add(template);
         }
     }

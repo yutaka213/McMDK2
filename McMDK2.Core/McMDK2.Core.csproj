@@ -58,7 +58,6 @@
     <Compile Include="Data\Project\Internal\SoundItem.cs" />
     <Compile Include="Data\Project\Internal\TextItem.cs" />
     <Compile Include="Data\Project\IProject.cs" />
-    <Compile Include="Data\Project\IProjectTemplate.cs" />
     <Compile Include="Data\Project\ModProject.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="FileController.cs" />

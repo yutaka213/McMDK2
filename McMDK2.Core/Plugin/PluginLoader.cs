@@ -59,7 +59,7 @@ namespace McMDK2.Core.Plugin
             public List<IPlugin> plugins = null;
 
             [ImportMany()]
-            public List<IProjectTemplate> templates = null;
+            public List<ITemplate> templates = null;
 
             public AssemblyPluginLoader()
             {
