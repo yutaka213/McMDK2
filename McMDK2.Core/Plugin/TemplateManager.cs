@@ -21,6 +21,11 @@ namespace McMDK2.Core.Plugin
             }
         }
 
+        public static ITemplate GetTemplateFromId(string id)
+        {
+            return templates.Single(w => w.Id == id);
+        }
+
         public static void Register(ITemplate template)
         {
             Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));

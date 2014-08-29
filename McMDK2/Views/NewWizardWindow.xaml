@@ -7,9 +7,10 @@
         xmlns:v="clr-namespace:McMDK2.Views"
         xmlns:vm="clr-namespace:McMDK2.ViewModels"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        
+        xmlns:Plugin="clr-namespace:McMDK2.Plugin;assembly=McMDK2.Plugin"
+        xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
         Title="新規作成ウィザード"
-        Height="550" Width="825"
+        Height="580" Width="825"
         WindowStartupLocation="CenterOwner">
 
     <Window.DataContext>
@@ -19,13 +20,25 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
-                <!--
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
-                -->
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate x:Key="ListBoxItemView">
-                
+            <Converter:StringToBitmapConverter x:Key="StringToBitmapConverter" />
+            <DataTemplate x:Key="ListBoxItemView" DataType="{x:Type Plugin:ITemplate}">
+                <Grid Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45px" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding IconPath, Converter={StaticResource StringToBitmapConverter}}" 
+                           Height="32px" Width="32px"
+                           UseLayoutRounding="True" />
+                    
+                    <TextBlock Grid.Column="1" 
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Text="{Binding Name}" FontSize="13"
+                               TextWrapping="Wrap"/>
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
@@ -37,45 +50,60 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" 
+            Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <Grid>
-        <Grid Margin="0,0,200,120">
-            <ListBox Margin="10">
-                <ListBoxItem Content="aaaaa"/>
-            </ListBox>
+        <Grid Margin="0,0,200,150">
+            <ListBox Margin="10" 
+                     ItemsSource="{Binding Templates}"
+                     ItemTemplate="{StaticResource ListBoxItemView}"
+                     SelectedItem="{Binding SelectedItem}"
+                     SelectedIndex="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
         </Grid>
         <Grid Margin="0,0,0,120" Width="200" HorizontalAlignment="Right">
-            <TextBlock Text="aaaa" FontWeight="Bold" TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
+            <TextBlock Text="{Binding SelectedItemName}" FontWeight="Bold" TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,10,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <TextBlock Text="Google Chrome is high speed web browser." TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
+            <TextBlock Text="{Binding SelectedItemDescription}" TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,30,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         </Grid>
-        <Grid Height="120" VerticalAlignment="Bottom">
+        <Grid Height="150" VerticalAlignment="Bottom">
             <TextBlock Text="名前" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,8,0,0" />
-            <TextBox FontSize="14"
-                     Margin="50,8,120,0" VerticalAlignment="Top"
+            <TextBox Text="{Binding ProjectName}" FontSize="14"
+                     Margin="80,8,200,0" VerticalAlignment="Top"
                      Height="22"/>
             
             <TextBlock Text="場所" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,40,0,0" />
-            <TextBox FontSize="14"
-                     Margin="50,38,120,0" VerticalAlignment="Top"
+            <TextBox Text="{Binding ProjectPath}" FontSize="12"
+                     Margin="80,38,200,0" VerticalAlignment="Top"
                      Height="22"
                      IsReadOnly="True"/>
             
+            <TextBlock Text="バージョン" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
+                       Margin="10,72,0,0" />
+            <ComboBox Height="22" Margin="80,70,200,0" VerticalAlignment="Top" Style="{x:Null}">
+                <ComboBoxItem>1.7.10</ComboBoxItem>
+            </ComboBox>
+
             <Button Content="OK" FontSize="12"
                     Margin="0,0,100,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Height="22" Width="80" 
                     Style="{x:Null}"
-                    Foreground="{DynamicResource WhiteColorBrush}"/>
+                    Foreground="{DynamicResource WhiteColorBrush}"
+                    Command="{Binding OKCommand}"/>
             
             <Button Content="Cancel" FontSize="12"
                     Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Height="22" Width="80"
                     Style="{x:Null}"
-                    Foreground="{DynamicResource WhiteColorBrush}"/>
+                    Foreground="{DynamicResource WhiteColorBrush}"
+                    Command="{Binding CancelCommand}"/>
         </Grid>
     </Grid>
 </Window>

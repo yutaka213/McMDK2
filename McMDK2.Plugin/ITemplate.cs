@@ -45,10 +45,8 @@ namespace McMDK2.Plugin
 
         /// <summary>
         /// テンプレートのファイル群がまとめられたZIPファイルのパスを取得します。 <para />
-        /// "Namespace.FileName.Ext"の用に指定します。
+        /// アセンブリ内に埋め込む場合は"ID;FilePath",埋め込まない場合は"FilePath"とします。
         /// </summary>
-        //Assembly.GetManifestResourceStream
-        //http://smdn.jp/programming/netfx/embeddedresource/
         string TemplateFile { get; }
     }
 }

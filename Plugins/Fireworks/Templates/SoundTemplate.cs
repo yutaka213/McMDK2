@@ -9,13 +9,13 @@ using McMDK2.Plugin;
 namespace Fireworks.Templates
 {
     /// <summary>
-    /// McMDK2 の標準的なプロジェクトのテンプレート
+    /// McMDK2 で、音声ファイルを用いたプロジェクトのテンプレート
     /// </summary>
-    public class StandardTemplate : ITemplate
+    public class SoundTemplate : ITemplate
     {
         public string Name
         {
-            get { return "スタンダードプロジェクト"; }
+            get { return "音声を含むプロジェクト"; }
         }
 
         public string Author
@@ -25,7 +25,7 @@ namespace Fireworks.Templates
 
         public string Id
         {
-            get { return "43ECD3FD-7E29-4968-AF55-4C5ED437E7B3"; }
+            get { return "29E1D308-F120-4D12-8F00-341EAD92BC82"; }
         }
 
         public string Dependents
@@ -40,12 +40,12 @@ namespace Fireworks.Templates
 
         public string Description
         {
-            get { return "標準的なModのプロジェクトです。通常はこのプロジェクトを使用してください。"; }
+            get { return "標準的なModのプロジェクトに加え、音声ファイルを簡単に追加できるプロジェクトです。"; }
         }
 
         public string TemplateFile
         {
-            get { return Id + ";Fireworks.Templates.StandardTemplate.zip"; }
+            get { return Id + ";Fireworks.Templates.SoundTemplate.zip"; }
         }
     }
 }

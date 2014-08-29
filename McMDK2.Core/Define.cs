@@ -54,28 +54,28 @@ namespace McMDK2.Core
         public static readonly string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
 
         /// <summary>
-        /// CurrentDirectory//plugins
+        /// CurrentDirectory/plugins
         /// </summary>
-        public static readonly string PluginDirectory = CurrentDirectory + "//plugins";
+        public static readonly string PluginDirectory = CurrentDirectory + "\\plugins";
 
         /// <summary>
-        /// CurrentDirectory//projects
+        /// CurrentDirectory/projects
         /// </summary>
-        public static readonly string ProjectsDirectory = CurrentDirectory + "//projects";
+        public static readonly string ProjectsDirectory = CurrentDirectory + "\\projects";
 
         /// <summary>
-        /// CurrentDirectory//logs
+        /// CurrentDirectory/logs
         /// </summary>
-        public static readonly string LogDirectory = CurrentDirectory + "//logs";
+        public static readonly string LogDirectory = CurrentDirectory + "\\logs";
 
         /// <summary>
-        /// CurrentDirectory//assets
+        /// CurrentDirectory/assets
         /// </summary>
-        public static readonly string AssetsDirectory = CurrentDirectory + "//assets";
+        public static readonly string AssetsDirectory = CurrentDirectory + "\\assets";
 
         /// <summary>
-        /// CurrentDirectory//cache
+        /// CurrentDirectory/cache
         /// </summary>
-        public static readonly string CacheDirectory = CurrentDirectory + "//cache";
+        public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
     }
 }

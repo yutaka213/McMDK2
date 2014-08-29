@@ -56,6 +56,7 @@ namespace Fireworks
         {
             //テンプレートの登録
             TemplateManager.Register(new StandardTemplate());
+            TemplateManager.Register(new SoundTemplate());
         }
 
         public void Updated() { }

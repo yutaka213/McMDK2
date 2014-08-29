@@ -20,6 +20,11 @@ namespace McMDK2.Core.Plugin
             }
         }
 
+        public static IPlugin GetPluginFromId(string id)
+        {
+            return plugins.Single(w => w.Id == id);
+        }
+
         public static void Register(IPlugin plugin)
         {
             try
