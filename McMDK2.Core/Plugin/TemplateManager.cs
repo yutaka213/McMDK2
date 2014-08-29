@@ -28,8 +28,12 @@ namespace McMDK2.Core.Plugin
 
         public static void Register(ITemplate template)
         {
-            Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
+            if (templates.Where(w => w.Id == template.Id).ToArray().Length != 0)
+            {
+                throw new Exception("既に同じIDをもつテンプレートが登録されています。 : " + template.Id);
+            }
             templates.Add(template);
+            Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
         }
     }
 }

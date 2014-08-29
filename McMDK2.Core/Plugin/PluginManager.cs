@@ -29,9 +29,14 @@ namespace McMDK2.Core.Plugin
         {
             try
             {
-                Define.GetLogger().Info("Loading plugin : " + plugin.Name + " " + plugin.Version);
+                if (plugins.Where(w => w.Id == plugin.Id).ToArray().Length != 0)
+                {
+                    throw new Exception("既に同じIDをもつプラグインが登録されています。 : " + plugin.Id);
+                }
+
                 plugin.Loaded();
                 plugins.Add(plugin);
+                Define.GetLogger().Info("Loading plugin : " + plugin.Name + " " + plugin.Version);
             }
             catch (Exception e)
             {
