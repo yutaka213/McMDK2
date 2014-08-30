@@ -115,11 +115,12 @@ namespace McMDK2.ViewModels
             get
             { return _ProjectName; }
             set
-            { 
+            {
                 if (_ProjectName == value)
                     return;
                 _ProjectName = value;
                 RaisePropertyChanged();
+                this.OKCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -133,11 +134,30 @@ namespace McMDK2.ViewModels
             get
             { return _ProjectPath; }
             set
-            { 
+            {
                 if (_ProjectPath == value)
                     return;
                 _ProjectPath = value;
                 RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region ProjectVersion変更通知プロパティ
+        private string _ProjectVersion;
+
+        public string ProjectVersion
+        {
+            get
+            { return _ProjectVersion; }
+            set
+            {
+                if (_ProjectVersion == value)
+                    return;
+                _ProjectVersion = value;
+                RaisePropertyChanged();
+                this.OKCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -152,7 +172,7 @@ namespace McMDK2.ViewModels
             {
                 if (_OKCommand == null)
                 {
-                    _OKCommand = new ViewModelCommand(OK);
+                    _OKCommand = new ViewModelCommand(OK, CanOK);
                 }
                 return _OKCommand;
             }
@@ -160,7 +180,16 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
-            
+
+        }
+
+        public bool CanOK()
+        {
+            if (String.IsNullOrWhiteSpace(this.ProjectName) || String.IsNullOrWhiteSpace(this.ProjectVersion))
+            {
+                return false;
+            }
+            return true;
         }
         #endregion
 

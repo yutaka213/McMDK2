@@ -13,7 +13,6 @@ using McMDK2.Core.Plugin;
 
 namespace McMDK2.Core.Converter
 {
-    //[ValueConversion(typeof(string), typeof(Bitmap))]
     public class StringToBitmapConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)

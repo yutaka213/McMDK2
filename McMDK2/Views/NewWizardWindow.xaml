@@ -87,7 +87,8 @@
             
             <TextBlock Text="バージョン" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,72,0,0" />
-            <ComboBox Height="22" Margin="80,70,200,0" VerticalAlignment="Top" Style="{x:Null}">
+            <ComboBox Height="22" Margin="80,70,200,0" VerticalAlignment="Top" Style="{x:Null}"
+                      SelectedValue="{Binding ProjectVersion}">
                 <ComboBoxItem>1.7.10</ComboBoxItem>
             </ComboBox>
 

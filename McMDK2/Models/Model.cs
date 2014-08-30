@@ -5,12 +5,29 @@ using System.Text;
 
 using Livet;
 
+
+
 namespace McMDK2.Models
 {
     public class Model : NotificationObject
     {
-        /*
-         * NotificationObjectはプロパティ変更通知の仕組みを実装したオブジェクトです。
-         */
+
+        #region CurrentProject変更通知プロパティ
+        private object _CurrentProject;
+
+        public object CurrentProject
+        {
+            get
+            { return _CurrentProject; }
+            set
+            {
+                if (_CurrentProject == value)
+                    return;
+                _CurrentProject = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
     }
 }
