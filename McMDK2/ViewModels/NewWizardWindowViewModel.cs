@@ -119,6 +119,7 @@ namespace McMDK2.ViewModels
                 if (_ProjectName == value)
                     return;
                 _ProjectName = value;
+                this.ProjectPath = Define.ProjectsDirectory + "\\" + _ProjectName;
                 RaisePropertyChanged();
                 this.OKCommand.RaiseCanExecuteChanged();
             }
