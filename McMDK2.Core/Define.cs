@@ -77,5 +77,10 @@ namespace McMDK2.Core
         /// CurrentDirectory/cache
         /// </summary>
         public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
+
+
+        public static readonly string UpdateVersionUrl = "https://api.tuyapin.net/mcmdk/2/latest";
+
+        public static readonly string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
     }
 }

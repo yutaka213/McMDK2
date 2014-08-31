@@ -75,7 +75,7 @@ namespace McMDK2.ViewModels
 
         public void Close(object parameter)
         {
-            System.Windows.MessageBox.Show(parameter.ToString());
+            this.Tabs.Remove((TabItem)parameter);
         }
         #endregion
 
