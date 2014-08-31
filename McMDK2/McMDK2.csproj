@@ -80,8 +80,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
+    <Compile Include="ViewModels\TabPages\StartPageViewModel.cs" />
     <Compile Include="Views\NewWizardWindow.xaml.cs">
       <DependentUpon>NewWizardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TabPages\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +102,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\NewWizardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TabPages\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +180,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

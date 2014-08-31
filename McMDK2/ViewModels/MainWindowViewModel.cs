@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using Livet;
@@ -13,17 +14,25 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
-using McMDK2.Models;
 using McMDK2.Core.Data.Project;
 using McMDK2.Core.Data.Project.Internal;
+using McMDK2.Models;
+using McMDK2.Views.TabPages;
 
 namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        public MainWindowViewModel()
+        {
+            this.Tabs = new ObservableCollection<TabItem>();
+        }
 
         public void Initialize()
         {
+            TabItem startPage = new TabItem { Header = "Start" };
+            startPage.Content = new StartPage();
+            this.Tabs.Add(startPage);
         }
 
 
@@ -47,6 +56,47 @@ namespace McMDK2.ViewModels
             Messenger.Raise(new TransitionMessage("ShowNewWizard"));
         }
         #endregion
+
+
+        #region CloseCommand
+        private ListenerCommand<object> _CloseCommand;
+
+        public ListenerCommand<object> CloseCommand
+        {
+            get
+            {
+                if (_CloseCommand == null)
+                {
+                    _CloseCommand = new ListenerCommand<object>(Close);
+                }
+                return _CloseCommand;
+            }
+        }
+
+        public void Close(object parameter)
+        {
+            System.Windows.MessageBox.Show(parameter.ToString());
+        }
+        #endregion
+
+
+        #region Tabs変更通知プロパティ
+        private ObservableCollection<TabItem> _Tabs;
+
+        public ObservableCollection<TabItem> Tabs
+        {
+            get
+            { return _Tabs; }
+            set
+            {
+                if (_Tabs == value)
+                    return;
+                _Tabs = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
     }
 }
