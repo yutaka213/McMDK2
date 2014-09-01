@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Converter\StringToBitmapConverter.cs" />
     <Compile Include="Converter\StringToObjectConverter.cs" />
+    <Compile Include="Data\NewsFeeds.cs" />
     <Compile Include="Data\Project\Internal\FolderItem.cs" />
     <Compile Include="Data\Project\Internal\ImageItem.cs" />
     <Compile Include="Data\Project\Internal\ItemCategory.cs" />
