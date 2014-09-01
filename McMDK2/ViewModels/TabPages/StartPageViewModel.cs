@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 using Livet;
 using Livet.Commands;
@@ -12,6 +14,7 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
+using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Models;
 
@@ -22,45 +25,43 @@ namespace McMDK2.ViewModels.TabPages
         public StartPageViewModel()
         {
             this.BlogFeeds = new ObservableCollection<NewsFeeds>();
-
-#if DEBUG
-            /* TEST DATA */
-            NewsFeeds feeds1 = new NewsFeeds();
-            feeds1.Title = "【Minecraft】McMDK進捗報告 2014/06/07";
-            feeds1.Link = "http://blog.tuyapin.net/2014/06/07/%e3%80%90minecraft%e3%80%91mcmdk%e9%80%b2%e6%8d%97%e5%a0%b1%e5%91%8a-20140607/";
-            feeds1.PublishDate = DateToString("Fri, 06 Jun 2014 19:34:52 +0000");
-            feeds1.Description = "響がВерныйになりました。ということでいつもどおりの進捗報告です。今回の更新点は テクスチャの動的生成 だけです。クライアントサイドではいまはWebページの方を作成しています。と...";
-            this.BlogFeeds.Add(feeds1);
-
-            NewsFeeds feeds2 = new NewsFeeds();
-            feeds2.Title = "【Minecraft】McMDK進捗報告 2014/06/02";
-            feeds2.Link = "http://blog.tuyapin.net/2014/06/02/%e3%80%90minecraft%e3%80%91mcmdk%e9%80%b2%e6%8d%97%e5%a0%b1%e5%91%8a-20140602/";
-            feeds2.PublishDate = DateToString("Sun, 01 Jun 2014 17:54:15 +0000");
-            feeds2.Description = "借金だわーいあはははは こんばんは、こんな深夜にもがんばってるつやぴんさんです。 来週テストだから今週は作業あんまりしません、よろしく。あれ、デジャヴを感じます。なんでだろう？ということで...";
-            this.BlogFeeds.Add(feeds2);
-
-            NewsFeeds feeds3 = new NewsFeeds();
-            feeds3.Title = "【Minecraft】McMDK進捗報告 2014/06/01";
-            feeds3.Link = "http://blog.tuyapin.net/2014/06/01/%e3%80%90minecraft%e3%80%91mcmdk%e9%80%b2%e6%8d%97%e5%a0%b1%e5%91%8a-20140601/";
-            feeds3.PublishDate = DateToString("Sat, 31 May 2014 18:45:30 +0000");
-            feeds3.Description = "かっこわらい こんばんは、こんな深夜にもがんばってるつやぴんさんです。 来週テストだから今週は作業あんまりしません、よろしく。Minecraft Forge #140 ~ #171(1.2.5) Mine...";
-            this.BlogFeeds.Add(feeds3);
-
-            NewsFeeds feeds4 = new NewsFeeds();
-            feeds4.Title = "【Minecraft】McMDK進捗報告 2014/05/20";
-            feeds4.Link = "http://blog.tuyapin.net/2014/05/20/%e3%80%90minecraft%e3%80%91mcmdk%e9%80%b2%e6%8d%97%e5%a0%b1%e5%91%8a-20140520/";
-            feeds4.PublishDate = DateToString("Mon, 19 May 2014 17:55:47 +0000");
-            feeds4.Description = "まんじゅうこわい おはこんばんちは　つやぴんさんだよ！ということで久しぶりに進捗報告です。 そのまえにちょっとした変更を McMDKのリポジトリが https://github.com/tuyapin/M...";
-            this.BlogFeeds.Add(feeds4);
-#endif
+            this.IsLoading = true;
+            this.UpdateNewsFeeds();
         }
 
-#if DEBUG
         private string DateToString(string date)
         {
             return DateTime.ParseExact(date, "ddd, d MMM yyyy HH':'mm':'ss zzz", System.Globalization.DateTimeFormatInfo.InvariantInfo, System.Globalization.DateTimeStyles.None).ToLongDateString();
         }
-#endif
+
+        private async void UpdateNewsFeeds()
+        {
+            var client = new WebClient();
+            client.Encoding = Encoding.UTF8;
+            string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
+
+            var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
+                    select new NewsFeeds
+                    {
+                        Title = p.Element("title").Value,
+                        Link = p.Element("link").Value.Replace(Environment.NewLine, ""),
+                        PublishDate = DateToString(p.Element("pubDate").Value),
+                        Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
+                    };
+            int i = 0;
+            this.IsLoading = false;
+            foreach (var item in q)
+            {
+                DispatcherHelper.UIDispatcher.Invoke(new Action(() =>
+                    {
+                        this.BlogFeeds.Add(item);
+                    }));
+                if (++i >= 5)
+                {
+                    break;
+                }
+            }
+        }
 
         #region BlogFeeds変更通知プロパティ
         private ObservableCollection<NewsFeeds> _BlogFeeds;
@@ -75,6 +76,36 @@ namespace McMDK2.ViewModels.TabPages
                     return;
                 _BlogFeeds = value;
                 RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region IsLoading変更通知プロパティ
+        private bool _IsLoading;
+
+        public bool IsLoading
+        {
+            get
+            { return _IsLoading; }
+            set
+            {
+                if (_IsLoading == value)
+                    return;
+                _IsLoading = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region OpenUrl
+
+        public void OpenUrl(string parameter)
+        {
+            if (!String.IsNullOrWhiteSpace(parameter) && (parameter.StartsWith("http://") || parameter.StartsWith("https://")))
+            {
+                System.Diagnostics.Process.Start(parameter);
             }
         }
         #endregion
