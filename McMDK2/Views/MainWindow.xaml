@@ -62,45 +62,54 @@
                 <MenuItem Header="開く(_O)" TextOptions.TextFormattingMode="Display"
                           InputGestureText="Ctrl+O" />
                 <Separator />
-                <MenuItem Header="閉じる(_C)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="閉じる(_C)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Close_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="保存(_S)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="保存(_S)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/save_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="終了(_E)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="終了(_E)" TextOptions.TextFormattingMode="Display"
+                          Command="{Binding CloseAppCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Close_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="編集(_E)" TextOptions.TextFormattingMode="Display">
-                <MenuItem Header="コピー(_C)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="コピー(_C)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Copy_6524.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="貼り付け(_P)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="貼り付け(_P)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Paste_6520.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="削除(_D)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="削除(_D)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/action_Cancel_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="表示(_V)" TextOptions.TextFormattingMode="Display">
-                <MenuItem Header="デザイナー(_D)" TextOptions.TextFormattingMode="Display" />
-                <MenuItem Header="ソースコード(_S)" TextOptions.TextFormattingMode="Display" />
-                <MenuItem Header="MDFファイル(_M)" TextOptions.TextFormattingMode="Display" />
+                <MenuItem Header="デザイナー(_D)" TextOptions.TextFormattingMode="Display" 
+                          IsEnabled="{Binding IsLoadedProject}"/>
+                <MenuItem Header="ソースコード(_S)" TextOptions.TextFormattingMode="Display" 
+                          IsEnabled="{Binding IsLoadedProject}"/>
+                <MenuItem Header="MDFファイル(_M)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}"/>
             </MenuItem>
             <MenuItem Header="プロジェクト(_P)" TextOptions.TextFormattingMode="Display">
                 <MenuItem Header="アイテム追加ウィザード(_N)" TextOptions.TextFormattingMode="Display" />
@@ -151,7 +160,7 @@
         <StatusBar DockPanel.Dock="Bottom" 
                    Background="{DynamicResource WindowGlowBrush}"
                    Height="22">
-            <TextBlock Text="準備完了" />
+            <TextBlock Text="{Binding TaskText}" />
         </StatusBar>
 
         <Grid Margin="10,0,0,0">

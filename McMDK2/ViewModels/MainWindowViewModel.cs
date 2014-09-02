@@ -17,6 +17,8 @@ using Livet.Messaging.Windows;
 using McMDK2.Models;
 using McMDK2.Views.TabPages;
 
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
@@ -24,6 +26,8 @@ namespace McMDK2.ViewModels
         public MainWindowViewModel()
         {
             this.Tabs = new ObservableCollection<TabItem>();
+            this.IsLoadedProject = false;
+            this.TaskText = "準備完了";
         }
 
         public void Initialize()
@@ -78,6 +82,28 @@ namespace McMDK2.ViewModels
         #endregion
 
 
+        #region CloseAppCommand
+        private ViewModelCommand _CloseAppCommand;
+
+        public ViewModelCommand CloseAppCommand
+        {
+            get
+            {
+                if (_CloseAppCommand == null)
+                {
+                    _CloseAppCommand = new ViewModelCommand(CloseApp);
+                }
+                return _CloseAppCommand;
+            }
+        }
+
+        public void CloseApp()
+        {
+            Environment.Exit(0);
+        }
+        #endregion
+
+
         #region Tabs変更通知プロパティ
         private ObservableCollection<TabItem> _Tabs;
 
@@ -95,6 +121,41 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+
+        #region IsLoadedProject変更通知プロパティ
+        private bool _IsLoadedProject;
+
+        public bool IsLoadedProject
+        {
+            get
+            { return _IsLoadedProject; }
+            set
+            {
+                if (_IsLoadedProject == value)
+                    return;
+                _IsLoadedProject = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region TaskText変更通知プロパティ
+        private string _TaskText;
+
+        public string TaskText
+        {
+            get
+            { return _TaskText; }
+            set
+            {
+                if (_TaskText == value)
+                    return;
+                _TaskText = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
     }
 }

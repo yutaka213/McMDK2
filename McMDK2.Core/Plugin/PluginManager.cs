@@ -36,7 +36,7 @@ namespace McMDK2.Core.Plugin
 
                 plugin.Loaded();
                 plugins.Add(plugin);
-                Define.GetLogger().Info("Loading plugin : " + plugin.Name + " " + plugin.Version);
+                Define.GetLogger().Info(String.Format("Loading Plugin : {0}({1}).", plugin.Name, plugin.Id));
             }
             catch (Exception e)
             {
