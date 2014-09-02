@@ -13,8 +13,6 @@ using System.Xml.Linq;
 using McMDK2.Plugin;
 
 using McMDK2.Core.Converter;
-using McMDK2.Core.Data.Project;
-using McMDK2.Core.Plugin;
 using McMDK2.Core.Plugin.Internal;
 using McMDK2.Core.Plugin.Internal.UI;
 using McMDK2.Core.Plugin.Internal.UI.Controls;

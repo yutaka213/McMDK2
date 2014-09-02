@@ -25,6 +25,15 @@ namespace McMDK2.ViewModels.TabPages
         public StartPageViewModel()
         {
             this.BlogFeeds = new ObservableCollection<NewsFeeds>();
+            this.RecentProjects = new ObservableCollection<Project>();
+
+#if DEBUG
+            var p = new Project();
+            p.Name = "Sample Project";
+
+            this.RecentProjects.Add(p);
+#endif
+
             this.IsLoading = true;
             this.UpdateNewsFeeds();
         }
@@ -62,6 +71,25 @@ namespace McMDK2.ViewModels.TabPages
                 }
             }
         }
+
+
+        #region RecentProjects変更通知プロパティ
+        private ObservableCollection<Project> _RecentProjects;
+
+        public ObservableCollection<Project> RecentProjects
+        {
+            get
+            { return _RecentProjects; }
+            set
+            {
+                if (_RecentProjects == value)
+                    return;
+                _RecentProjects = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
         #region BlogFeeds変更通知プロパティ
         private ObservableCollection<NewsFeeds> _BlogFeeds;

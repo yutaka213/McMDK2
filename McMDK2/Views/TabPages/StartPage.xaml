@@ -70,11 +70,27 @@
                         <StackPanel Orientation="Vertical" Margin="0,20,0,0">
                             <TextBlock Text="最近開いたプロジェクト" FontSize="17" />
                             <!-- 5件 -->
-                            <TextBlock Margin="15,5,0,0">
-                                <Hyperlink>
-                                    <Run Text="Sample Project"/>
-                                </Hyperlink>
-                            </TextBlock>
+                            <ItemsControl Margin="15,5,0,0"
+                                          ItemsSource="{Binding RecentProjects}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock>
+                                                <Hyperlink>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="Click">
+                                                            <l:LivetCallMethodAction MethodTarget="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                     MethodName="OpenUrl"
+                                                                                     MethodParameter="{Binding Path}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                    <Run Text="{Binding Name}" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
