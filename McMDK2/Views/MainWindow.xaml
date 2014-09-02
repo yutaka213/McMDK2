@@ -29,7 +29,7 @@
         </i:EventTrigger>
         
         <l:InteractionMessageTrigger MessageKey="ShowNewWizard" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type v:NewWizardWindow}"
+            <l:TransitionInteractionMessageAction WindowType="{x:Type v:NewWizardWindow}"                                          
                                                   Mode="Modal" />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
