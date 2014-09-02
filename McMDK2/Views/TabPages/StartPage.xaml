@@ -18,28 +18,28 @@
     <UserControl.DataContext>
         <vm:StartPageViewModel/>
     </UserControl.DataContext>
-    
-     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
-        </i:EventTrigger>
+
+    <i:Interaction.Triggers>
     </i:Interaction.Triggers>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="5,5,0,0" Orientation="Vertical">
             <Grid>
                 <TextBlock Text="McMDK" FontSize="35" FontFamily="Segoe UI Light" />
-                <TextBlock Text="Version 2.0.0.26" FontSize="18"
-                Margin="130,20,0,0"/>
+                <TextBlock Text="Version 2.0.0.26" FontSize="18" Margin="130,20,0,0"/>
             </Grid>
 
             <Grid Margin="5,5,5,0" Visibility="Visible">
                 <Border Background="WhiteSmoke" BorderBrush="Salmon"
-                BorderThickness="2" Padding="5" >
+                        BorderThickness="2" Padding="5" >
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="最新版(2.0.0.26)が公開されています。" 
-                        FontSize="13" Foreground="{StaticResource BlackColorBrush}" />
-                        <TextBlock><Hyperlink><Run FontSize="13" Text="更新する"/></Hyperlink></TextBlock>
+                                   FontSize="13" Foreground="{StaticResource BlackColorBrush}" />
+                        <TextBlock>
+                            <Hyperlink Command="{Binding UpdateCommand}">
+                                <Run FontSize="13" Text="更新する"/>
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -53,16 +53,28 @@
                     <StackPanel Orientation="Vertical">
                         <!-- 開始 -->
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="開始" FontSize="18" />
+                            <TextBlock Text="開始" FontSize="17" />
 
-                            <TextBlock Margin="15,5,0,0"><Hyperlink><Run FontSize="13" Text="新しいプロジェクト"/></Hyperlink></TextBlock>
-                            <TextBlock Margin="15,5,0,0"><Hyperlink><Run FontSize="13" Text="既存のプロジェクト"/></Hyperlink></TextBlock>
+                            <TextBlock Margin="15,5,0,0">
+                                <Hyperlink>
+                                    <Run FontSize="13" Text="新しいプロジェクト"/>
+                                </Hyperlink>
+                            </TextBlock>
+                            <TextBlock Margin="15,5,0,0">
+                                <Hyperlink>
+                                    <Run FontSize="13" Text="既存のプロジェクト"/>
+                                </Hyperlink>
+                            </TextBlock>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="0,20,0,0">
-                            <TextBlock Text="最近開いたプロジェクト" FontSize="18" />
+                            <TextBlock Text="最近開いたプロジェクト" FontSize="17" />
                             <!-- 5件 -->
-                            <TextBlock Margin="15,5,0,0"><Hyperlink><Run Text="Sample Project"/></Hyperlink></TextBlock>
+                            <TextBlock Margin="15,5,0,0">
+                                <Hyperlink>
+                                    <Run Text="Sample Project"/>
+                                </Hyperlink>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

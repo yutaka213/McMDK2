@@ -110,5 +110,28 @@ namespace McMDK2.ViewModels.TabPages
         }
         #endregion
 
+
+        #region UpdateCommand
+        private ViewModelCommand _UpdateCommand;
+
+        public ViewModelCommand UpdateCommand
+        {
+            get
+            {
+                if (_UpdateCommand == null)
+                {
+                    _UpdateCommand = new ViewModelCommand(Update);
+                }
+                return _UpdateCommand;
+            }
+        }
+
+        public void Update()
+        {
+
+        }
+        #endregion
+
+
     }
 }
