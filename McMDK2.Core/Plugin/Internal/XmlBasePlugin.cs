@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using McMDK2.Plugin;
-using McMDK2.Core.Plugin.Internal.UI;
+using McMDK2.UI.Controls;
 
 namespace McMDK2.Core.Plugin.Internal
 {

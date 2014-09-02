@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace McMDK2.Core.Plugin.Internal.UI
+namespace McMDK2.UI
 {
     /// <summary>
     /// McMDK2 XML Base Pluginで使用可能なコントロールの定義です。<para />
@@ -78,7 +78,7 @@ namespace McMDK2.Core.Plugin.Internal.UI
         Canvas,
 
         /// <summary>
-        /// System.Windows.Controls.UniformGrid
+        /// System.Windows.Controls.Primitives.UniformGrid
         /// </summary>
         UniformGrid,
 

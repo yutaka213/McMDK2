@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-using McMDK2.Core.Plugin.Internal.UI;
+using McMDK2.UI;
 
 namespace McMDK2.Core.Converter
 {

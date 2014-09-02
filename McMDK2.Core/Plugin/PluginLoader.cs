@@ -11,11 +11,9 @@ using System.Xml;
 using System.Xml.Linq;
 
 using McMDK2.Plugin;
-
+using McMDK2.UI.Controls;
 using McMDK2.Core.Converter;
 using McMDK2.Core.Plugin.Internal;
-using McMDK2.Core.Plugin.Internal.UI;
-using McMDK2.Core.Plugin.Internal.UI.Controls;
 
 namespace McMDK2.Core.Plugin
 {
@@ -133,8 +131,7 @@ namespace McMDK2.Core.Plugin
                     XmlNode root = document.DocumentElement;
                     XmlNode node = root.ChildNodes[0];
 
-                    var control = new UIControl();
-                    control.Component = StringToObjectConverter.StringToComponents(((XmlElement)node).Name);
+                    var control = new UIControl(StringToObjectConverter.StringToComponents(((XmlElement)node).Name));
 
                     RecursiveSerializeXML(node, control, dir);
 
@@ -154,8 +151,9 @@ namespace McMDK2.Core.Plugin
                     {
                         continue;
                     }
-                    UIControl control = new UIControl();
+                    UIControl control = new UIControl(StringToObjectConverter.StringToComponents(((XmlElement)node).Name));
 
+                    /*
                     switch (node.Name)
                     {
                         case "TextBlock":
@@ -200,6 +198,7 @@ namespace McMDK2.Core.Plugin
                             control = new UIControl();
                             break;
                     }
+                    
                     control.Background = StringToObjectConverter.StringToBrush(((XmlElement)node).GetAttribute("Background"), new System.Windows.Media.SolidColorBrush(new System.Windows.Media.Color() { A = (byte)0xFF, R = (byte)0xFF, G = (byte)0xFF, B = (byte)0xFF }));
                     control.Component = StringToObjectConverter.StringToComponents(((XmlElement)node).Name);
                     control.Foreground = StringToObjectConverter.StringToBrush(((XmlElement)node).GetAttribute("Foreground"), new System.Windows.Media.SolidColorBrush(new System.Windows.Media.Color() { A = (byte)0xFF, R = (byte)0x00, G = (byte)0x00, B = (byte)0x00 }));
@@ -217,6 +216,7 @@ namespace McMDK2.Core.Plugin
                     control.IsRequired = StringToObjectConverter.StringTo<bool>(((XmlElement)node).GetAttribute("IsRequired"), false);
                     parentControl.Children.Add(control);
                     RecursiveSerializeXML(node, control, dir);
+                    */
                 }
             }
 
