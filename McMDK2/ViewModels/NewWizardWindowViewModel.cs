@@ -21,8 +21,11 @@ namespace McMDK2.ViewModels
 {
     public class NewWizardWindowViewModel : ViewModel
     {
-        public NewWizardWindowViewModel()
+        private MainWindowViewModel MainWindowViewModel;
+
+        public NewWizardWindowViewModel(MainWindowViewModel main)
         {
+            this.MainWindowViewModel = main;
             this.Templates = new ObservableCollection<ITemplate>(TemplateManager.Templates);
             this.ProjectPath = Define.ProjectsDirectory;
         }
@@ -119,7 +122,13 @@ namespace McMDK2.ViewModels
                 if (_ProjectName == value)
                     return;
                 _ProjectName = value;
-                this.ProjectPath = Define.ProjectsDirectory + "\\" + _ProjectName;
+                var projectPath = Define.ProjectsDirectory + "\\" + _ProjectName;
+                int i = 1;
+                while (FileController.Exists(projectPath))
+                {
+                    projectPath = Define.ProjectsDirectory + "\\" + _ProjectName + (i++).ToString();
+                }
+                this.ProjectPath = projectPath;
                 RaisePropertyChanged();
                 this.OKCommand.RaiseCanExecuteChanged();
             }

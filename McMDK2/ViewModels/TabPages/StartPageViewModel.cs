@@ -45,30 +45,37 @@ namespace McMDK2.ViewModels.TabPages
 
         private async void UpdateNewsFeeds()
         {
-            var client = new WebClient();
-            client.Encoding = Encoding.UTF8;
-            string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
-
-            var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
-                    select new NewsFeeds
-                    {
-                        Title = p.Element("title").Value,
-                        Link = p.Element("link").Value.Replace(Environment.NewLine, ""),
-                        PublishDate = DateToString(p.Element("pubDate").Value),
-                        Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
-                    };
-            int i = 0;
-            this.IsLoading = false;
-            foreach (var item in q)
+            try
             {
-                DispatcherHelper.UIDispatcher.Invoke(new Action(() =>
-                    {
-                        this.BlogFeeds.Add(item);
-                    }));
-                if (++i >= 5)
+                var client = new WebClient();
+                client.Encoding = Encoding.UTF8;
+                string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
+
+                var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
+                        select new NewsFeeds
+                        {
+                            Title = p.Element("title").Value,
+                            Link = p.Element("link").Value.Replace(Environment.NewLine, ""),
+                            PublishDate = DateToString(p.Element("pubDate").Value),
+                            Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
+                        };
+                int i = 0;
+                this.IsLoading = false;
+                foreach (var item in q)
                 {
-                    break;
+                    DispatcherHelper.UIDispatcher.Invoke(new Action(() =>
+                        {
+                            this.BlogFeeds.Add(item);
+                        }));
+                    if (++i >= 5)
+                    {
+                        break;
+                    }
                 }
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Cannot connect to blog RSS feeds.");
             }
         }
 

@@ -55,8 +55,8 @@ namespace McMDK2.ViewModels
 
         public void NewWizard()
         {
-            // Messenger.Raise(new TransitionMessage(ViewModel, Key));
-            Messenger.Raise(new TransitionMessage("ShowNewWizard"));
+            Messenger.Raise(new TransitionMessage(new NewWizardWindowViewModel(this), "ShowNewWizard"));
+            //Messenger.Raise(new TransitionMessage("ShowNewWizard"));
         }
         #endregion
 

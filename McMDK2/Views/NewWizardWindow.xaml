@@ -13,10 +13,6 @@
         Height="580" Width="825"
         WindowStartupLocation="CenterOwner">
 
-    <Window.DataContext>
-        <vm:NewWizardWindowViewModel/>
-    </Window.DataContext>
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
