@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.ComponentModel;
 
@@ -14,8 +17,11 @@ using Livet.Messaging.Windows;
 
 using McMDK2.Plugin;
 using McMDK2.Core;
+using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
+
+using Newtonsoft.Json;
 
 namespace McMDK2.ViewModels
 {
@@ -190,7 +196,51 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
+            var newProject = new Project
+            {
+                Version = "1.0.0",
+                Path = this.ProjectPath,
+                Name = this.ProjectName,
+                Items = new ObservableCollection<object>(),
+                Id = Guid.NewGuid().ToString()
+            };
 
+            FileController.CreateDirectory(newProject.Path);
+
+            var template = this.SelectedItem;
+            string root = "";
+            Stream stream;
+            if (template.TemplateFile.Split(';').Length == 2)
+            {
+                string path = template.TemplateFile.Split(';')[1];
+                stream = Assembly.GetAssembly(template.GetType()).GetManifestResourceStream(path);
+                root = path.Replace(".zip", "").Split('.')[path.Replace(".zip", "").Split('.').Length - 1];
+            }
+            else
+            {
+                stream = new FileStream(template.TemplateFile, FileMode.Open, FileAccess.Read);
+                root = Path.GetFileNameWithoutExtension(template.TemplateFile);
+            }
+            FileStream fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
+            int nbyte;
+            while ((nbyte = stream.ReadByte()) != -1)
+            {
+                fs.WriteByte((byte)nbyte);
+            }
+            fs.Close();
+            stream.Close();
+
+            ZipFile.ExtractToDirectory(newProject.Path + "//Template.zip", newProject.Path);
+            FileController.Delete(newProject.Path + "//Template.zip");
+            FileController.Rename(newProject.Path + "//" + root + ".mmproj", newProject.Path + "//" + newProject.Name + ".mmproj");
+
+            var json = JsonConvert.SerializeObject(newProject, Formatting.Indented);
+            using (var sw = new StreamWriter(newProject.Path + "//project.json"))
+            {
+                sw.WriteLine(json);
+            }
+
+            // *.mmproj を読み込み、プロジェクトエクスプローラーに反映させる。
         }
 
         public bool CanOK()
