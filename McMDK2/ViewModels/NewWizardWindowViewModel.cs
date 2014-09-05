@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.ComponentModel;
+using System.Xml;
+using System.Xml.Linq;
 
 using Livet;
 using Livet.Commands;
@@ -201,7 +203,7 @@ namespace McMDK2.ViewModels
                 Version = "1.0.0",
                 Path = this.ProjectPath,
                 Name = this.ProjectName,
-                Items = new ObservableCollection<object>(),
+                Items = new ObservableCollection<ProjectItem>(),
                 Id = Guid.NewGuid().ToString()
             };
 
@@ -234,13 +236,23 @@ namespace McMDK2.ViewModels
             FileController.Delete(newProject.Path + "//Template.zip");
             FileController.Rename(newProject.Path + "//" + root + ".mmproj", newProject.Path + "//" + newProject.Name + ".mmproj");
 
-            var json = JsonConvert.SerializeObject(newProject, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
             using (var sw = new StreamWriter(newProject.Path + "//project.json"))
             {
                 sw.WriteLine(json);
             }
 
             // *.mmproj を読み込み、プロジェクトエクスプローラーに反映させる。
+            var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
+            var q = from p in element.Element("Items").Elements()
+                    select new
+                    {
+                        Include = p.Attribute("Include").Value
+                    };
+            foreach (var item in q)
+            {
+                string[] path = item.Include.Split('/');
+            }
         }
 
         public bool CanOK()
