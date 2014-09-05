@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 using McMDK2.Plugin;
 using McMDK2.Core;
+using McMDK2.Core.Data;
 
 namespace McMDK2.Core.Plugin
 {
     public class TemplateManager
     {
         private static List<ITemplate> templates = new List<ITemplate>();
+        private static Dictionary<string, ItemType> exts = new Dictionary<string, ItemType>();
 
         public static IEnumerable<ITemplate> Templates
         {
@@ -26,6 +28,11 @@ namespace McMDK2.Core.Plugin
             return templates.Single(w => w.Id == id);
         }
 
+        public static ItemType GetItemTypeFromExtension(string ext)
+        {
+            return exts[ext];
+        }
+
         public static void Register(ITemplate template)
         {
             if (templates.Where(w => w.Id == template.Id).ToArray().Length != 0)
@@ -34,6 +41,12 @@ namespace McMDK2.Core.Plugin
             }
             templates.Add(template);
             Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
+        }
+
+        public static void RegisterExtension(string ext, ItemType type)
+        {
+            if (!exts.ContainsKey(ext))
+                exts.Add(ext, type);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using McMDK2.Core;
+using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
 
@@ -57,6 +58,16 @@ namespace Fireworks
             //テンプレートの登録
             TemplateManager.Register(new StandardTemplate());
             TemplateManager.Register(new SoundTemplate());
+
+            //拡張子の登録
+            TemplateManager.RegisterExtension("png", ItemType.Image);
+            TemplateManager.RegisterExtension("ogg", ItemType.Sound);
+            TemplateManager.RegisterExtension("txt", ItemType.Text);
+            TemplateManager.RegisterExtension("lang", ItemType.Text);
+            TemplateManager.RegisterExtension("json", ItemType.Mod);
+            TemplateManager.RegisterExtension("java", ItemType.Text);
+            TemplateManager.RegisterExtension("definer", ItemType.Definer);
+            TemplateManager.RegisterExtension("designer", ItemType.Designer);
         }
 
         public void Updated() { }

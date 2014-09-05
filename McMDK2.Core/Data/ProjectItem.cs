@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,12 @@ namespace McMDK2.Core.Data
 
         public ItemType ItemType { set; get; }
 
-        public List<ProjectItem> Children { set; get; }
+        /* should be used ReadOnlyObservableCollection<ProjectItem> ? */
+        public ObservableCollection<ProjectItem> Children { set; get; }
 
         public ProjectItem()
         {
-            this.Children = new List<ProjectItem>();
+            this.Children = new ObservableCollection<ProjectItem>();
         }
     }
 
@@ -30,6 +32,10 @@ namespace McMDK2.Core.Data
 
         Image,
 
-        Sound
+        Sound,
+
+        Definer,
+
+        Designer
     }
 }

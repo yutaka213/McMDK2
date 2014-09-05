@@ -242,7 +242,10 @@ namespace McMDK2.ViewModels
                 sw.WriteLine(json);
             }
 
-            // *.mmproj を読み込み、プロジェクトエクスプローラーに反映させる。
+            List<ProjectItem> projectSolution = new List<ProjectItem>();
+            List<string> floor = new List<string>();
+
+            // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
             var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
             var q = from p in element.Element("Items").Elements()
                     select new
@@ -252,6 +255,13 @@ namespace McMDK2.ViewModels
             foreach (var item in q)
             {
                 string[] path = item.Include.Split('/');
+                for (int i = 0; i < path.Length - 1; i++)
+                {
+                    if (path.Length - 1 == 0)
+                    {
+
+                    }
+                }
             }
         }
 
