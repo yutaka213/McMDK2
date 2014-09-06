@@ -45,8 +45,11 @@ namespace McMDK2.Core.Plugin
 
         public static void RegisterExtension(string ext, ItemType type)
         {
-            if (!exts.ContainsKey(ext))
-                exts.Add(ext, type);
+            if (exts.ContainsKey(ext))
+                return;
+
+            exts.Add("." + ext, type);
+            Define.GetLogger().Info(String.Format("Register Extension : {0}({1}).", ext, type));
         }
     }
 }

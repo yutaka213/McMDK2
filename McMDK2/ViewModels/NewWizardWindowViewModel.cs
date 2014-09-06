@@ -242,9 +242,6 @@ namespace McMDK2.ViewModels
                 sw.WriteLine(json);
             }
 
-            List<ProjectItem> projectSolution = new List<ProjectItem>();
-            List<string> floor = new List<string>();
-
             // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
             var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
             var q = from p in element.Element("Items").Elements()
@@ -252,17 +249,43 @@ namespace McMDK2.ViewModels
                     {
                         Include = p.Attribute("Include").Value
                     };
+
             foreach (var item in q)
             {
-                string[] path = item.Include.Split('/');
-                for (int i = 0; i < path.Length - 1; i++)
+                string[] path = item.Include.Split('\\');
+                ObservableCollection<ProjectItem> cur = newProject.Items;
+                for (int i = 0; i < path.Length; i++)
                 {
                     if (path.Length - 1 == 0)
                     {
-
+                        newProject.Items.Add(new ProjectItem { Name = path[0], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[0])) });
+                    }
+                    else
+                    {
+                        // do not FILE
+                        if (i != path.Length - 1)
+                        {
+                            // nf directory
+                            if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                            {
+                                cur.Add(new ProjectItem { Name = path[i], ItemType = ItemType.Directory });
+                            }
+                            cur = cur.Single(w => w.Name == path[i]).Children;
+                        }
+                        // FILE
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine(Path.GetExtension(path[i]));
+                            cur.Add(new ProjectItem { Name = path[i], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[i])) });
+                        }
                     }
                 }
             }
+
+            this.MainWindowViewModel.IsLoadedProject = true;
+            this.MainWindowViewModel.CurrentProject = newProject;
+
+            Messenger.Raise(new WindowActionMessage(WindowAction.Close));
         }
 
         public bool CanOK()

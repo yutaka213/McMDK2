@@ -105,6 +105,24 @@ namespace McMDK2.ViewModels
         #endregion
 
 
+        #region CurrentProject変更通知プロパティ
+        private McMDK2.Core.Data.Project _CurrentProject;
+
+        public McMDK2.Core.Data.Project CurrentProject
+        {
+            get
+            { return _CurrentProject; }
+            set
+            {
+                if (_CurrentProject == value)
+                    return;
+                _CurrentProject = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
         #region Tabs変更通知プロパティ
         private ObservableCollection<TabItem> _Tabs;
 
