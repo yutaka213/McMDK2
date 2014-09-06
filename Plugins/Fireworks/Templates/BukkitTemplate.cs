@@ -8,14 +8,11 @@ using McMDK2.Plugin;
 
 namespace Fireworks.Templates
 {
-    /// <summary>
-    /// McMDK2 の標準的なプロジェクトのテンプレート
-    /// </summary>
-    public class StandardTemplate : ITemplate
+    public class BukkitTemplate : ITemplate
     {
         public string Name
         {
-            get { return "スタンダードプロジェクト(ユニバーサル)"; }
+            get { return "スタンダードプロジェクト(Bukkit プラグイン)"; }
         }
 
         public string Author
@@ -25,7 +22,7 @@ namespace Fireworks.Templates
 
         public string Id
         {
-            get { return "43ECD3FD-7E29-4968-AF55-4C5ED437E7B3"; }
+            get { return "A69FD32C-BD6B-4C8B-A1A7-D33944CA6984"; }
         }
 
         public string Dependents
@@ -40,12 +37,12 @@ namespace Fireworks.Templates
 
         public string Description
         {
-            get { return "標準的なModのプロジェクトです。通常はこのプロジェクトを使用してください。"; }
+            get { return "CraftBukkit プラグイン向けのプロジェクトです。"; }
         }
 
         public string TemplateFile
         {
-            get { return Id + ";Fireworks.Templates.StandardTemplate.zip"; }
+            get { return Id + ";Fireworks.Templates.BukkitTemplate.zip"; }
         }
     }
 }
