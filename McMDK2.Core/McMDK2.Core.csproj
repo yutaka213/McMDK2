@@ -50,6 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\ItemTypeToBitmapConverter.cs" />
     <Compile Include="Converter\StringToBitmapConverter.cs" />
     <Compile Include="Converter\StringToObjectConverter.cs" />
     <Compile Include="Data\NewsFeeds.cs" />
