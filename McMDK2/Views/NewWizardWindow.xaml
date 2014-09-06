@@ -62,7 +62,9 @@
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
         </Grid>
         <Grid Margin="0,0,0,120" Width="200" HorizontalAlignment="Right">
-            <TextBlock Text="{Binding SelectedItemName}" FontWeight="Bold" TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
+            <TextBlock Text="{Binding SelectedItemName}" 
+                       FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" 
+                       Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,10,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <TextBlock Text="{Binding SelectedItemDescription}" TextWrapping="Wrap" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,30,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
