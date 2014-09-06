@@ -285,7 +285,11 @@ namespace McMDK2.ViewModels
             this.MainWindowViewModel.IsLoadedProject = true;
             this.MainWindowViewModel.CurrentProject = newProject;
 
-            Messenger.Raise(new WindowActionMessage(WindowAction.Close));
+            Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+
+            var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => w.Header == "Start");
+            if(tab != null)
+                this.MainWindowViewModel.Tabs.Remove(tab);
         }
 
         public bool CanOK()
