@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\StartPageViewModel.cs" />
@@ -148,7 +149,9 @@
   <ItemGroup>
     <Content Include="InfrastructureAssemblies\Design\Livet.Design.dll" />
     <Content Include="InfrastructureAssemblies\Livet.dll" />
-    <Content Include="InfrastructureAssemblies\Livet.XML" />
+    <Content Include="InfrastructureAssemblies\Livet.XML">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
     <Resource Include="Resources\Soundfile_461.png" />

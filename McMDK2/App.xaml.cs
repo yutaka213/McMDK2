@@ -30,6 +30,9 @@ namespace McMDK2
             FileController.CreateDirectory(Define.ProjectsDirectory);
 
             PluginLoader.Load();
+
+            // Check update
+
         }
 
         //集約エラーハンドラ

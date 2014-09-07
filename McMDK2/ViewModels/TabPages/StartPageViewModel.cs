@@ -26,12 +26,26 @@ namespace McMDK2.ViewModels.TabPages
         {
             this.BlogFeeds = new ObservableCollection<NewsFeeds>();
             this.RecentProjects = new ObservableCollection<Project>();
+            this.Notifications = new ObservableCollection<Notification>();
 
 #if DEBUG
             var p = new Project();
             p.Name = "Sample Project";
 
             this.RecentProjects.Add(p);
+
+            var n = new Notification();
+            n.NotificationText = "最新版(2.0.0.26)が公開されています。";
+            n.NotificationLikedText = "更新する";
+            n.OnClicked += (_, __) => System.Windows.MessageBox.Show("aa");
+
+            this.Notifications.Add(n);
+
+            var n2 = new Notification();
+            n2.NotificationText = "Fireworks.dllの更新があります。";
+            n2.NotificationLikedText = "詳細を確認する";
+
+            this.Notifications.Add(n2);
 #endif
 
             this.IsLoading = true;
@@ -75,7 +89,7 @@ namespace McMDK2.ViewModels.TabPages
             }
             catch
             {
-                System.Diagnostics.Debug.WriteLine("Cannot connect to blog RSS feeds.");
+                Define.GetLogger().Error("Cannot connect to blog RSS feeds.");
             }
         }
 
@@ -128,6 +142,24 @@ namespace McMDK2.ViewModels.TabPages
                 if (_IsLoading == value)
                     return;
                 _IsLoading = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region Notifications変更通知プロパティ
+        private ObservableCollection<Notification> _Notifications;
+
+        public ObservableCollection<Notification> Notifications
+        {
+            get
+            { return _Notifications; }
+            set
+            {
+                if (_Notifications == value)
+                    return;
+                _Notifications = value;
                 RaisePropertyChanged();
             }
         }
