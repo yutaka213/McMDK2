@@ -9,8 +9,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
+using System.Windows.Media;
 
 using McMDK2.Plugin;
+using McMDK2.UI;
 using McMDK2.UI.Controls;
 using McMDK2.Core.Converter;
 using McMDK2.Core.Plugin.Internal;
@@ -151,72 +153,130 @@ namespace McMDK2.Core.Plugin
                     {
                         continue;
                     }
-                    UIControl control = new UIControl(StringToObjectConverter.StringToComponents(((XmlElement)node).Name));
+                    UIControl control = null;
+                    XmlElement element = (XmlElement)node;
 
-                    /*
+                    // Parse TOPLEVEL Contents.
                     switch (node.Name)
                     {
                         case "TextBlock":
-                        case "TextBox":
-                        case "Label":
-                        case "CheckBox":
-                        case "GroupBox":
-                            var textcontrol = new TextControl();
-                            textcontrol.FontSize = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("FontSize"));
-                            textcontrol.FontStretch = (FontStretch)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontStretch"), typeof(FontStretches), FontStretches.Normal);
-                            textcontrol.FontStyle = (FontStyle)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontStyle"), typeof(FontStyles), FontStyles.Normal);
-                            textcontrol.FontWeight = (FontWeight)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontWeight"), typeof(FontWeights), FontWeights.Normal);
-                            textcontrol.Text = (((XmlElement)node).GetAttribute("Text"));
-                            textcontrol.TextAlignment = (TextAlignment?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("TextAlignment"), typeof(TextAlignment));
-                            textcontrol.TextDecoration = (TextDecoration)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("TextDecoration"), typeof(TextDecorations), null);
-                            textcontrol.TextWrapping = (TextWrapping?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("TextWrapping"), typeof(TextWrapping));
-                            control = textcontrol;
+                            control = new TextBlockControl
+                            {
+                                Background = StringToObjectConverter.StringToBrush(element.GetAttribute("Background")),
+                                /* FontFamiy */
+                                FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize")),
+                                FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches)),
+                                FontStyle = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStyle"), typeof(FontStyles)),
+                                FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights)),
+                                Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground")),
+                                Padding = ParseMargin(element.GetAttribute("Padding")),
+                                LineHeight = StringToObjectConverter.StringTo<double>(element.GetAttribute("LineHeight")),
+                                Text = element.GetAttribute("Text"),
+                                TextAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("TextAlignment"), typeof(TextAlignment)),
+                                TextDecorations = StringToObjectConverter.StringToProperty(element.GetAttribute("TextDecorations"), typeof(TextDecorations)),
+                                TextTrimming = StringToObjectConverter.StringToEnum(element.GetAttribute("TextTrimming"), typeof(TextTrimming)),
+                                TextWrapping = StringToObjectConverter.StringToEnum(element.GetAttribute("TextWrapping"), typeof(TextWrapping))
+                            };
                             break;
 
                         case "ComboBox":
-                            var selectionControl = new SelectionControl();
-                            selectionControl.FontSize = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("FontSize"));
-                            selectionControl.FontStretch = (FontStretch)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontStretch"), typeof(FontStretches), FontStretches.Normal);
-                            selectionControl.FontStyle = (FontStyle)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontStyle"), typeof(FontStyles), FontStyles.Normal);
-                            selectionControl.FontWeight = (FontWeight)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("FontWeight"), typeof(FontWeights), FontWeights.Normal);
-                            selectionControl.Text = (((XmlElement)node).GetAttribute("Text"));
-                            selectionControl.TextAlignment = (TextAlignment?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("TextAlignment"), typeof(TextAlignment));
-                            selectionControl.TextDecoration = (TextDecoration)StringToObjectConverter.StringToProperty(((XmlElement)node).GetAttribute("TextDecoration"), typeof(TextDecorations), null);
-                            selectionControl.TextWrapping = (TextWrapping?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("TextWrapping"), typeof(TextWrapping));
-                            selectionControl.ItemsSource = (((XmlElement)node).GetAttribute("ItemsSource"));
-                            control = selectionControl;
-
+                            control = new SelectableControl(GuiComponents.ComboBox)
+                            {
+                                // SelectableControl
+                                ItemsSource = element.GetAttribute("ItemsSource"),
+                                // EnterableControl
+                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired")),
+                                Default = element.GetAttribute("Default"),
+                                // ContentControl
+                                Content = element.GetAttribute("Content")
+                            };
                             break;
 
+                        case "TextBox":
+                        case "CheckBox":
+                            control = new EnterableControl(StringToObjectConverter.StringToComponents(node.Name))
+                            {
+                                // EnterableControl
+                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired")),
+                                Default = element.GetAttribute("Default"),
+                                // ContentControl
+                                Content = element.GetAttribute("Content")
+                            };
+                            break;
+
+                        case "GroupBox":
+                            control = new GroupBoxControl()
+                            {
+                                // GroupBoxControl
+                                Header = element.GetAttribute("Header"),
+                                // ContentControl
+                                Content = element.GetAttribute("Content")
+                            };
+                            break;
+
+                        // There controls has 'Content' property.
+                        // Based on System.Windows.Controls.ContentControl
                         case "Image":
-                            var imagecontrol = new ImageControl();
-                            imagecontrol.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(dir + ((XmlElement)node).GetAttribute("ImageSource")));
-                            control = imagecontrol;
+                        case "Label":
+                            control = new McMDK2.UI.Controls.ContentControl(StringToObjectConverter.StringToComponents(node.Name))
+                            {
+                                // ContentControl
+                                Content = element.GetAttribute("Content")
+                            };
+                            break;
+
+                        case "Grid":
+                        case "WrapPanel":
+                        case "StackPanel":
+                        case "DockPanel":
+                        case "Canvas":
+                        case "UniformGrid":
+                        case "ScrollViewer":
+                            control = new PanelControl(StringToObjectConverter.StringToComponents(node.Name));
+                            break;
+
+                        case "Separator":
+                            control = new UIControlEx(GuiComponents.Separator);
                             break;
 
                         default:
-                            control = new UIControl();
+                            control = new UIControl(StringToObjectConverter.StringToComponents(node.Name));
                             break;
                     }
-                    
-                    control.Background = StringToObjectConverter.StringToBrush(((XmlElement)node).GetAttribute("Background"), new System.Windows.Media.SolidColorBrush(new System.Windows.Media.Color() { A = (byte)0xFF, R = (byte)0xFF, G = (byte)0xFF, B = (byte)0xFF }));
-                    control.Component = StringToObjectConverter.StringToComponents(((XmlElement)node).Name);
-                    control.Foreground = StringToObjectConverter.StringToBrush(((XmlElement)node).GetAttribute("Foreground"), new System.Windows.Media.SolidColorBrush(new System.Windows.Media.Color() { A = (byte)0xFF, R = (byte)0x00, G = (byte)0x00, B = (byte)0x00 }));
-                    control.Height = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("Height"));
-                    control.HorizontalAlignment = (HorizontalAlignment?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("HorizontalAlignment"), typeof(HorizontalAlignment));
-                    control.IsEnabled = StringToObjectConverter.StringTo<bool>(((XmlElement)node).GetAttribute("IsEnabled"), true);
-                    control.IsVisible = StringToObjectConverter.StringTo<bool>(((XmlElement)node).GetAttribute("IsVisible"));
-                    control.Margin = ParseMargin(((XmlElement)node).GetAttribute("Margin"));
-                    control.Name = (((XmlElement)node).GetAttribute("Name"));
-                    control.Opacity = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("Opacity"));
-                    control.ToolTip = (((XmlElement)node).GetAttribute("ToolTip"));
-                    control.VerticalAlignment = (VerticalAlignment?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("VerticalAlignment"), typeof(VerticalAlignment));
-                    control.Visibility = (Visibility?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("Visibility"), typeof(Visibility));
-                    control.Width = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("Width"));
-                    control.IsRequired = StringToObjectConverter.StringTo<bool>(((XmlElement)node).GetAttribute("IsRequired"), false);
-                    parentControl.Children.Add(control);
+
+                    // If control has McMDK2.UI.Controls.UIControlEx(Based on System.Windows.Controls.Control), Parse these properties.
+                    if (control is UIControlEx)
+                    {
+                        ((UIControlEx)control).Background = StringToObjectConverter.StringToBrush(element.GetAttribute("Background"));
+                        ((UIControlEx)control).BorderBrush = StringToObjectConverter.StringToBrush(element.GetAttribute("BorderBrush"));
+                        ((UIControlEx)control).BorderThickess = ParseMargin(element.GetAttribute("BorderThickness"));
+                        /* FontFamily */
+                        ((UIControlEx)control).FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"));
+                        ((UIControlEx)control).FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches));
+                        ((UIControlEx)control).FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights));
+                        ((UIControlEx)control).Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground"));
+                        ((UIControlEx)control).Padding = ParseMargin(element.GetAttribute("Padding"));
+                    }
+
+                    // All controls has this properties.
+                    // Based on System.Windows.UIElement and System.Windows.FrameworkElement.
+                    control.IsEnabled = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsEnabled"), true);
+                    control.IsVisible = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsVisible"), true);
+                    control.Opacity = StringToObjectConverter.StringTo<double>(element.GetAttribute("Opacity"));
+                    control.Visibility = StringToObjectConverter.StringToEnum(element.GetAttribute("Visibility"), typeof(Visibility));
+                    control.Height = StringToObjectConverter.StringTo<double>(element.GetAttribute("Height"));
+                    control.HorizontalAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("HorizontalAlignment"), typeof(HorizontalAlignment));
+                    control.Margin = ParseMargin(element.GetAttribute("Margin"));
+                    control.Name = element.GetAttribute("Name");
+                    control.ToolTip = element.GetAttribute("Tooltip");
+                    control.VerticalAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("VerticalAlignment"), typeof(VerticalAlignment));
+                    control.Width = StringToObjectConverter.StringTo<double>(element.GetAttribute("Width"));
+
+                    if (parentControl is PanelControl)
+                    {
+                        ((PanelControl)parentControl).Children.Add(control);
+                    }
                     RecursiveSerializeXML(node, control, dir);
-                    */
                 }
             }
 

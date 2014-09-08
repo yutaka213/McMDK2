@@ -17,22 +17,22 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールの背景色を設定します。
         /// </summary>
-        public Brush Background { set; get; }
+        public /*Brush*/object Background { set; get; }
 
         /// <summary>
         /// コントロールの境界線の背景色を設定します。
         /// </summary>
-        public Brush BorderBrush { set; get; }
+        public /*Brush*/object BorderBrush { set; get; }
 
         /// <summary>
         /// コントロールの境界線の太さを設定します。
         /// </summary>
-        public Thickness BorderThickess { set; get; }
+        public /*Thickness*/object BorderThickess { set; get; }
 
         /// <summary>
         /// コントロールのフォントファミリーを設定します。
         /// </summary>
-        public FontFamily FontFamily { set; get; }
+        public /*FontFamily*/object FontFamily { set; get; }
 
         /// <summary>
         /// コントロールのフォントサイズを設定します。
@@ -42,22 +42,22 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールのフォントの縮小/拡大する度合いを設定します。
         /// </summary>
-        public FontStretch FontStretch { set; get; }
+        public /*FontStretch*/object FontStretch { set; get; }
 
         /// <summary>
         /// コントロールのフォントの太さを設定します。
         /// </summary>
-        public FontWeight FontWeight { set; get; }
+        public /*FontWeight*/object FontWeight { set; get; }
 
         /// <summary>
         /// コントロールの前景色を設定します。
         /// </summary>
-        public Brush Foreground { set; get; }
+        public /*Brush*/object Foreground { set; get; }
 
         /// <summary>
         /// コントロール内側の空白を設定します。
         /// </summary>
-        public Thickness Padding { set; get; }
+        public /*Thickness*/object Padding { set; get; }
 
         public UIControlEx(GuiComponents component)
             : base(component)

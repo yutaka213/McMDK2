@@ -16,47 +16,47 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールの背景色を設定します。
         /// </summary>
-        public Brush Background { set; get; }
+        public /*Brush*/object Background { set; get; }
 
         /// <summary>
         /// コントロールのフォントファミリーを設定します。
         /// </summary>
-        public FontFamily FontFamiy { set; get; }
+        public /*FontFamily*/object FontFamiy { set; get; }
 
         /// <summary>
         /// コントロールのフォントサイズを設定します。
         /// </summary>
-        public double FontSize { set; get; }
+        public /*double*/object FontSize { set; get; }
 
         /// <summary>
         /// コントロールのフォント収縮特性を設定します。
         /// </summary>
-        public FontStretch FontStrertch { set; get; }
+        public /*FontStretch*/object FontStretch { set; get; }
 
         /// <summary>
         /// コントロールのフォントスタイルを設定します。
         /// </summary>
-        public FontStyle FontStyle { set; get; }
+        public /*FontStyle*/object FontStyle { set; get; }
 
         /// <summary>
         /// コントロールのフォントの太さを設定します。
         /// </summary>
-        public FontWeight FontWeight { set; get; }
+        public /*FontWeight*/object FontWeight { set; get; }
 
         /// <summary>
         /// テキストの色を設定します。
         /// </summary>
-        public Brush Foreground { set; get; }
+        public /*Brush*/object Foreground { set; get; }
 
         /// <summary>
         /// コントロール内の空白を設定します。
         /// </summary>
-        public Thickness Padding { set; get; }
+        public /*Thickness*/object Padding { set; get; }
 
         /// <summary>
         /// テキストの行の高さを設定します。
         /// </summary>
-        public double LineHeight { set; get; }
+        public /*double*/object LineHeight { set; get; }
 
         /// <summary>
         /// テキストを設定します。
@@ -66,22 +66,22 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// テキストの水平方向の配置を示す値を設定します。
         /// </summary>
-        public TextAlignment TextAlignment { set; get; }
+        public /*TextAlignment*/object TextAlignment { set; get; }
 
         /// <summary>
         /// テキストに適用する効果を設定します。
         /// </summary>
-        public TextDecoration TextDecorations { set; get; }
+        public /*TextDecoration*/object TextDecorations { set; get; }
 
         /// <summary>
         /// テキストがコンテンツエリアいっぱいになったときに使用するトリミング方法を設定します。
         /// </summary>
-        public TextTrimming TextTrimming { set; get; }
+        public /*TextTrimming*/object TextTrimming { set; get; }
 
         /// <summary>
         /// テキストの折り返し方法を設定します。
         /// </summary>
-        public TextWrapping TextWrapping { set; get; }
+        public /*TextWrapping*/object TextWrapping { set; get; }
 
         public TextBlockControl()
             : base(GuiComponents.TextBlock)

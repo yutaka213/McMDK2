@@ -33,7 +33,7 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールの可視状態を示します。
         /// </summary>
-        public Visibility Visibility { set; get; }
+        public /*Visibility*/object Visibility { set; get; }
 
 
         // System.Windows.FrameworkElement
@@ -46,12 +46,12 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールの水平方向の配置を示します。
         /// </summary>
-        public HorizontalAlignment HorizontalAlignment { set; get; }
+        public /*HorizontalAlignment*/object HorizontalAlignment { set; get; }
 
         /// <summary>
         /// コントロールの外側の余白を設定します。
         /// </summary>
-        public Thickness Margin { set; get; }
+        public /*Thickness*/object Margin { set; get; }
 
         /// <summary>
         /// コントロールの名前を設定します。<para />
@@ -67,7 +67,7 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールの垂直方向の配置を示します。
         /// </summary>
-        public VerticalAlignment VerticalAlignment { set; get; }
+        public /*VerticalAlignment*/object VerticalAlignment { set; get; }
 
         /// <summary>
         /// コントロールの幅を設定します。

@@ -36,7 +36,7 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// パネルの境界線間の領域の色を指定します。
         /// </summary>
-        public Brush Backgound { set; get; }
+        public /*Brush*/object Backgound { set; get; }
 
         /// <summary>
         /// このパネルの子要素を設定します。
