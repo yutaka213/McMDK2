@@ -62,7 +62,9 @@
     <Compile Include="Log\LogLevel.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
+    <Compile Include="Plugin\Internal\XmlBaseMod.cs" />
     <Compile Include="Plugin\Internal\XmlBasePlugin.cs" />
+    <Compile Include="Plugin\Internal\XmlBaseTemplate.cs" />
     <Compile Include="Plugin\PluginLoader.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Plugin\TemplateManager.cs" />
