@@ -63,7 +63,12 @@
     <EmbeddedResource Include="Resources\Contract_32xLG.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Items\Readme.txt" />
     <Content Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\ViewModels\" />
+    <Folder Include="Items\Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

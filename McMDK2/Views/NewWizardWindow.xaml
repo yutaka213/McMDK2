@@ -18,7 +18,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <!--<Style TargetType="ListBox" BasedOn="{StaticResource StandardListBox}" />-->
             <Converter:StringToBitmapConverter x:Key="StringToBitmapConverter" />
             <DataTemplate x:Key="ListBoxItemView" DataType="{x:Type Plugin:ITemplate}">
                 <Grid Height="40">
@@ -59,7 +62,8 @@
                      ItemTemplate="{StaticResource ListBoxItemView}"
                      SelectedItem="{Binding SelectedItem}"
                      SelectedIndex="0"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            </ListBox>
         </Grid>
         <Grid Margin="0,0,0,120" Width="200" HorizontalAlignment="Right">
             <TextBlock Text="{Binding SelectedItemName}" 
