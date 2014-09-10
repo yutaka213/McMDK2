@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 using Livet;
 using Livet.Commands;
@@ -20,5 +21,24 @@ namespace McMDK2.ViewModels.TabPages
         public void Initialize()
         {
         }
+
+
+        #region ModdingContent変更通知プロパティ
+        private UserControl _ModdingContent;
+
+        public UserControl ModdingContent
+        {
+            get
+            { return _ModdingContent; }
+            set
+            {
+                if (_ModdingContent == value)
+                    return;
+                _ModdingContent = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
     }
 }

@@ -16,6 +16,6 @@
     </i:Interaction.Triggers>
     
     <Grid>
-        
+        <ContentControl Content="{Binding ModdingContent}" />
     </Grid>
 </UserControl>

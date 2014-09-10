@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using McMDK2.Plugin;
 
+using Fireworks.Items.Views;
+
 namespace Fireworks.Items
 {
     public class Block : IMod
@@ -16,6 +18,15 @@ namespace Fireworks.Items
 
         public string Id { get { return "1F121275-6E85-4EED-9A0D-C58B3AC49DA8"; } }
 
-        public ModView View { get { return null; } }
+        private ModView _View;
+        public ModView View
+        {
+            get
+            {
+                if (this._View == null)
+                    this._View = new BlockView();
+                return null;
+            }
+        }
     }
 }

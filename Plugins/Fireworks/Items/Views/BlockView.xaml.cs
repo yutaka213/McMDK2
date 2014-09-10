@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using McMDK2.Plugin;
+
 namespace Fireworks.Items.Views
 {
     /* 
@@ -25,7 +27,7 @@ namespace Fireworks.Items.Views
     /// <summary>
     /// BlockView.xaml の相互作用ロジック
     /// </summary>
-    public partial class BlockView : UserControl
+    public partial class BlockView : /*UserControl*/ModView
     {
         public BlockView()
         {
