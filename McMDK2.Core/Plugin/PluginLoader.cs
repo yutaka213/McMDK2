@@ -38,6 +38,13 @@ namespace McMDK2.Core.Plugin
                     TemplateManager.Register(p);
                 }
             }
+            if (asmPlugins.mods != null)
+            {
+                foreach (var p in asmPlugins.mods)
+                {
+                    ModItemManager.Register(p);
+                }
+            }
 
             var xmlPlugins = new XmlBasePluginLoader();
             if (xmlPlugins.plugins != null)
@@ -58,6 +65,9 @@ namespace McMDK2.Core.Plugin
 
             [ImportMany()]
             public List<ITemplate> templates = null;
+
+            [ImportMany()]
+            public List<IMod> mods = null;
 
             public AssemblyPluginLoader()
             {
