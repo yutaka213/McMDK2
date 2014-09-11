@@ -49,7 +49,7 @@ namespace McMDK2.Core
 
         private static readonly string VersionNo = "2.0.0";
 
-        private static readonly long ReleaseNo = 25;
+        private static readonly long ReleaseNo = 27;
 
         public static readonly string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
 

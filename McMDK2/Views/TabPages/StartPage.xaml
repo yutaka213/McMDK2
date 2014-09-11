@@ -26,7 +26,8 @@
         <StackPanel Margin="5,5,0,0" Orientation="Vertical">
             <Grid>
                 <TextBlock Text="McMDK" FontSize="35" FontFamily="Segoe UI Light" />
-                <TextBlock Text="Version 2.0.0.26" FontSize="18" Margin="130,20,0,0"/>
+                <TextBlock Text="Version" FontSize="18" Margin="130,20,0,0"/>
+                <TextBlock Text="{Binding Version}" FontSize="18" Margin="200,20,0,0" />
             </Grid>
 
             <Grid>

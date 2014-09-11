@@ -28,6 +28,7 @@ namespace McMDK2.ViewModels.TabPages
             this.RecentProjects = new ObservableCollection<Project>();
             this.Notifications = new ObservableCollection<Notification>();
             this.StatusMessage = "取得中...";
+            this.Version = Define.Version;
 
 #if DEBUG
             var p = new Project();
@@ -95,6 +96,23 @@ namespace McMDK2.ViewModels.TabPages
                 Define.GetLogger().Error("Cannot connect to blog RSS feeds.");
             }
         }
+
+        #region Version変更通知プロパティ
+        private string _Version;
+
+        public string Version
+        {
+            get
+            { return _Version; }
+            set
+            {
+                if (_Version == value)
+                    return;
+                _Version = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
 
         #region RecentProjects変更通知プロパティ

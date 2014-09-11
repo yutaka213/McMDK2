@@ -79,7 +79,7 @@ namespace McMDK2.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Define.GetLogger().Error("Cannot load plugin.", e);
+                    Define.GetLogger().Error("Cannot load plugin", e);
                 }
             }
         }
