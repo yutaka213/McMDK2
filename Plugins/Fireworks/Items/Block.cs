@@ -28,5 +28,7 @@ namespace Fireworks.Items
                 return null;
             }
         }
+
+        public string SourceFile { get { return Id + ";Fireworks.Items.Source.Block.java"; } }
     }
 }

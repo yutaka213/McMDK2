@@ -32,5 +32,11 @@ namespace McMDK2.Plugin
         /// Modの項目編集時に使用する、Viewを取得します。
         /// </summary>
         ModView View { get; }
+
+        /// <summary>
+        /// Viewの項目に対応する*.javaソースファイルを取得します。 <para />
+        /// 
+        /// </summary>
+        string SourceFile { get; }
     }
 }
