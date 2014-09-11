@@ -86,7 +86,9 @@
     <Content Include="Items\Readme.txt" />
     <Content Include="Readme.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Items\Views\BlockView.xaml">
       <SubType>Designer</SubType>
