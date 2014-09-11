@@ -103,7 +103,7 @@
                 </Grid>
                 <Grid Grid.Column="1" Margin="0,0,45,0">
                     <TextBlock Text="ニュース" FontSize="27" />
-                    <TextBlock Text="取得中..." FontSize="16" Margin="0,45,0,0"
+                    <TextBlock Text="{Binding StatusMessage}" FontSize="16" Margin="0,45,0,0"
                                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <ItemsControl Grid.IsSharedSizeScope="True"
                               ItemsSource="{Binding BlogFeeds}"

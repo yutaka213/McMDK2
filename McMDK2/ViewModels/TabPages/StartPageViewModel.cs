@@ -27,6 +27,7 @@ namespace McMDK2.ViewModels.TabPages
             this.BlogFeeds = new ObservableCollection<NewsFeeds>();
             this.RecentProjects = new ObservableCollection<Project>();
             this.Notifications = new ObservableCollection<Notification>();
+            this.StatusMessage = "取得中...";
 
 #if DEBUG
             var p = new Project();
@@ -48,7 +49,6 @@ namespace McMDK2.ViewModels.TabPages
             this.Notifications.Add(n2);
 #endif
 
-            this.IsLoading = true;
             this.UpdateNewsFeeds();
         }
 
@@ -61,6 +61,7 @@ namespace McMDK2.ViewModels.TabPages
         {
             try
             {
+                this.IsLoading = false;
                 var client = new WebClient();
                 client.Encoding = Encoding.UTF8;
                 string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
@@ -89,6 +90,8 @@ namespace McMDK2.ViewModels.TabPages
             }
             catch
             {
+                this.IsLoading = true;
+                this.StatusMessage = "ニュースフィードを読み込むことができませんでした。";
                 Define.GetLogger().Error("Cannot connect to blog RSS feeds.");
             }
         }
@@ -160,6 +163,24 @@ namespace McMDK2.ViewModels.TabPages
                 if (_Notifications == value)
                     return;
                 _Notifications = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region StatusMessage変更通知プロパティ
+        private string _StatusMessage;
+
+        public string StatusMessage
+        {
+            get
+            { return _StatusMessage; }
+            set
+            {
+                if (_StatusMessage == value)
+                    return;
+                _StatusMessage = value;
                 RaisePropertyChanged();
             }
         }
