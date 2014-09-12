@@ -60,6 +60,12 @@
     <Compile Include="FileController.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="Minecaft\ApiService.cs" />
+    <Compile Include="Minecaft\Authentication.cs" />
+    <Compile Include="Minecaft\LegacyUserAuthentication.cs" />
+    <Compile Include="Minecaft\ServerStatus.cs" />
+    <Compile Include="Minecaft\Session.cs" />
+    <Compile Include="Minecaft\UserAuthentication.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
     <Compile Include="Plugin\Internal\XmlBaseMod.cs" />
