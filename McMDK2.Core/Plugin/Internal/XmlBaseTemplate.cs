@@ -16,8 +16,6 @@ namespace McMDK2.Core.Plugin.Internal
     {
         public string Name { set; get; }
 
-        public string Author { set; get; }
-
         public string Id { set; get; }
 
         public string Dependents { set; get; }
@@ -27,5 +25,10 @@ namespace McMDK2.Core.Plugin.Internal
         public string Description { set; get; }
 
         public string TemplateFile { set; get; }
+
+        /// <summary>
+        /// template.xml Version
+        /// </summary>
+        public string XmlVersion { set; get; }
     }
 }

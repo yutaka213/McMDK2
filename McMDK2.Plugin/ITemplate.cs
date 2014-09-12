@@ -17,11 +17,6 @@ namespace McMDK2.Plugin
         string Name { get; }
 
         /// <summary>
-        /// テンプレートの作者を取得します。
-        /// </summary>
-        string Author { get; }
-
-        /// <summary>
         /// テンプレートのユニークIDを取得します。 <para />
         /// 他のテンプレートと被るIDは使用できません。
         /// </summary>

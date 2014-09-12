@@ -130,6 +130,7 @@ namespace McMDK2.Core.Plugin
                     }
 
                     // IMod.cs
+                    #region MOD
                     if (xmlPlugin.Type == "Mod")
                     {
                         // ui.xml
@@ -155,11 +156,29 @@ namespace McMDK2.Core.Plugin
                         xmlMod.View = view;
                         mods.Add(xmlMod);
                     }
+                    #endregion
 
                     // ITemplate.cs
                     if (xmlPlugin.Type == "Template")
                     {
                         // template.xml
+                        var c = from d in XElement.Load(xml + "\\template.xml").Elements()
+                                select new XmlBaseTemplate
+                                {
+                                    Name = d.Element("Name") == null ? xmlPlugin.Name : d.Element("Name").Value,
+                                    Id = d.Element("Id") == null ? xmlPlugin.Id : d.Element("Id").Value,
+                                    IconPath = d.Element("IconPath").Value,
+                                    Description = d.Element("Description").Value,
+                                    TemplateFile = d.Element("TemplateFile").Value,
+                                    XmlVersion = d.Element("XmlVersion") == null ? "1.0" : d.Element("XmlVersion").Value
+                                };
+                        XmlBaseTemplate xmlTemplate = null;
+                        foreach (var item in c)
+                        {
+                            xmlTemplate = item;
+                        }
+
+                        templates.Add(xmlTemplate);
                     }
                     plugins.Add(xmlPlugin);
                 }

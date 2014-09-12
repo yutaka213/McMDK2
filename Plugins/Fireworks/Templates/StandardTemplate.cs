@@ -18,11 +18,6 @@ namespace Fireworks.Templates
             get { return "スタンダードプロジェクト(ユニバーサル)"; }
         }
 
-        public string Author
-        {
-            get { return "tuyapin"; }
-        }
-
         public string Id
         {
             get { return "43ECD3FD-7E29-4968-AF55-4C5ED437E7B3"; }

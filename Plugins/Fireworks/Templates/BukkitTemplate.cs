@@ -15,11 +15,6 @@ namespace Fireworks.Templates
             get { return "スタンダードプロジェクト(Bukkit プラグイン)"; }
         }
 
-        public string Author
-        {
-            get { return "tuyapin"; }
-        }
-
         public string Id
         {
             get { return "A69FD32C-BD6B-4C8B-A1A7-D33944CA6984"; }
