@@ -25,7 +25,7 @@ namespace Fireworks.Items
             {
                 if (this._View == null)
                     this._View = new BlockView();
-                return null;
+                return this._View;
             }
         }
 

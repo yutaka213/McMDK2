@@ -14,6 +14,11 @@ namespace McMDK2.Core.Plugin.Internal
     /// </summary>
     public class XmlBasePlugin : IPlugin
     {
+        public XmlBasePlugin()
+        {
+            this.Controls = new List<UIControl>();
+        }
+
         public string Name { set; get; }
 
         public string Version { set; get; }
@@ -37,6 +42,11 @@ namespace McMDK2.Core.Plugin.Internal
         /// plugin.xml Version
         /// </summary>
         public string XmlVersion { set; get; }
+
+        /// <summary>
+        /// "Template" or "Mod"
+        /// </summary>
+        public string Type { set; get; }
 
         public void Loaded() { }
 

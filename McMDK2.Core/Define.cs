@@ -79,7 +79,16 @@ namespace McMDK2.Core
         public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
 
 
-        public static readonly string UpdateVersionUrl = "https://api.tuyapin.net/mcmdk/2/latest";
+        private static readonly string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
+        public static readonly string ApiLogin = ApiEndPoint + "account/login.php";
+        public static readonly string ApiRegister = ApiEndPoint + "account/register.php";
+
+        public static readonly string ApiVersionsList = ApiEndPoint + "versions/list.php";
+        public static readonly string ApiForgeVerList = ApiEndPoint + "versions/all_versions/{0}";
+        public static readonly string ApiForgeRecommendedVerList = ApiEndPoint + "versions/recommended/{0}";
+
+
+        public static readonly string UpdateUrl = "http://tuyapin.net/mcmdk/update.xml";
 
         public static readonly string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
     }

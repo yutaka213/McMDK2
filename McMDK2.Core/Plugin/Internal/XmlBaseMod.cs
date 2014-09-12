@@ -23,5 +23,10 @@ namespace McMDK2.Core.Plugin.Internal
         public ModView View { set; get; }
 
         public string SourceFile { set; get; }
+
+        /// <summary>
+        /// mod.xml Version
+        /// </summary>
+        public string XmlVersion { set; get; }
     }
 }

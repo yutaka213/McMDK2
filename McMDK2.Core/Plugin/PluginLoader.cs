@@ -90,12 +90,15 @@ namespace McMDK2.Core.Plugin
         private class XmlBasePluginLoader
         {
             public List<IPlugin> plugins = new List<IPlugin>();
+            public List<IMod> mods = new List<IMod>();
+            public List<ITemplate> templates = new List<ITemplate>();
 
             public XmlBasePluginLoader()
             {
                 string[] xmls = FileController.GetLists(Define.PluginDirectory, true);
                 foreach (var xml in xmls)
                 {
+                    // McMDK Basic Template Folder.
                     if (xml.EndsWith("template"))
                     {
                         continue;
@@ -105,6 +108,8 @@ namespace McMDK2.Core.Plugin
                         continue;
                     }
 
+
+                    // IPlugin.cs
                     var a = from b in XElement.Load(xml + "\\plugin.xml").Elements()
                             select new XmlBasePlugin
                             {
@@ -115,7 +120,8 @@ namespace McMDK2.Core.Plugin
                                 Dependents = b.Element("Dependents").Value,
                                 IconPath = b.Element("IconPath").Value,
                                 Description = b.Element("Description").Value,
-                                XmlVersion = b.Element("XmlVersion").Value
+                                XmlVersion = b.Element("XmlVersion") == null ? "1.0" : b.Element("XmlVersion").Value,
+                                Type = b.Element("PluginType") == null ? "Mod" : b.Element("PluginType").Value
                             };
                     XmlBasePlugin xmlPlugin = null;
                     foreach (var item in a)
@@ -123,18 +129,48 @@ namespace McMDK2.Core.Plugin
                         xmlPlugin = item;
                     }
 
-                    SerializeXML(xmlPlugin, xml);
+                    // IMod.cs
+                    if (xmlPlugin.Type == "Mod")
+                    {
+                        // ui.xml
+                        SerializeXML(xmlPlugin, xml);
+
+                        // mod.xml
+                        var c = from d in XElement.Load(xml + "\\mod.xml").Elements()
+                                select new XmlBaseMod
+                                {
+                                    Name = d.Element("Name") == null ? xmlPlugin.Name : d.Element("Name").Value,
+                                    Version = d.Element("Version") == null ? xmlPlugin.Version : d.Element("Version").Value,
+                                    Id = d.Element("Id") == null ? xmlPlugin.Id : d.Element("Id").Value,
+                                    SourceFile = d.Element("SourceFile").Value,
+                                    XmlVersion = d.Element("XmlVersion") == null ? "1.0" : d.Element("XmlVersion").Value
+                                };
+                        XmlBaseMod xmlMod = null;
+                        foreach (var item in c)
+                        {
+                            xmlMod = item;
+                        }
+
+                        XmlBaseModView view = new XmlBaseModView(xmlPlugin.Controls);
+                        xmlMod.View = view;
+                        mods.Add(xmlMod);
+                    }
+
+                    // ITemplate.cs
+                    if (xmlPlugin.Type == "Template")
+                    {
+                        // template.xml
+                    }
                     plugins.Add(xmlPlugin);
                 }
             }
 
             private void SerializeXML(XmlBasePlugin plugin, string dir)
             {
-                if (!FileController.Exists(dir + "\\ui.xml"))
+                if (!FileController.Exists(dir + "//ui.xml"))
                 {
                     return;
                 }
-
                 try
                 {
                     var document = new XmlDocument();

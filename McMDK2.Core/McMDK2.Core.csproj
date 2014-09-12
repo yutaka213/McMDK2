@@ -63,6 +63,7 @@
     <Compile Include="Patcher.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
     <Compile Include="Plugin\Internal\XmlBaseMod.cs" />
+    <Compile Include="Plugin\Internal\XmlBaseModView.cs" />
     <Compile Include="Plugin\Internal\XmlBasePlugin.cs" />
     <Compile Include="Plugin\Internal\XmlBaseTemplate.cs" />
     <Compile Include="Plugin\ModItemManager.cs" />

@@ -10,8 +10,11 @@ namespace McMDK2.Plugin
     /// <summary>
     /// Mod作成時の編集画面の基本クラスです。
     /// </summary>
-    public partial class ModView : UserControl
+    public class ModView : UserControl
     {
+        /// <summary>
+        /// ＼( ・ٹ・)／
+        /// </summary>
         public ModView()
         {
             this.ModProperties = new Dictionary<string, object>();

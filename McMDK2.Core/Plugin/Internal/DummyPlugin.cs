@@ -27,17 +27,17 @@ namespace McMDK2.Core.Plugin.Internal
 
         public string Id
         {
-            get { return "McMDK.DummyPlugin"; }
+            get { return Guid.Empty.ToString(); }
         }
 
         public string Dependents
         {
-            get { return ""; }
+            get { return null; }
         }
 
         public string IconPath
         {
-            get { return ""; }
+            get { return null; }
         }
 
         public string Description
