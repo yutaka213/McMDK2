@@ -54,6 +54,20 @@ namespace McMDK2.Core.Plugin
                     PluginManager.Register(p);
                 }
             }
+            if (xmlPlugins.templates != null)
+            {
+                foreach (var p in xmlPlugins.templates)
+                {
+                    TemplateManager.Register(p);
+                }
+            }
+            if (xmlPlugins.mods != null)
+            {
+                foreach (var p in xmlPlugins.mods)
+                {
+                    ModItemManager.Register(p);
+                }
+            }
         }
 
         #region Assembly Base Plugin

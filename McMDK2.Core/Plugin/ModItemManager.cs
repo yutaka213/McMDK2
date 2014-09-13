@@ -34,7 +34,7 @@ namespace McMDK2.Core.Plugin
                     throw new Exception("既に同じIDをもつModが登録されています。 : " + mod.Id);
                 }
                 mods.Add(mod);
-                Define.GetLogger().Info(String.Format("Loading Mod : {0}({1]).", mod.Name, mod.Id));
+                Define.GetLogger().Info(String.Format("Loading Mod : {0}({1}).", mod.Name, mod.Id));
             }
             catch (Exception e)
             {
