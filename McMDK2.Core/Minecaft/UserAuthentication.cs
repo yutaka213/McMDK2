@@ -19,6 +19,9 @@ namespace McMDK2.Core.Minecaft
             this.Url = "";
         }
 
+        /// <summary>
+        /// パスワードを使って、Mojang Accountへログインします。
+        /// </summary>
         public UserProfile LoginWithPassword(string username, string password)
         {
             this.Url = "https://authserver.mojang.com/authenticate";
@@ -65,6 +68,9 @@ namespace McMDK2.Core.Minecaft
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// トークンが正常であるかを確認します。
+        /// </summary>
         public bool CheckTokenValidity(string clientToken, string accessToken)
         {
             this.Url = "https://authserver.mojang.com/validate";

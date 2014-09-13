@@ -16,6 +16,10 @@ namespace McMDK2.Core.Minecaft
 
         }
 
+        /// <summary>
+        /// UUIDからUserProfileを取得します。 <para />
+        /// 存在しないUUIDの場合、例外が投げられます。
+        /// </summary>
         public User GetUserProfileFromUUID(string uuid)
         {
             this.Url = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid;
@@ -31,6 +35,10 @@ namespace McMDK2.Core.Minecaft
             return user;
         }
 
+        /// <summary>
+        /// ユーザーネームからUserProfileを取得します。 <para />
+        /// 存在しないユーザーネームの場合、例外が投げられます。
+        /// </summary>
         public User GetUserProfileFromUsername(string username)
         {
             this.Url = "https://api.mojang.com/users/profiles/minecraft/" + username;
