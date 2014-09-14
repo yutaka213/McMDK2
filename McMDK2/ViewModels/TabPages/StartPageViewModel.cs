@@ -29,6 +29,7 @@ namespace McMDK2.ViewModels.TabPages
             this.Notifications = new ObservableCollection<Notification>();
             this.StatusMessage = "取得中...";
             this.Version = Define.Version;
+            this.IsLoading = true;
 
 #if DEBUG
             var p = new Project();
@@ -62,7 +63,6 @@ namespace McMDK2.ViewModels.TabPages
         {
             try
             {
-                this.IsLoading = false;
                 var client = new WebClient();
                 client.Encoding = Encoding.UTF8;
                 string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
