@@ -16,6 +16,7 @@ using Livet.Messaging.Windows;
 
 using McMDK2.Models;
 using McMDK2.Views.TabPages;
+using McMDK2.ViewModels.TabPages;
 
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -33,7 +34,7 @@ namespace McMDK2.ViewModels
         public void Initialize()
         {
             TabItem startPage = new TabItem { Header = "Start" };
-            startPage.Content = new StartPage();
+            startPage.Content = new StartPage() { DataContext = new StartPageViewModel(this) };
             this.Tabs.Add(startPage);
         }
 

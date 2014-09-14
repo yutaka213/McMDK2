@@ -22,8 +22,11 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class StartPageViewModel : ViewModel
     {
-        public StartPageViewModel()
+        private MainWindowViewModel MainWindowViewModel;
+
+        public StartPageViewModel(MainWindowViewModel main)
         {
+            this.MainWindowViewModel = main;
             this.BlogFeeds = new ObservableCollection<NewsFeeds>();
             this.RecentProjects = new ObservableCollection<Project>();
             this.Notifications = new ObservableCollection<Notification>();
@@ -238,6 +241,27 @@ namespace McMDK2.ViewModels.TabPages
         }
         #endregion
 
+
+        #region NewProjectCommand
+        private ViewModelCommand _NewProjectCommand;
+
+        public ViewModelCommand NewProjectCommand
+        {
+            get
+            {
+                if (_NewProjectCommand == null)
+                {
+                    _NewProjectCommand = new ViewModelCommand(NewProject);
+                }
+                return _NewProjectCommand;
+            }
+        }
+
+        public void NewProject()
+        {
+            this.MainWindowViewModel.NewWizard();
+        }
+        #endregion
 
     }
 }

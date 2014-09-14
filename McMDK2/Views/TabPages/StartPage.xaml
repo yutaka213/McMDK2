@@ -14,10 +14,6 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>    
-    
-    <UserControl.DataContext>
-        <vm:StartPageViewModel/>
-    </UserControl.DataContext>
 
     <i:Interaction.Triggers>
     </i:Interaction.Triggers>
@@ -65,7 +61,7 @@
                             <TextBlock Text="開始" FontSize="17" />
 
                             <TextBlock Margin="15,5,0,0">
-                                <Hyperlink>
+                                <Hyperlink Command="{Binding NewProjectCommand}">
                                     <Run FontSize="13" Text="新しいプロジェクト"/>
                                 </Hyperlink>
                             </TextBlock>
