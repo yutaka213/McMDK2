@@ -243,13 +243,13 @@ namespace McMDK2.Core.Plugin
                             {
                                 Background = StringToObjectConverter.StringToBrush(element.GetAttribute("Background")),
                                 /* FontFamiy */
-                                FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize")),
+                                FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"), -1.0),
                                 FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches)),
                                 FontStyle = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStyle"), typeof(FontStyles)),
                                 FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights)),
                                 Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground")),
                                 Padding = ParseMargin(element.GetAttribute("Padding")),
-                                LineHeight = StringToObjectConverter.StringTo<double>(element.GetAttribute("LineHeight")),
+                                LineHeight = StringToObjectConverter.StringTo<double>(element.GetAttribute("LineHeight"), -1.0),
                                 Text = element.GetAttribute("Text"),
                                 TextAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("TextAlignment"), typeof(TextAlignment)),
                                 TextDecorations = StringToObjectConverter.StringToProperty(element.GetAttribute("TextDecorations"), typeof(TextDecorations)),
@@ -264,7 +264,7 @@ namespace McMDK2.Core.Plugin
                                 // SelectableControl
                                 ItemsSource = element.GetAttribute("ItemsSource"),
                                 // EnterableControl
-                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired")),
+                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired"), false),
                                 Default = element.GetAttribute("Default"),
                                 // ContentControl
                                 Content = element.GetAttribute("Content")
@@ -276,7 +276,7 @@ namespace McMDK2.Core.Plugin
                             control = new EnterableControl(StringToObjectConverter.StringToComponents(node.Name))
                             {
                                 // EnterableControl
-                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired")),
+                                IsRequired = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsRequired"), false),
                                 Default = element.GetAttribute("Default"),
                                 // ContentControl
                                 Content = element.GetAttribute("Content")
@@ -330,7 +330,7 @@ namespace McMDK2.Core.Plugin
                         ((UIControlEx)control).BorderBrush = StringToObjectConverter.StringToBrush(element.GetAttribute("BorderBrush"));
                         ((UIControlEx)control).BorderThickess = ParseMargin(element.GetAttribute("BorderThickness"));
                         /* FontFamily */
-                        ((UIControlEx)control).FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"));
+                        ((UIControlEx)control).FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"), -1.0);
                         ((UIControlEx)control).FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches));
                         ((UIControlEx)control).FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights));
                         ((UIControlEx)control).Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground"));
@@ -341,19 +341,23 @@ namespace McMDK2.Core.Plugin
                     // Based on System.Windows.UIElement and System.Windows.FrameworkElement.
                     control.IsEnabled = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsEnabled"), true);
                     control.IsVisible = StringToObjectConverter.StringTo<bool>(element.GetAttribute("IsVisible"), true);
-                    control.Opacity = StringToObjectConverter.StringTo<double>(element.GetAttribute("Opacity"));
+                    control.Opacity = StringToObjectConverter.StringTo<double>(element.GetAttribute("Opacity"), -1.0);
                     control.Visibility = StringToObjectConverter.StringToEnum(element.GetAttribute("Visibility"), typeof(Visibility));
-                    control.Height = StringToObjectConverter.StringTo<double>(element.GetAttribute("Height"));
+                    control.Height = StringToObjectConverter.StringTo<double>(element.GetAttribute("Height"), -1.0);
                     control.HorizontalAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("HorizontalAlignment"), typeof(HorizontalAlignment));
                     control.Margin = ParseMargin(element.GetAttribute("Margin"));
                     control.Name = element.GetAttribute("Name");
                     control.ToolTip = element.GetAttribute("Tooltip");
                     control.VerticalAlignment = StringToObjectConverter.StringToEnum(element.GetAttribute("VerticalAlignment"), typeof(VerticalAlignment));
-                    control.Width = StringToObjectConverter.StringTo<double>(element.GetAttribute("Width"));
+                    control.Width = StringToObjectConverter.StringTo<double>(element.GetAttribute("Width"), -1.0);
 
                     if (parentControl is PanelControl)
                     {
                         ((PanelControl)parentControl).Children.Add(control);
+                    }
+                    if (parentControl is GroupBoxControl)
+                    {
+                        ((GroupBoxControl)parentControl).Children.Add(control);
                     }
                     RecursiveSerializeXML(node, control, dir);
                 }

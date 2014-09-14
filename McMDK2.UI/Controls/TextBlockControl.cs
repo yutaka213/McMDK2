@@ -26,7 +26,7 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// コントロールのフォントサイズを設定します。
         /// </summary>
-        public /*double*/object FontSize { set; get; }
+        public double FontSize { set; get; }
 
         /// <summary>
         /// コントロールのフォント収縮特性を設定します。
@@ -56,7 +56,7 @@ namespace McMDK2.UI.Controls
         /// <summary>
         /// テキストの行の高さを設定します。
         /// </summary>
-        public /*double*/object LineHeight { set; get; }
+        public double LineHeight { set; get; }
 
         /// <summary>
         /// テキストを設定します。

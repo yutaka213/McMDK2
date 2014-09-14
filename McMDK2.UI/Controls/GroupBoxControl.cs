@@ -16,6 +16,12 @@ namespace McMDK2.UI.Controls
         /// </summary>
         public string Header { set; get; }
 
-        public GroupBoxControl() : base(GuiComponents.GroupBox) { }
+        public List<UIControl> Children { set; get; }
+
+        public GroupBoxControl()
+            : base(GuiComponents.GroupBox)
+        {
+            this.Children = new List<UIControl>();
+        }
     }
 }

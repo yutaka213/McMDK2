@@ -13,6 +13,9 @@ namespace McMDK2.UI.Controls
     ///     <item>
     ///         <description>CheckBox</description>
     ///     </item>
+    ///     <item>
+    ///         <description>TextBox</description>
+    ///     </item>
     /// </list>
     /// </summary>
     public class EnterableControl : ContentControl
