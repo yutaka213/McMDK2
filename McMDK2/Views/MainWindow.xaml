@@ -200,9 +200,18 @@
                                     <TextBlock Padding="5,0,0,0" Text="{Binding Name}" />
                                 </StackPanel>
                                 <HierarchicalDataTemplate.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True" />
+                                            <Condition Binding="{Binding ItemType}" Value="Directory" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="ITEM_ICON" Property="Source" Value="/Resources/Folder_6221.png" />
+                                    </MultiDataTrigger>
+                                    <!--
                                     <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True">
                                         <Setter TargetName="ITEM_ICON" Property="Source" Value="/Resources/Folder_6221.png" />
                                     </DataTrigger>
+                                    -->
                                 </HierarchicalDataTemplate.Triggers>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>

@@ -31,6 +31,7 @@ namespace McMDK2
 
             // Checking Account Information
             // あくまで簡易的なもの
+#if !DEBUG
             #region MINECRAFT ACCOUNT CHECK
             string mcdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft"; /* %appdata%/.minecraft */
             if (!FileController.Exists(mcdir + "\\launcher_profiles.json"))
@@ -99,7 +100,7 @@ namespace McMDK2
                 Define.GetLogger().Info("Loggined : " + profile.Name);
             }
             #endregion
-
+#endif
             // Creating some directories.
             FileController.CreateDirectory(Define.AssetsDirectory);
             FileController.CreateDirectory(Define.CacheDirectory);
