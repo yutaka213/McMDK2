@@ -50,7 +50,7 @@
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewWizardCommand}"/>
         <KeyBinding Key="T" Modifiers="Control" />
-        <KeyBinding Key="O" Modifiers="Control" />
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenProjectCommand}"/>
     </Window.InputBindings>
 
     <DockPanel>

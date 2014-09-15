@@ -60,6 +60,7 @@
     <Compile Include="FileController.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="MetroDialogWrapper.cs" />
     <Compile Include="Minecaft\ApiService.cs" />
     <Compile Include="Minecaft\Authentication.cs" />
     <Compile Include="Minecaft\LegacyUserAuthentication.cs" />
@@ -88,6 +89,10 @@
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj">
+      <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
+      <Name>MahApps.Metro.NET45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\McMDK2.Plugin\McMDK2.Plugin.csproj">
       <Project>{98df5682-c721-45cb-804f-50409d3aff84}</Project>
       <Name>McMDK2.Plugin</Name>
