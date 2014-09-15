@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("McMDK2")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("tuyapin.net")]
 [assembly: AssemblyProduct("McMDK2")]
-[assembly: AssemblyCopyright("Copyright c  2011")]
+[assembly: AssemblyCopyright("Copyright (c) tuyapin 2012 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

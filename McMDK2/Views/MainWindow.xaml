@@ -48,7 +48,9 @@
     
     <!-- Keyborad Bindings -->
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control" />
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewWizardCommand}"/>
+        <KeyBinding Key="T" Modifiers="Control" />
+        <KeyBinding Key="O" Modifiers="Control" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -63,7 +65,8 @@
                               InputGestureText="Ctrl+T" />
                 </MenuItem>
                 <MenuItem Header="開く(_O)" TextOptions.TextFormattingMode="Display"
-                          InputGestureText="Ctrl+O" />
+                          InputGestureText="Ctrl+O"
+                          Command="{Binding OpenProjectCommand}"/>
                 <Separator />
                 <MenuItem Header="閉じる(_C)" TextOptions.TextFormattingMode="Display"
                           IsEnabled="{Binding IsLoadedProject}">

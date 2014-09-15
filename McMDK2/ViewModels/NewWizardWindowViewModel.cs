@@ -237,7 +237,7 @@ namespace McMDK2.ViewModels
             FileController.Rename(newProject.Path + "//" + root + ".mmproj", newProject.Path + "//" + newProject.Name + ".mmproj");
 
             var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
-            using (var sw = new StreamWriter(newProject.Path + "//project.json"))
+            using (var sw = new StreamWriter(newProject.Path + "//project.mdk") /* JSON FORMAT */)
             {
                 sw.WriteLine(json);
             }
@@ -275,7 +275,6 @@ namespace McMDK2.ViewModels
                         // FILE
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine(Path.GetExtension(path[i]));
                             cur.Add(new ProjectItem { Name = path[i], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[i])) });
                         }
                     }
@@ -287,8 +286,8 @@ namespace McMDK2.ViewModels
 
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 
-            var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => w.Header == "Start");
-            if(tab != null)
+            var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */ == "Start");
+            if (tab != null)
                 this.MainWindowViewModel.Tabs.Remove(tab);
         }
 

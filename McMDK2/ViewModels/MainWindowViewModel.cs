@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 using Livet;
 using Livet.Commands;
@@ -14,11 +16,18 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
+using McMDK2.Core;
+using McMDK2.Core.Data;
+using McMDK2.Core.Plugin;
 using McMDK2.Models;
 using McMDK2.Views.TabPages;
 using McMDK2.ViewModels.TabPages;
 
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace McMDK2.ViewModels
 {
@@ -57,6 +66,90 @@ namespace McMDK2.ViewModels
         public void NewWizard()
         {
             Messenger.Raise(new TransitionMessage(new NewWizardWindowViewModel(this), "ShowNewWizard"));
+        }
+        #endregion
+
+
+        #region OpenProjectCommand
+        private ViewModelCommand _OpenProjectCommand;
+
+        public ViewModelCommand OpenProjectCommand
+        {
+            get
+            {
+                if (_OpenProjectCommand == null)
+                {
+                    _OpenProjectCommand = new ViewModelCommand(OpenProject);
+                }
+                return _OpenProjectCommand;
+            }
+        }
+
+        public void OpenProject()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.FileName = "";
+            ofd.Filter = "McMDK Main Project File (*.mdk)|*.mdk";
+            if (ofd.ShowDialog() == true)
+            {
+                if (FileController.Exists(ofd.FileName))
+                {
+                    string file = ofd.FileName;
+                    string json = "";
+                    using (var sr = new StreamReader(file))
+                    {
+                        json = sr.ReadToEnd();
+                    }
+                    var obj = JsonConvert.DeserializeObject<Project>(json);
+                    obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
+
+                    // Loadin MINECRAFT MOD PROJECT(*.mmproj) file.
+                    var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
+                    var q = from p in element.Element("Items").Elements()
+                            select new
+                            {
+                                Inclue = p.Attribute("Include").Value
+                            };
+
+                    foreach (var item in q)
+                    {
+                        string[] path = item.Inclue.Split('\\');
+                        ObservableCollection<ProjectItem> cur = obj.Items;
+                        for (int i = 0; i < path.Length; i++)
+                        {
+                            if (path.Length - 1 == 0)
+                            {
+                                obj.Items.Add(new ProjectItem { Name = path[0], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[0])) });
+                            }
+                            else
+                            {
+                                if (i != path.Length - 1)
+                                {
+                                    if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                                    {
+                                        cur.Add(new ProjectItem { Name = path[i], ItemType = ItemType.Directory });
+                                    }
+                                    cur = cur.Single(w => w.Name == path[i]).Children;
+                                }
+                                else
+                                {
+                                    cur.Add(new ProjectItem { Name = path[i], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[i])) });
+                                }
+                            }
+                        }
+                    }
+
+                    this.CurrentProject = obj;
+
+                    var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
+                    if (tab != null)
+                        this.Tabs.Remove(tab);
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("ファイルを開けませんでした。");
+                }
+            }
         }
         #endregion
 
