@@ -11,9 +11,6 @@ namespace McMDK2.Core.Data
     {
         public string Name { set; get; }
 
-        [Obsolete("Use ProjectItem.FileType.")]
-        public ItemType ItemType { set; get; }
-
         public string FileType { set; get; }
 
         /* should be used ReadOnlyObservableCollection<ProjectItem> ? */
@@ -23,23 +20,5 @@ namespace McMDK2.Core.Data
         {
             this.Children = new ObservableCollection<ProjectItem>();
         }
-    }
-
-    [Obsolete]
-    public enum ItemType
-    {
-        Directory,
-
-        Mod,
-
-        Text,
-
-        Image,
-
-        Sound,
-
-        Definer,
-
-        Designer
     }
 }

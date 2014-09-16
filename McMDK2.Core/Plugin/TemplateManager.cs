@@ -31,12 +31,6 @@ namespace McMDK2.Core.Plugin
             return templates.Single(w => w.Id == id);
         }
 
-        [Obsolete]
-        public static ItemType GetItemTypeFromExtension(string ext)
-        {
-            return ItemType.Text;
-        }
-
         public static void Register(ITemplate template)
         {
             if (templates.Where(w => w.Id == template.Id).ToArray().Length != 0)
@@ -45,12 +39,6 @@ namespace McMDK2.Core.Plugin
             }
             templates.Add(template);
             Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
-        }
-
-        [Obsolete]
-        public static void RegisterExtension(string ext, ItemType type)
-        {
-
         }
     }
 }
