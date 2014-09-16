@@ -263,5 +263,27 @@ namespace McMDK2.ViewModels.TabPages
         }
         #endregion
 
+
+        #region OpenProjectCommand
+        private ViewModelCommand _OpenProjectCommand;
+
+        public ViewModelCommand OpenProjectCommand
+        {
+            get
+            {
+                if (_OpenProjectCommand == null)
+                {
+                    _OpenProjectCommand = new ViewModelCommand(OpenProject);
+                }
+                return _OpenProjectCommand;
+            }
+        }
+
+        public void OpenProject()
+        {
+            this.MainWindowViewModel.OpenProject();
+        }
+        #endregion
+
     }
 }

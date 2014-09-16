@@ -66,7 +66,7 @@
                                 </Hyperlink>
                             </TextBlock>
                             <TextBlock Margin="15,5,0,0">
-                                <Hyperlink>
+                                <Hyperlink Command="{Binding OpenProjectCommand}">
                                     <Run FontSize="13" Text="既存のプロジェクト"/>
                                 </Hyperlink>
                             </TextBlock>
