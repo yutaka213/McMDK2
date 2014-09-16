@@ -10,10 +10,13 @@ using McMDK2.Core.Data;
 
 namespace McMDK2.Core.Plugin
 {
+    /// <summary>
+    /// テンプレートを管理するクラスです。<para />
+    /// ITemplate もしくは XML BASE PLUGIN の PluginType = Template の場合、このクラスで管理されます。
+    /// </summary>
     public class TemplateManager
     {
         private static List<ITemplate> templates = new List<ITemplate>();
-        private static Dictionary<string, ItemType> exts = new Dictionary<string, ItemType>();
 
         public static IEnumerable<ITemplate> Templates
         {
@@ -28,9 +31,10 @@ namespace McMDK2.Core.Plugin
             return templates.Single(w => w.Id == id);
         }
 
+        [Obsolete]
         public static ItemType GetItemTypeFromExtension(string ext)
         {
-            return exts[ext];
+            return ItemType.Text;
         }
 
         public static void Register(ITemplate template)
@@ -43,13 +47,10 @@ namespace McMDK2.Core.Plugin
             Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
         }
 
+        [Obsolete]
         public static void RegisterExtension(string ext, ItemType type)
         {
-            if (exts.ContainsKey(ext))
-                return;
 
-            exts.Add("." + ext, type);
-            Define.GetLogger().Info(String.Format("Register Extension : {0}({1}).", ext, type));
         }
     }
 }

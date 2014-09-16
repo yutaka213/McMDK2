@@ -73,7 +73,8 @@
     <Compile Include="Plugin\Internal\XmlBaseModView.cs" />
     <Compile Include="Plugin\Internal\XmlBasePlugin.cs" />
     <Compile Include="Plugin\Internal\XmlBaseTemplate.cs" />
-    <Compile Include="Plugin\ModItemManager.cs" />
+    <Compile Include="Plugin\ItemManager.cs" />
+    <Compile Include="Plugin\ModManager.cs" />
     <Compile Include="Plugin\PluginLoader.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Plugin\TemplateManager.cs" />

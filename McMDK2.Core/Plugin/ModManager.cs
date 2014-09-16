@@ -8,7 +8,11 @@ using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin
 {
-    public class ModItemManager
+    /// <summary>
+    /// Mod を管理するクラスです。 <para />
+    /// IMod もしくは XML BASE PLUGIN の PluginType = Mod(Default) の場合、このクラスで管理されます。
+    /// </summary>
+    public class ModManager
     {
         private static List<IMod> mods = new List<IMod>();
 
@@ -20,7 +24,7 @@ namespace McMDK2.Core.Plugin
             }
         }
 
-        public static IMod GetModItemFromName(string name)
+        public static IMod GetModFromName(string name)
         {
             return mods.Single(w => w.Name == name);
         }
@@ -34,7 +38,7 @@ namespace McMDK2.Core.Plugin
                     throw new Exception("既に同じIDをもつModが登録されています。 : " + mod.Id);
                 }
                 mods.Add(mod);
-                Define.GetLogger().Info(String.Format("Loading Mod : {0}({1}).", mod.Name, mod.Id));
+                Define.GetLogger().Info(String.Format("Register Mod : {0}({1}).", mod.Name, mod.Id));
             }
             catch (Exception e)
             {

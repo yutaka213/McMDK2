@@ -42,7 +42,7 @@ namespace McMDK2.Core.Plugin
             {
                 foreach (var p in asmPlugins.mods)
                 {
-                    ModItemManager.Register(p);
+                    ModManager.Register(p);
                 }
             }
 
@@ -65,7 +65,7 @@ namespace McMDK2.Core.Plugin
             {
                 foreach (var p in xmlPlugins.mods)
                 {
-                    ModItemManager.Register(p);
+                    ModManager.Register(p);
                 }
             }
         }

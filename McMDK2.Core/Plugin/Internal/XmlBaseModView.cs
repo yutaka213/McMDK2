@@ -50,7 +50,7 @@ namespace McMDK2.Core.Plugin.Internal
                 var c = this.CreateControl(innerControl.Component);
                 this.Decorate(c, innerControl);
 
-                if (innerControl is PanelControl)/* Havve children controls. */
+                if (innerControl is PanelControl)/* Have children controls. */
                     this.RecursiveBuild(c, (PanelControl)innerControl);
 
                 if (innerControl is GroupBoxControl)/* Have child control. */
@@ -67,7 +67,7 @@ namespace McMDK2.Core.Plugin.Internal
                 var c = this.CreateControl(innerControl.Component);
                 this.Decorate(c, innerControl);
 
-                if (innerControl is PanelControl)/* Havve children controls. */
+                if (innerControl is PanelControl)/* Have children controls. */
                     this.RecursiveBuild(c, (PanelControl)innerControl);
 
                 if (innerControl is GroupBoxControl)/* Have child control. */
@@ -160,8 +160,7 @@ namespace McMDK2.Core.Plugin.Internal
 
         private void DecorateUIControl(FrameworkElement element, UIControl control)
         {
-            if (control.IsEnabled != null)
-                element.IsEnabled = control.IsEnabled;
+            element.IsEnabled = control.IsEnabled;
 
             // readonly
             //if (control.IsVisible != null)

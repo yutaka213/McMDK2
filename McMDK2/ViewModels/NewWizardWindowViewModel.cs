@@ -258,7 +258,7 @@ namespace McMDK2.ViewModels
                 {
                     if (path.Length - 1 == 0)
                     {
-                        newProject.Items.Add(new ProjectItem { Name = path[0], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[0])) });
+                        newProject.Items.Add(new ProjectItem { Name = path[0], FileType = ItemManager.GetItemTypeFromExtension(Path.GetExtension(path[0])) });
                     }
                     else
                     {
@@ -268,14 +268,14 @@ namespace McMDK2.ViewModels
                             // nf directory
                             if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
                             {
-                                cur.Add(new ProjectItem { Name = path[i], ItemType = ItemType.Directory });
+                                cur.Add(new ProjectItem { Name = path[i], FileType = "Directory" });
                             }
                             cur = cur.Single(w => w.Name == path[i]).Children;
                         }
                         // FILE
                         else
                         {
-                            cur.Add(new ProjectItem { Name = path[i], ItemType = TemplateManager.GetItemTypeFromExtension(Path.GetExtension(path[i])) });
+                            cur.Add(new ProjectItem { Name = path[i], FileType = ItemManager.GetItemTypeFromExtension(Path.GetExtension(path[i])) });
                         }
                     }
                 }

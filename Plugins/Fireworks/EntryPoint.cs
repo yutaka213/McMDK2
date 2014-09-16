@@ -61,6 +61,7 @@ namespace Fireworks
             TemplateManager.Register(new ServerTemplate());
 
             //拡張子の登録
+            /*
             TemplateManager.RegisterExtension("png", ItemType.Image);
             TemplateManager.RegisterExtension("ogg", ItemType.Sound);
             TemplateManager.RegisterExtension("txt", ItemType.Text);
@@ -69,6 +70,8 @@ namespace Fireworks
             TemplateManager.RegisterExtension("java", ItemType.Text);
             TemplateManager.RegisterExtension("definer", ItemType.Definer);
             TemplateManager.RegisterExtension("designer", ItemType.Designer);
+             */
+            // Moved to McMDK2.exe
         }
 
         public void Updated() { }

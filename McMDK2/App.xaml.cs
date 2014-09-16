@@ -108,6 +108,16 @@ namespace McMDK2
             FileController.CreateDirectory(Define.PluginDirectory);
             FileController.CreateDirectory(Define.ProjectsDirectory);
 
+            // Register Defaults
+            ItemManager.Register("png", "Image", null, "pack://application:,,,/Resources/Image_24x.png");
+            ItemManager.Register("ogg", "Sound", null, "pack://application:,,,/Resources/Soundfile_461.png");
+            ItemManager.Register("txt", "Text", null, "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.Register("lang", "Text", null, "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.Register("json", "Text", null, "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.Register("java", "Java", null, "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.Register("", "Directory", null, "pack://application:,,,/Resources/Folder_6222.png");
+
+
             // Load Plugins from PluginDirectory.
             PluginLoader.Load();
 

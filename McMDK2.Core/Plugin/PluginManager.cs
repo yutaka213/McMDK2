@@ -8,6 +8,10 @@ using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin
 {
+    /// <summary>
+    /// プラグイン全般を管理するクラスです.
+    /// IPlugin もしくは XML BASE PLUGIN の エントリーポイントクラス は、全てこのクラスで管理されます。
+    /// </summary>
     public class PluginManager
     {
         private static List<IPlugin> plugins = new List<IPlugin>();

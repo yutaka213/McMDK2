@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMod.cs" />
+    <Compile Include="ItemView.cs" />
     <Compile Include="ModView.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="ITemplate.cs" />
