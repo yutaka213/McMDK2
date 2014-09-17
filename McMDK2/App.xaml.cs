@@ -108,6 +108,10 @@ namespace McMDK2
             FileController.CreateDirectory(Define.PluginDirectory);
             FileController.CreateDirectory(Define.ProjectsDirectory);
 
+            // Default
+            ItemManager.RegisterExtension("mod", "Mod", null);
+            ItemManager.RegisterIcon("Mod", "pack://application:,,,/Resources/ASCube_16xLG.png");
+
             // Load Plugins from PluginDirectory.
             PluginLoader.Load();
 

@@ -72,6 +72,7 @@ namespace Fireworks
             ItemManager.RegisterExtension("xml", "XML FILE", null);
             ItemManager.RegisterExtension("page", "HTML PAGE", null);
             ItemManager.RegisterExtension("html", "HTML PAGE", null);
+            ItemManager.RegisterExtension("js", "JAVASCRIPT", null);
             ItemManager.RegisterExtension("", "DIRECTORY", null);
 
             ItemManager.RegisterIcon("IMAGE", this.Id + ";Fireworks.Resources.Image_24x.png");
@@ -82,6 +83,7 @@ namespace Fireworks
             ItemManager.RegisterIcon("JAR FILE", this.Id + ";Fireworks.Resources.JARFile_464.png");
             ItemManager.RegisterIcon("XML FILE", this.Id + ";Fireworks.Resources.XMLFile_828_16x.png");
             ItemManager.RegisterIcon("HTML PAGE", this.Id + ";Fireworks.Resources.HTMLPage(HTM)_825_16x_color.png");
+            ItemManager.RegisterIcon("JAVASCRIPT", this.Id + ";Fireworks.Resources.LanguageOverlay_JS_32xSM.png");
             ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
         }
 

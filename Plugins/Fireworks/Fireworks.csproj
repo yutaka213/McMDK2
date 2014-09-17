@@ -82,6 +82,8 @@
   <ItemGroup>
     <Content Include="Items\Readme.txt" />
     <Content Include="Readme.txt" />
+    <EmbeddedResource Include="Resources\ASCube_16xLG.png" />
+    <EmbeddedResource Include="Resources\LanguageOverlay_JS_32xSM.png" />
     <EmbeddedResource Include="Resources\Contract_16xLG.png" />
     <EmbeddedResource Include="Resources\Contract_32xLG.png" />
     <EmbeddedResource Include="Resources\document_16xLG.png" />
@@ -95,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="ItemViewers\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Items\Views\BlockView.xaml">

@@ -158,6 +158,8 @@
     </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
+    <Resource Include="Resources\ASCube_16xLG.png" />
+    <Resource Include="Resources\minecraft.png" />
     <Resource Include="Resources\Content_6017.png" />
     <Resource Include="Resources\Folder_6221.png" />
     <Resource Include="Resources\Folder_6222.png" />
