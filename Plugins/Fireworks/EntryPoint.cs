@@ -61,17 +61,19 @@ namespace Fireworks
             TemplateManager.Register(new ServerTemplate());
 
             //拡張子の登録
-            /*
-            TemplateManager.RegisterExtension("png", ItemType.Image);
-            TemplateManager.RegisterExtension("ogg", ItemType.Sound);
-            TemplateManager.RegisterExtension("txt", ItemType.Text);
-            TemplateManager.RegisterExtension("lang", ItemType.Text);
-            TemplateManager.RegisterExtension("json", ItemType.Mod);
-            TemplateManager.RegisterExtension("java", ItemType.Text);
-            TemplateManager.RegisterExtension("definer", ItemType.Definer);
-            TemplateManager.RegisterExtension("designer", ItemType.Designer);
-             */
-            // Moved to McMDK2.exe
+            ItemManager.RegisterExtension("png", "IMAGE", null);
+            ItemManager.RegisterExtension("ogg", "SOUND", null);
+            ItemManager.RegisterExtension("txt", "PLAIN TEXT", null);
+            ItemManager.RegisterExtension("lang", "PROPERTIES", null);
+            ItemManager.RegisterExtension("properties", "PROPERTIES", null);
+            ItemManager.RegisterExtension("json", "JAVASCRIPT OBJECT NOTATION", null);
+            ItemManager.RegisterExtension("java", "JAVA SOURCE FILE", null);
+            ItemManager.RegisterExtension("", "DIRECTORY", null);
+
+            ItemManager.RegisterIcon("IMAGE", "pack://application:,,,/Resources/Image_24x.png");
+            ItemManager.RegisterIcon("SOUND", "pack://application:,,,/Resources/Soundfile_461.png");
+            ItemManager.RegisterIcon("PLAIN TEXT", "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
         }
 
         public void Updated() { }

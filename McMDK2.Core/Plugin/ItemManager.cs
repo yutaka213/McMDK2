@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
+using McMDK2.Plugin;
+
 namespace McMDK2.Core.Plugin
 {
     /// <summary>
@@ -13,62 +15,55 @@ namespace McMDK2.Core.Plugin
     /// </summary>
     public class ItemManager
     {
-        // items(Extension(Including dot '.', Identifier, Object Viewer, Item Icon). 
-        private static Dictionary<string, Tuple<string, object/* Interim */, string>> items = new Dictionary<string, Tuple<string, object, string>>();
+        // exts(Extension(Including dot '.'.), Identifier);
+        private static Dictionary<string, string> exts = new Dictionary<string, string>();
 
+        // icons(Identifier, Icon Path(Abs));
+        private static Dictionary<string, string> icons = new Dictionary<string, string>();
 
-        /// <summary>
-        /// 拡張子から、その拡張子に対応したアイテムタイプ(識別子)を取得します。
-        /// </summary>
-        public static string GetItemTypeFromExtension(string extension)
+        // viewers(Extension(Including dot '.'), View( is McMDK2.Plugin.ItemView))
+        private static Dictionary<string, ItemView> viewers = new Dictionary<string, ItemView>();
+
+        public static string GetIdentifierFromExtension(string extension)
         {
-            if (!items.ContainsKey(extension))
+            if (!exts.ContainsKey(extension))
                 return null;
-            var item = items[extension];
-            return item.Item1;
+            return exts[extension];
         }
 
-        /// <summary>
-        /// 拡張子から、その拡張子に対応したビューワーを取得します。
-        /// </summary>
-        public static object/* Interim */ GetItemViewerFromExtension(string extension)
+        public static ItemView GetItemViewFromExtension(string extension)
         {
-            if (!items.ContainsKey(extension))
+            if (!viewers.ContainsKey(extension))
                 return null;
-            var item = items[extension];
-            return item.Item2;
+            return viewers[extension];
         }
 
-        /// <summary>
-        /// 拡張子から、その拡張子に対応したアイコンを取得します。
-        /// </summary>
-        public static string GetIconFromExtension(string extension)
-        {
-            if (!items.ContainsKey(extension))
-                return null;
-            var item = items[extension];
-            return item.Item3;
-        }
-
-        /// <summary>
-        /// 識別子から、その識別子に対応したアイコンを取得します。
-        /// </summary>
         public static string GetIconFromIdentifier(string identifier)
         {
-            var item = items.Where(w => w.Value.Item1 == identifier).ToArray();
-            if (item.Length >= 1)
-                return item[0].Value.Item3;
-            return null;
+            if (!icons.ContainsKey(identifier))
+                return null;
+            return icons[identifier];
         }
 
-        /// <summary>
-        /// 拡張子を登録します。
-        /// </summary>
-        public static void Register(string extension, string identifier, object viewer, string iconpath)
+        public static void RegisterExtension(string extension, string identifier, ItemView viewer)
         {
-            var tuple = new Tuple<string, object, string>(identifier, viewer, iconpath);
-            items.Add("." + extension, tuple);
-            Define.GetLogger().Info(String.Format("Register Extension : {0}(IDENTIFIER:{1}, VIEWER:{2}, ICONPATH:{3})", extension, identifier, viewer, iconpath));
+            if (exts.ContainsKey(extension))
+            {
+                Define.GetLogger().Info(String.Format("\"{0}\" is already registered.", extension));
+                return;
+            }
+            extension = "." + extension;
+            exts.Add(extension, identifier);
+            viewers.Add(extension, viewer);
+        }
+
+        public static void RegisterIcon(string identifier, string iconpath)
+        {
+            if (icons.ContainsKey(identifier))
+            {
+                Define.GetLogger().Info(String.Format("\"{0}\" is already registered.", identifier));
+            }
+            icons.Add(identifier, iconpath);
         }
     }
 }

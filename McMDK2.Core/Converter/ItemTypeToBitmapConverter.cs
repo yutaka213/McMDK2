@@ -19,12 +19,18 @@ namespace McMDK2.Core.Converter
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
 
-            string iconPath = ItemManager.GetIconFromIdentifier(identifier);
-            if (String.IsNullOrEmpty(iconPath))
-                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Content_6017.png");
+            if (!String.IsNullOrEmpty(identifier))
+            {
+                string iconPath = ItemManager.GetIconFromIdentifier(identifier);
+                if (String.IsNullOrEmpty(iconPath))
+                    bitmap.UriSource = new Uri("pack://application:,,,/Resources/Content_6017.png");
+                else
+                    bitmap.UriSource = new Uri(iconPath);
+            }
             else
-                bitmap.UriSource = new Uri(iconPath);
-
+            {
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Content_6017.png");
+            }
             bitmap.EndInit();
             return bitmap;
         }
