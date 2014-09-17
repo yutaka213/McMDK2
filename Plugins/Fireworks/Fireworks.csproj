@@ -80,11 +80,18 @@
     <EmbeddedResource Include="Templates\StandardTemplate.zip" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Contract_32xLG.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Items\Readme.txt" />
     <Content Include="Readme.txt" />
+    <EmbeddedResource Include="Resources\Contract_16xLG.png" />
+    <EmbeddedResource Include="Resources\Contract_32xLG.png" />
+    <EmbeddedResource Include="Resources\document_16xLG.png" />
+    <EmbeddedResource Include="Resources\HTMLPage%28HTM%29_825_16x_color.png" />
+    <EmbeddedResource Include="Resources\Image_24x.png" />
+    <EmbeddedResource Include="Resources\JARFile_464.png" />
+    <EmbeddedResource Include="Resources\ScriptFile_452.png" />
+    <EmbeddedResource Include="Resources\Soundfile_461.png" />
+    <EmbeddedResource Include="Resources\Textfile_818_16x.png" />
+    <EmbeddedResource Include="Resources\XMLFile_828_16x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />

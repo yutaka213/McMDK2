@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -25,7 +26,16 @@ namespace McMDK2.Core.Converter
                 if (String.IsNullOrEmpty(iconPath))
                     bitmap.UriSource = new Uri("pack://application:,,,/Resources/Content_6017.png");
                 else
-                    bitmap.UriSource = new Uri(iconPath);
+                {
+                    if (iconPath.Contains(";"))
+                    {
+                        string[] path = iconPath.Split(';');
+                        var plugin = PluginManager.GetPluginFromId(path[0]);
+                        bitmap.StreamSource = Assembly.GetAssembly(plugin.GetType()).GetManifestResourceStream(path[1]);
+                    }
+                    else
+                        bitmap.UriSource = new Uri(iconPath);
+                }
             }
             else
             {

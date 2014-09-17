@@ -66,13 +66,22 @@ namespace Fireworks
             ItemManager.RegisterExtension("txt", "PLAIN TEXT", null);
             ItemManager.RegisterExtension("lang", "PROPERTIES", null);
             ItemManager.RegisterExtension("properties", "PROPERTIES", null);
-            ItemManager.RegisterExtension("json", "JAVASCRIPT OBJECT NOTATION", null);
-            ItemManager.RegisterExtension("java", "JAVA SOURCE FILE", null);
+            ItemManager.RegisterExtension("json", "SCRIPT FILE", null);
+            ItemManager.RegisterExtension("java", "SCRIPT FILE", null);
+            ItemManager.RegisterExtension("jar", "JAR FILE", null);
+            ItemManager.RegisterExtension("xml", "XML FILE", null);
+            ItemManager.RegisterExtension("page", "HTML PAGE", null);
+            ItemManager.RegisterExtension("html", "HTML PAGE", null);
             ItemManager.RegisterExtension("", "DIRECTORY", null);
 
-            ItemManager.RegisterIcon("IMAGE", "pack://application:,,,/Resources/Image_24x.png");
-            ItemManager.RegisterIcon("SOUND", "pack://application:,,,/Resources/Soundfile_461.png");
-            ItemManager.RegisterIcon("PLAIN TEXT", "pack://application:,,,/Resources/Textfile_818_16x.png");
+            ItemManager.RegisterIcon("IMAGE", this.Id + ";Fireworks.Resources.Image_24x.png");
+            ItemManager.RegisterIcon("SOUND", this.Id + ";Fireworks.Resources.Soundfile_461.png");
+            ItemManager.RegisterIcon("PLAIN TEXT", this.Id + ";Fireworks.Resources.Textfile_818_16x.png");
+            ItemManager.RegisterIcon("PROPERTIES", this.Id + ";Fireworks.Resources.document_16xLG.png");
+            ItemManager.RegisterIcon("SCRIPT FILE", this.Id + ";Fireworks.Resources.ScriptFile_452.png");
+            ItemManager.RegisterIcon("JAR FILE", this.Id + ";Fireworks.Resources.JARFile_464.png");
+            ItemManager.RegisterIcon("XML FILE", this.Id + ";Fireworks.Resources.XMLFile_828_16x.png");
+            ItemManager.RegisterIcon("HTML PAGE", this.Id + ";Fireworks.Resources.HTMLPage(HTM)_825_16x_color.png");
             ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
         }
 

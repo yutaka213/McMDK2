@@ -158,12 +158,9 @@
     </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
-    <Resource Include="Resources\Soundfile_461.png" />
-    <Resource Include="Resources\Textfile_818_16x.png" />
     <Resource Include="Resources\Content_6017.png" />
     <Resource Include="Resources\Folder_6221.png" />
     <Resource Include="Resources\Folder_6222.png" />
-    <Resource Include="Resources\Image_24x.png" />
     <Resource Include="Resources\arrow_run_16xLG.png" />
     <Resource Include="Resources\Saveall_6518.png" />
     <Resource Include="Resources\Paste_6520.png" />

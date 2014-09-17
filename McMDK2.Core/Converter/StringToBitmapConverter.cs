@@ -21,6 +21,8 @@ namespace McMDK2.Core.Converter
             var image = new BitmapImage();
             image.BeginInit();
 
+            System.Diagnostics.Debug.WriteLine(imagepath);
+
             if (imagepath.Split(';').Length == 2)
             {
                 string[] path = imagepath.Split(';');
