@@ -79,16 +79,16 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock>
+                                            <TextBlock Margin="0,5,0,0">
                                                 <Hyperlink>
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
                                                             <l:LivetCallMethodAction MethodTarget="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                                     MethodName="OpenUrl"
-                                                                                     MethodParameter="{Binding Path}" />
+                                                                                     MethodName="OpenRecentProject"
+                                                                                     MethodParameter="{Binding}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                    <Run Text="{Binding Name}" />
+                                                    <Run Text="{Binding Name}" FontSize="13" />
                                                 </Hyperlink>
                                             </TextBlock>
                                         </Grid>

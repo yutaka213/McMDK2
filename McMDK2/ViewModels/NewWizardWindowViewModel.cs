@@ -299,6 +299,7 @@ namespace McMDK2.ViewModels
 
             this.MainWindowViewModel.IsLoadedProject = true;
             this.MainWindowViewModel.CurrentProject = newProject;
+            this.MainWindowViewModel.RecentProjects.Add(newProject);
 
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 

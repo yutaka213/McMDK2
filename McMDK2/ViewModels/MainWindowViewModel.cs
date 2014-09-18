@@ -33,11 +33,26 @@ namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        public ApplicationInternalSettings internalSettings;
+
         public MainWindowViewModel()
         {
             this.Tabs = new ObservableCollection<TabItem>();
+            this.RecentProjects = new ObservableCollection<Project>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
+
+            if (this.internalSettings == null)
+            {
+                this.internalSettings = new ApplicationInternalSettings();
+            }
+
+            this.internalSettings.Reload();
+            foreach (var item in this.internalSettings.RecentProjects)
+            {
+                if (item != null)
+                    this.RecentProjects.Add(item);
+            }
         }
 
         public void Initialize()
@@ -45,6 +60,21 @@ namespace McMDK2.ViewModels
             TabItem startPage = new TabItem { Header = "Start" };
             startPage.Content = new StartPage() { DataContext = new StartPageViewModel(this) };
             this.Tabs.Add(startPage);
+        }
+
+        public void Uninitialize()
+        {
+            this.RecentProjects.Reverse();
+            Project[] items = new Project[5];
+            int length = this.RecentProjects.Count >= 5 ? 5 : this.RecentProjects.Count;
+            Define.GetLogger().Debug(length);
+            for (int i = 0; i < length; i++)
+            {
+                items[i] = this.RecentProjects[i];
+            }
+
+            this.internalSettings.RecentProjects = items;
+            this.internalSettings.Save();
         }
 
 
@@ -104,7 +134,7 @@ namespace McMDK2.ViewModels
                     obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
                     string rootpath = obj.Path + "\\";
 
-                    // Loadin MINECRAFT MOD PROJECT(*.mmproj) file.
+                    // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
                     var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
                     var q = from p in element.Element("Items").Elements()
                             select new
@@ -159,6 +189,8 @@ namespace McMDK2.ViewModels
                     var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
                     if (tab != null)
                         this.Tabs.Remove(tab);
+
+                    this.RecentProjects.Add(obj);
                 }
                 else
                 {
@@ -309,6 +341,25 @@ namespace McMDK2.ViewModels
             }
         }
         #endregion
+
+
+        #region RecentProjects変更通知プロパティ
+        private ObservableCollection<Project> _RecentProjects;
+
+        public ObservableCollection<Project> RecentProjects
+        {
+            get
+            { return _RecentProjects; }
+            set
+            {
+                if (_RecentProjects == value)
+                    return;
+                _RecentProjects = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
     }
 }

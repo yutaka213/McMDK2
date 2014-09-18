@@ -27,6 +27,9 @@
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
         </i:EventTrigger>
+        <i:EventTrigger EventName="Closing">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Uninitialize" />
+        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>

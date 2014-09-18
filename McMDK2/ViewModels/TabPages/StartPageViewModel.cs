@@ -18,6 +18,8 @@ using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Models;
 
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 namespace McMDK2.ViewModels.TabPages
 {
     public class StartPageViewModel : ViewModel
@@ -34,11 +36,9 @@ namespace McMDK2.ViewModels.TabPages
             this.Version = Define.Version;
             this.IsLoading = true;
 
-#if DEBUG
-            var p = new Project();
-            p.Name = "Sample Project";
+            this.RecentProjects = this.MainWindowViewModel.RecentProjects;
 
-            this.RecentProjects.Add(p);
+#if DEBUG
 
             var n = new Notification();
             n.NotificationText = "最新版(2.0.0.26)が公開されています。";
@@ -219,6 +219,35 @@ namespace McMDK2.ViewModels.TabPages
         }
         #endregion
 
+        #region OpenRecentProject
+
+        public void OpenRecentProject(Project parameter)
+        {
+            if (FileController.Exists(parameter.Path + "\\" + parameter.Name + ".mmproj"))
+            {
+                this.MainWindowViewModel.CurrentProject = parameter;
+                var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
+                if (tab != null)
+                    this.MainWindowViewModel.Tabs.Remove(tab);
+
+            }
+            else
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "Error";
+                taskDialog.InstructionText = "プロジェクトファイルを読み込めませんでした。";
+                taskDialog.Text = "プロジェクトファイル(*.mmproj)を見つけることができなかったか、ファイルフォーマットが正常でない可能性があります。";
+                taskDialog.Icon = TaskDialogStandardIcon.Error;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.Opened += (_sender, _e) =>
+                {
+                    ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                };
+                taskDialog.Show();
+            }
+        }
+
+        #endregion
 
         #region UpdateCommand
         private ViewModelCommand _UpdateCommand;
