@@ -9,6 +9,7 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:Data="clr-namespace:McMDK2.Core.Data;assembly=McMDK2.Core"
                       xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
+                      xmlns:Behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
                       Title="McMDK BETA"
                       Height="820" Width="1350"
                       TitleCaps="False"
@@ -194,6 +195,12 @@
                           Background="{DynamicResource WindowGlowBrush}"
                           BorderBrush="{DynamicResource WindowTitleForeground}">
                     <TreeView ItemsSource="{Binding CurrentProject.Items, Mode=TwoWay}">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MetroTreeViewItem}">
+                                <Setter Property="Behaviors:MouseDoubleClickBehavior.Command" Value="{Binding DataContext.MouseDoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
+                                <Setter Property="Behaviors:MouseDoubleClickBehavior.CommandParameter" Value="{Binding}" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">
                                 <StackPanel Orientation="Horizontal">
@@ -210,11 +217,6 @@
                                         </MultiDataTrigger.Conditions>
                                         <Setter TargetName="ITEM_ICON" Property="Source" Value="/Resources/Folder_6221.png" />
                                     </MultiDataTrigger>
-                                    <!--
-                                    <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True">
-                                        <Setter TargetName="ITEM_ICON" Property="Source" Value="/Resources/Folder_6221.png" />
-                                    </DataTrigger>
-                                    -->
                                 </HierarchicalDataTemplate.Triggers>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>

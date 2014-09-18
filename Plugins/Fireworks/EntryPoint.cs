@@ -57,9 +57,11 @@ namespace Fireworks
         {
             //テンプレートの登録
             TemplateManager.Register(new StandardTemplate());
-            TemplateManager.Register(new BukkitTemplate());
-            TemplateManager.Register(new ServerTemplate());
-
+#if DEBUG
+            TemplateManager.Register(new TestTemplate());
+#endif
+            //TemplateManager.Register(new BukkitTemplate());
+            //TemplateManager.Register(new ServerTemplate());
             //拡張子の登録
             ItemManager.RegisterExtension("png", "IMAGE", null);
             ItemManager.RegisterExtension("ogg", "SOUND", null);

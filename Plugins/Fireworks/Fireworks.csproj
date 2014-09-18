@@ -65,6 +65,7 @@
     <Compile Include="Templates\BukkitTemplate.cs" />
     <Compile Include="Templates\ServerTemplate.cs" />
     <Compile Include="Templates\StandardTemplate.cs" />
+    <Compile Include="Templates\TestTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\McMDK2.Core\McMDK2.Core.csproj">
@@ -82,6 +83,7 @@
   <ItemGroup>
     <Content Include="Items\Readme.txt" />
     <Content Include="Readme.txt" />
+    <EmbeddedResource Include="Resources\application_32xLG.png" />
     <EmbeddedResource Include="Resources\ASCube_16xLG.png" />
     <EmbeddedResource Include="Resources\LanguageOverlay_JS_32xSM.png" />
     <EmbeddedResource Include="Resources\Contract_16xLG.png" />
@@ -104,6 +106,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\TestTemplate.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

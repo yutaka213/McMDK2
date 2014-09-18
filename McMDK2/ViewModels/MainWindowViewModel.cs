@@ -102,24 +102,30 @@ namespace McMDK2.ViewModels
                     }
                     var obj = JsonConvert.DeserializeObject<Project>(json);
                     obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
+                    string rootpath = obj.Path + "\\";
 
                     // Loadin MINECRAFT MOD PROJECT(*.mmproj) file.
                     var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
                     var q = from p in element.Element("Items").Elements()
                             select new
                             {
-                                Inclue = p.Attribute("Include").Value
+                                Include = p.Attribute("Include").Value
                             };
 
                     foreach (var item in q)
                     {
-                        string[] path = item.Inclue.Split('\\');
+                        string[] path = item.Include.Split('\\');
                         ObservableCollection<ProjectItem> cur = obj.Items;
                         for (int i = 0; i < path.Length; i++)
                         {
                             if (path.Length - 1 == 0)
                             {
-                                obj.Items.Add(new ProjectItem { Name = path[0], FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])) });
+                                obj.Items.Add(new ProjectItem
+                                {
+                                    Name = path[0],
+                                    FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                    FilePath = rootpath + item.Include
+                                });
                             }
                             else
                             {
@@ -127,20 +133,29 @@ namespace McMDK2.ViewModels
                                 {
                                     if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
                                     {
-                                        cur.Add(new ProjectItem { Name = path[i], FileType = "DIRECTORY" });
+                                        cur.Add(new ProjectItem
+                                        {
+                                            Name = path[i],
+                                            FileType = "DIRECTORY",
+                                            FilePath = rootpath + item.Include
+                                        });
                                     }
                                     cur = cur.Single(w => w.Name == path[i]).Children;
                                 }
                                 else
                                 {
-                                    cur.Add(new ProjectItem { Name = path[i], FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])) });
+                                    cur.Add(new ProjectItem
+                                    {
+                                        Name = path[i],
+                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
+                                        FilePath = rootpath + item.Include
+                                    });
                                 }
                             }
                         }
                     }
 
                     this.CurrentProject = obj;
-
                     var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
                     if (tab != null)
                         this.Tabs.Remove(tab);
@@ -194,6 +209,32 @@ namespace McMDK2.ViewModels
         public void CloseApp()
         {
             Environment.Exit(0);
+        }
+        #endregion
+
+
+        #region MouseDoubleClickCommand
+        private ListenerCommand<object> _MouseDoubleClickCommand;
+
+        public ListenerCommand<object> MouseDoubleClickCommand
+        {
+            get
+            {
+                if (_MouseDoubleClickCommand == null)
+                {
+                    _MouseDoubleClickCommand = new ListenerCommand<object>(MouseDoubleClick);
+                }
+                return _MouseDoubleClickCommand;
+            }
+        }
+
+        public void MouseDoubleClick(object parameter)
+        {
+            var item = parameter as ProjectItem;
+            if (item.FileType == "DIRECTORY")
+                return;
+            System.Windows.MessageBox.Show(item.FilePath);
+            //var view = ItemManager.GetItemViewFromExtension(Path.GetExtension(item.Name));
         }
         #endregion
 

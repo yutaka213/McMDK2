@@ -242,6 +242,7 @@ namespace McMDK2.ViewModels
                 sw.WriteLine(json);
             }
 
+            string rootpath = newProject.Path + "\\";
             // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
             var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
             var q = from p in element.Element("Items").Elements()
@@ -258,7 +259,12 @@ namespace McMDK2.ViewModels
                 {
                     if (path.Length - 1 == 0)
                     {
-                        newProject.Items.Add(new ProjectItem { Name = path[0], FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])) });
+                        newProject.Items.Add(new ProjectItem
+                        {
+                            Name = path[0],
+                            FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                            FilePath = rootpath + item.Include
+                        });
                     }
                     else
                     {
@@ -268,14 +274,24 @@ namespace McMDK2.ViewModels
                             // nf directory
                             if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
                             {
-                                cur.Add(new ProjectItem { Name = path[i], FileType = "DIRECTORY" });
+                                cur.Add(new ProjectItem
+                                {
+                                    Name = path[i],
+                                    FileType = "DIRECTORY",
+                                    FilePath = rootpath + item.Include
+                                });
                             }
                             cur = cur.Single(w => w.Name == path[i]).Children;
                         }
                         // FILE
                         else
                         {
-                            cur.Add(new ProjectItem { Name = path[i], FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])) });
+                            cur.Add(new ProjectItem
+                            {
+                                Name = path[i],
+                                FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
+                                FilePath = rootpath + item.Include
+                            });
                         }
                     }
                 }
