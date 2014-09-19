@@ -87,12 +87,16 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
+    <Compile Include="ViewModels\TabPages\NullPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\StartPageViewModel.cs" />
     <Compile Include="Views\NewWizardWindow.xaml.cs">
       <DependentUpon>NewWizardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TabPages\ModdingPage.xaml.cs">
       <DependentUpon>ModdingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TabPages\NullPage.xaml.cs">
+      <DependentUpon>NullPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TabPages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
@@ -116,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TabPages\ModdingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TabPages\NullPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -260,13 +260,30 @@ namespace McMDK2.ViewModels
             }
         }
 
+        // プロジェクトエクスプローラーのItemがWクリック(=選択)された際にコールされます。
         public void MouseDoubleClick(object parameter)
         {
             var item = parameter as ProjectItem;
             if (item.FileType == "DIRECTORY")
                 return;
-            System.Windows.MessageBox.Show(item.FilePath);
-            //var view = ItemManager.GetItemViewFromExtension(Path.GetExtension(item.Name));
+
+            var newtab = new TabItem { Header = item.Name };
+            var view = ItemManager.GetItemViewFromExtension(Path.GetExtension(item.Name));
+            if (view == null)
+            {
+                // Preview unavailable
+                var page = new NullPage();
+                var vm = new NullPageViewModel();
+                vm.Message = String.Format("この項目({0})ではプレビュー及び編集機能は使用できません。", item.Name);
+                page.DataContext = vm;
+                newtab.Content = page;
+            }
+            else
+            {
+                view.Initialize(item.FilePath);
+                newtab.Content = view;
+            }
+            this.Tabs.Add(newtab);
         }
         #endregion
 

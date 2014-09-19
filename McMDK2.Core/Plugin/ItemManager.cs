@@ -45,6 +45,11 @@ namespace McMDK2.Core.Plugin
             return icons[identifier];
         }
 
+        /// <summary>
+        /// McMDKで扱える拡張子を追加します。<para />
+        /// アイコンを表示したい時や、プレビューを使用したいときに登録する必要があります。<para />
+        /// ItemView に null を指定すると、NullPage(プレビューが利用できない)が使用されます。
+        /// </summary>
         public static void RegisterExtension(string extension, string identifier, ItemView viewer)
         {
             if (exts.ContainsKey(extension))
@@ -57,6 +62,9 @@ namespace McMDK2.Core.Plugin
             viewers.Add(extension, viewer);
         }
 
+        /// <summary>
+        /// アイコンを登録します。
+        /// </summary>
         public static void RegisterIcon(string identifier, string iconpath)
         {
             if (icons.ContainsKey(identifier))

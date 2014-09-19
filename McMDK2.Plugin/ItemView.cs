@@ -16,6 +16,11 @@ namespace McMDK2.Plugin
         /// プロジェクト エクスプローラー内のアイテムを選択した際に、新規タブで呼ばれます。
         /// </summary>
         /// <param name="path">対象となるファイルのパス</param>
-        public abstract void Build(string path);
+        public abstract void Initialize(string path);
+
+        /// <summary>
+        /// このViewが開かれているタブが閉じられる時に呼ばれます。
+        /// </summary>
+        public abstract/*virtual*/ void Closing();
     }
 }

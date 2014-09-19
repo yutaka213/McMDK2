@@ -64,18 +64,18 @@ namespace Fireworks
             //TemplateManager.Register(new ServerTemplate());
             //拡張子の登録
             ItemManager.RegisterExtension("png", "IMAGE", null);
-            ItemManager.RegisterExtension("ogg", "SOUND", null);
+            ItemManager.RegisterExtension("ogg", "SOUND", null);               // Preview unavailable
             ItemManager.RegisterExtension("txt", "PLAIN TEXT", null);
             ItemManager.RegisterExtension("lang", "PROPERTIES", null);
             ItemManager.RegisterExtension("properties", "PROPERTIES", null);
             ItemManager.RegisterExtension("json", "SCRIPT FILE", null);
             ItemManager.RegisterExtension("java", "SCRIPT FILE", null);
-            ItemManager.RegisterExtension("jar", "JAR FILE", null);
+            ItemManager.RegisterExtension("jar", "JAR FILE", null);            // Preview unavailable
             ItemManager.RegisterExtension("xml", "XML FILE", null);
             ItemManager.RegisterExtension("page", "HTML PAGE", null);
             ItemManager.RegisterExtension("html", "HTML PAGE", null);
             ItemManager.RegisterExtension("js", "JAVASCRIPT", null);
-            ItemManager.RegisterExtension("", "DIRECTORY", null);
+            ItemManager.RegisterExtension("", "DIRECTORY", null);              // Preview unavailable
 
             ItemManager.RegisterIcon("IMAGE", this.Id + ";Fireworks.Resources.Image_24x.png");
             ItemManager.RegisterIcon("SOUND", this.Id + ";Fireworks.Resources.Soundfile_461.png");
