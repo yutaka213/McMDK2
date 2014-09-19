@@ -20,6 +20,7 @@ using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
+using McMDK2.Plugin;
 using McMDK2.Views.TabPages;
 using McMDK2.ViewModels.TabPages;
 
@@ -218,6 +219,18 @@ namespace McMDK2.ViewModels
 
         public void Close(object parameter)
         {
+            object content = ((TabItem)parameter).Content;
+            if (content != null)
+            {
+                if (content is ItemView)
+                {
+                    ((ItemView)content).Closing();
+                }
+                else if (((UserControl)content).DataContext != null && ((UserControl)content).DataContext is ItemViewEx)
+                {
+                    ((ItemViewEx)((UserControl)content).DataContext).Closing();
+                }
+            }
             this.Tabs.Remove((TabItem)parameter);
         }
         #endregion
@@ -280,7 +293,14 @@ namespace McMDK2.ViewModels
             }
             else
             {
-                view.Initialize(item.FilePath);
+                if (view is ItemView)
+                {
+                    ((ItemView)view).Initialize(item.FilePath);
+                }
+                else if (view.DataContext != null && view.DataContext is ItemViewEx)
+                {
+                    ((ItemViewEx)view.DataContext).Initialize(item.FilePath);
+                }
                 newtab.Content = view;
             }
             this.Tabs.Add(newtab);

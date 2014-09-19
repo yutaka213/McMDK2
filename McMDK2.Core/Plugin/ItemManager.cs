@@ -21,8 +21,8 @@ namespace McMDK2.Core.Plugin
         // icons(Identifier, Icon Path(Abs));
         private static Dictionary<string, string> icons = new Dictionary<string, string>();
 
-        // viewers(Extension(Including dot '.'), View( is McMDK2.Plugin.ItemView))
-        private static Dictionary<string, ItemView> viewers = new Dictionary<string, ItemView>();
+        // viewers(Extension(Including dot '.'), View)
+        private static Dictionary<string, UserControl> viewers = new Dictionary<string, UserControl>();
 
         public static string GetIdentifierFromExtension(string extension)
         {
@@ -31,7 +31,7 @@ namespace McMDK2.Core.Plugin
             return exts[extension];
         }
 
-        public static ItemView GetItemViewFromExtension(string extension)
+        public static UserControl GetItemViewFromExtension(string extension)
         {
             if (!viewers.ContainsKey(extension))
                 return null;
@@ -59,6 +59,25 @@ namespace McMDK2.Core.Plugin
             }
             extension = "." + extension;
             exts.Add(extension, identifier);
+            viewers.Add(extension, viewer);
+        }
+
+        /// <summary>
+        /// McMDKで扱える拡張子を追加します。<para />
+        /// アイコンを表示したい時や、プレビューを使用したいときに登録する必要があります。<para />
+        /// ItemView に null を指定すると、NullPage(プレビューが利用できない)が使用されます。
+        /// </summary>
+        [Obsolete]
+        public static void RegisterExtension(string extension, string identifier, UserControl viewer, ItemViewEx viewmodel)
+        {
+            if (exts.ContainsKey(extension))
+            {
+                Define.GetLogger().Info(String.Format("\"{0}\" is already registered.", extension));
+                return;
+            }
+            extension = "." + extension;
+            exts.Add(extension, identifier);
+            viewer.DataContext = viewmodel;
             viewers.Add(extension, viewer);
         }
 
