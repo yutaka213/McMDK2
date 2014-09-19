@@ -280,7 +280,7 @@ namespace McMDK2.ViewModels
             if (item.FileType == "DIRECTORY")
                 return;
 
-            if (this.Tabs.SingleOrDefault(w => w.Header == item.Name) != null)
+            if (this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name) != null)
                 return;
 
             var newtab = new TabItem { Header = item.Name };
