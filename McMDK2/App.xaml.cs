@@ -109,6 +109,7 @@ namespace McMDK2
             FileController.CreateDirectory(Define.ProjectsDirectory);
 
             // Default
+            // XML FORMAT
             ItemManager.RegisterExtension("mod", "Mod", null);
             ItemManager.RegisterIcon("Mod", "pack://application:,,,/Resources/ASCube_16xLG.png");
 

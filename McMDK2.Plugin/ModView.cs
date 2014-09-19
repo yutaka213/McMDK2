@@ -10,7 +10,7 @@ namespace McMDK2.Plugin
     /// <summary>
     /// Mod作成時の編集画面の基本クラスです。
     /// </summary>
-    public class ModView : UserControl
+    public class ModView : ItemView
     {
         /// <summary>
         /// ＼( ・ٹ・)／
@@ -26,5 +26,15 @@ namespace McMDK2.Plugin
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, object> ModProperties { set; get; }
+
+        public override void Initialize(string path)
+        {
+
+        }
+
+        public override void Closing()
+        {
+
+        }
     }
 }

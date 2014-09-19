@@ -40,6 +40,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -60,6 +61,7 @@
     <Compile Include="Data\ProjectItem.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="FileController.cs" />
+    <Compile Include="Items\ItemMod.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
     <Compile Include="MetroDialogWrapper.cs" />

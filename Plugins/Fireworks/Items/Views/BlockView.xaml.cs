@@ -33,7 +33,5 @@ namespace Fireworks.Items.Views
         {
             InitializeComponent();
         }
-
-
     }
 }
