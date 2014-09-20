@@ -10,6 +10,8 @@ using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
 
+using Fireworks.ItemViewers.Views;
+using Fireworks.ItemViewers.ViewModels;
 using Fireworks.Templates;
 
 namespace Fireworks
@@ -63,7 +65,7 @@ namespace Fireworks
             //TemplateManager.Register(new BukkitTemplate());
             //TemplateManager.Register(new ServerTemplate());
             //拡張子の登録
-            ItemManager.RegisterExtension("png", "IMAGE", null);
+            ItemManager.RegisterExtension("png", "IMAGE", new ImagePage(), new ImagePageViewModel());
             ItemManager.RegisterExtension("ogg", "SOUND", null);               // Preview unavailable
             ItemManager.RegisterExtension("txt", "PLAIN TEXT", null);
             ItemManager.RegisterExtension("lang", "PROPERTIES", null);

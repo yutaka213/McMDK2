@@ -54,6 +54,7 @@
     <Compile Include="ApplicationInternalSettings.cs" />
     <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Converter\ItemTypeToBitmapConverter.cs" />
+    <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\StringToBitmapConverter.cs" />
     <Compile Include="Converter\StringToObjectConverter.cs" />
     <Compile Include="Data\NewsFeeds.cs" />
