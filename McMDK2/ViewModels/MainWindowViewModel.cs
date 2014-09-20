@@ -42,6 +42,7 @@ namespace McMDK2.ViewModels
             this.RecentProjects = new ObservableCollection<Project>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
+            this.SelectedTabIndex = -1;
 
             if (this.internalSettings == null)
             {
@@ -61,6 +62,7 @@ namespace McMDK2.ViewModels
             TabItem startPage = new TabItem { Header = "Start" };
             startPage.Content = new StartPage() { DataContext = new StartPageViewModel(this) };
             this.Tabs.Add(startPage);
+            this.SelectedTabIndex = 0;
         }
 
         public void Uninitialize()
@@ -307,6 +309,7 @@ namespace McMDK2.ViewModels
                 newtab.Content = view;
             }
             this.Tabs.Add(newtab);
+            this.SelectedTabIndex = this.Tabs.IndexOf(newtab);
         }
         #endregion
 
@@ -400,6 +403,23 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+
+        #region SelectedTabIndex変更通知プロパティ
+        private int _SelectedTabIndex;
+
+        public int SelectedTabIndex
+        {
+            get
+            { return _SelectedTabIndex; }
+            set
+            {
+                if (_SelectedTabIndex == value)
+                    return;
+                _SelectedTabIndex = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
     }
 }

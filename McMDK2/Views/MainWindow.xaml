@@ -184,7 +184,7 @@
             <Grid Grid.Column="0">
                 <TabControl Margin="0,10,0,0" 
                             ItemsSource="{Binding Tabs}"
-                            SelectedIndex="0"/>
+                            SelectedIndex="{Binding SelectedTabIndex}"/>
             </Grid>
 
             <GridSplitter Grid.Column="1" Width="4"
