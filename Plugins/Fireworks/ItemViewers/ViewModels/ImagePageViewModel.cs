@@ -40,9 +40,12 @@ namespace Fireworks.ItemViewers.ViewModels
                     this.MaxHeight = bitmap.PixelHeight;
                     this.MaxWidth = bitmap.PixelWidth;
                     this.Loaded = true;
-                    return;
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    this.ErrorText = e.Message;
+                }
+                return;
             }
             this.ErrorText = "この項目では画像プレビューを利用することはできません。";
 
