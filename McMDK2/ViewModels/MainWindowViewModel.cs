@@ -50,10 +50,13 @@ namespace McMDK2.ViewModels
             }
 
             this.internalSettings.Reload();
-            foreach (var item in this.internalSettings.RecentProjects)
+            if (this.internalSettings.RecentProjects != null)
             {
-                if (item != null)
-                    this.RecentProjects.Add(item);
+                foreach (var item in this.internalSettings.RecentProjects)
+                {
+                    if (item != null)
+                        this.RecentProjects.Add(item);
+                }
             }
         }
 
