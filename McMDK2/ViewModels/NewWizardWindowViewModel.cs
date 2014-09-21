@@ -310,7 +310,7 @@ namespace McMDK2.ViewModels
 
         public bool CanOK()
         {
-            if (String.IsNullOrWhiteSpace(this.ProjectName) || String.IsNullOrWhiteSpace(this.ProjectVersion))
+            if (String.IsNullOrWhiteSpace(this.ProjectName) || String.IsNullOrWhiteSpace(this.ProjectVersion) || this.SelectedItem == null)
             {
                 return false;
             }

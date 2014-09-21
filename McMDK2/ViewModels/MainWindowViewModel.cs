@@ -62,21 +62,23 @@ namespace McMDK2.ViewModels
 
         public void Initialize()
         {
-            TabItem startPage = new TabItem { Header = "Start" };
-            startPage.Content = new StartPage() { DataContext = new StartPageViewModel(this) };
+            var startPage = new TabItem
+            {
+                Header = "Start",
+                Content = new StartPage { DataContext = new StartPageViewModel(this) }
+            };
             this.Tabs.Add(startPage);
             this.SelectedTabIndex = 0;
         }
 
         public void Uninitialize()
         {
-            this.RecentProjects.Reverse();
-            Project[] items = new Project[5];
-            int length = this.RecentProjects.Count >= 5 ? 5 : this.RecentProjects.Count;
-            Define.GetLogger().Debug(length);
-            for (int i = 0; i < length; i++)
+            //TODO: Check
+            var items = new Project[5];
+            int length = this.RecentProjects.Count > 5 ? this.RecentProjects.Count - 5 : 0;
+            for (int i = this.RecentProjects.Count - 1, j = 0; i >= length; i--, j++)
             {
-                items[i] = this.RecentProjects[i];
+                items[j] = this.RecentProjects[i];
             }
 
             this.internalSettings.RecentProjects = items;
@@ -123,15 +125,17 @@ namespace McMDK2.ViewModels
 
         public void OpenProject()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.FileName = "";
-            ofd.Filter = "McMDK Main Project File (*.mdk)|*.mdk";
+            var ofd = new OpenFileDialog
+            {
+                FileName = "",
+                Filter = "McMDK Main Project File (*.mdk)|*.mdk"
+            };
             if (ofd.ShowDialog() == true)
             {
                 if (FileController.Exists(ofd.FileName))
                 {
                     string file = ofd.FileName;
-                    string json = "";
+                    string json;
                     using (var sr = new StreamReader(file))
                     {
                         json = sr.ReadToEnd();
@@ -227,9 +231,10 @@ namespace McMDK2.ViewModels
             object content = ((TabItem)parameter).Content;
             if (content != null)
             {
-                if (content is ItemView)
+                var view = content as ItemView;
+                if (view != null)
                 {
-                    ((ItemView)content).Closing();
+                    view.Closing();
                 }
                 else if (((UserControl)content).DataContext != null && ((UserControl)content).DataContext is ItemViewEx)
                 {
@@ -301,9 +306,10 @@ namespace McMDK2.ViewModels
             }
             else
             {
-                if (view is ItemView)
+                var itemView = view as ItemView;
+                if (itemView != null)
                 {
-                    ((ItemView)view).Initialize(item.FilePath);
+                    itemView.Initialize(item.FilePath);
                 }
                 else if (view.DataContext != null && view.DataContext is ItemViewEx)
                 {
@@ -318,9 +324,9 @@ namespace McMDK2.ViewModels
 
 
         #region CurrentProject変更通知プロパティ
-        private McMDK2.Core.Data.Project _CurrentProject;
+        private Project _CurrentProject;
 
-        public McMDK2.Core.Data.Project CurrentProject
+        public Project CurrentProject
         {
             get
             { return _CurrentProject; }
