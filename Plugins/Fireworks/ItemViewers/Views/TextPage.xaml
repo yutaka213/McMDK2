@@ -19,7 +19,8 @@
         <TextBlock Text="{Binding ErrorText}" FontSize="25"
                    Visibility="{Binding Loaded, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"
+        <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" 
+                 AcceptsReturn="True" AcceptsTab="True"
                  FontSize="12"
                  Visibility="{Binding Loaded, Converter={StaticResource BooleanToVisibilityConverter}}"
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
