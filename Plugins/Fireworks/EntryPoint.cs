@@ -77,7 +77,7 @@ namespace Fireworks
             ItemManager.RegisterExtension("xml", "XML FILE", new TextEditPage(), new TextEditPageViewModel("XML"));
             ItemManager.RegisterExtension("page", "HTML PAGE", null);
             ItemManager.RegisterExtension("html", "HTML PAGE", new TextEditPage(), new TextEditPageViewModel("HTML"));
-            ItemManager.RegisterExtension("js", "JAVASCRIPT", null);
+            ItemManager.RegisterExtension("js", "JAVASCRIPT", new TextEditPage(), new TextEditPageViewModel("JavaScript"));
             ItemManager.RegisterExtension("", "DIRECTORY", null);              // Preview unavailable
 
             ItemManager.RegisterIcon("IMAGE", this.Id + ";Fireworks.Resources.Image_24x.png");
