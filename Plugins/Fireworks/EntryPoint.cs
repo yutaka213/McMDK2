@@ -65,6 +65,7 @@ namespace Fireworks
             //TemplateManager.Register(new BukkitTemplate());
             //TemplateManager.Register(new ServerTemplate());
             //拡張子の登録
+#pragma warning disable 612
             ItemManager.RegisterExtension("png", "IMAGE", new ImagePage(), new ImagePageViewModel());
             ItemManager.RegisterExtension("ogg", "SOUND", null);               // Preview unavailable
             ItemManager.RegisterExtension("txt", "PLAIN TEXT", new TextPage(), new TextPageViewModel());

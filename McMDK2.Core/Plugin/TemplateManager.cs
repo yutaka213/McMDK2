@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using McMDK2.Plugin;
-using McMDK2.Core;
-using McMDK2.Core.Data;
 
 namespace McMDK2.Core.Plugin
 {

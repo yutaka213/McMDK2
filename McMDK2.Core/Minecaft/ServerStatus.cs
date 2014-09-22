@@ -74,12 +74,12 @@ namespace McMDK2.Core.Minecaft
             var sr = new System.IO.StreamReader(stream);
 
             var o = JObject.Parse(sr.ReadToEnd());
-            string s = (string)o[server];
+            var s = (string)o[server];
             if (s == "green")
                 return Status.Green;
-            else if (s == "yellow")
+            if (s == "yellow")
                 return Status.Yellow;
-            else if (s == "red")
+            if (s == "red")
                 return Status.Red;
             return Status.Undefined;
         }

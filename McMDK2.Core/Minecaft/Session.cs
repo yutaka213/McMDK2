@@ -11,11 +11,6 @@ namespace McMDK2.Core.Minecaft
     // See this -> launcher.jar/com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.class
     public class Session : ApiService
     {
-        public Session()
-        {
-
-        }
-
         /// <summary>
         /// UUIDからUserProfileを取得します。 <para />
         /// 存在しないUUIDの場合、例外が投げられます。

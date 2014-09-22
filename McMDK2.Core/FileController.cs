@@ -77,8 +77,7 @@ namespace McMDK2.Core
 
         public static void Copy(string source, string dest)
         {
-            string dirname;
-            dirname = Path.GetDirectoryName(dest);
+            string dirname = Path.GetDirectoryName(dest);
             if (dirname == null)
             {
                 throw new ArgumentException("dest");
@@ -122,7 +121,6 @@ namespace McMDK2.Core
             {
                 Directory.Move(oldName, newName);
             }
-            return;
         }
 
         public static string[] GetLists(string path, bool isDirectory = false, bool isSearchAllDirectories = false)
@@ -139,10 +137,7 @@ namespace McMDK2.Core
                     return Directory.GetFiles(path, "*", SearchOption.AllDirectories);
                 return Directory.GetFiles(path);
             }
-            else
-            {
-                throw new DirectoryNotFoundException(path);
-            }
+            throw new DirectoryNotFoundException(path);
         }
 
         public static string LoadFile(string path)

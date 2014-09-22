@@ -79,7 +79,7 @@ namespace McMDK2.Core.Win32
         [DllImport("user32.dll")]
         public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwLong);
 
-        public enum WindowStyles : int
+        public enum WindowStyles
         {
             BORDER = 0x00800000,
 

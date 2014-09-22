@@ -74,13 +74,13 @@ namespace McMDK2.Core.Plugin
         // Reference : https://github.com/fin-alice/Mystique/blob/master/Inscribe/Plugin/PluginLoader.cs
         private class AssemblyPluginLoader
         {
-            [ImportMany()]
+            [ImportMany]
             public List<IPlugin> plugins = null;
 
-            [ImportMany()]
+            [ImportMany]
             public List<ITemplate> templates = null;
 
-            [ImportMany()]
+            [ImportMany]
             public List<IMod> mods = null;
 
             public AssemblyPluginLoader()
@@ -212,7 +212,7 @@ namespace McMDK2.Core.Plugin
                     XmlNode root = document.DocumentElement;
                     XmlNode node = root.ChildNodes[0];
 
-                    var control = new UIControl(StringToObjectConverter.StringToComponents(((XmlElement)node).Name));
+                    var control = new UIControl(StringToObjectConverter.StringToComponents(node.Name));
 
                     RecursiveSerializeXML(node, control, dir);
 
@@ -232,8 +232,8 @@ namespace McMDK2.Core.Plugin
                     {
                         continue;
                     }
-                    UIControl control = null;
-                    XmlElement element = (XmlElement)node;
+                    UIControl control;
+                    var element = (XmlElement)node;
 
                     // Parse TOPLEVEL Contents.
                     switch (node.Name)
@@ -284,7 +284,7 @@ namespace McMDK2.Core.Plugin
                             break;
 
                         case "GroupBox":
-                            control = new GroupBoxControl()
+                            control = new GroupBoxControl
                             {
                                 // GroupBoxControl
                                 Header = element.GetAttribute("Header"),
@@ -297,7 +297,7 @@ namespace McMDK2.Core.Plugin
                         // Based on System.Windows.Controls.ContentControl
                         case "Image":
                         case "Label":
-                            control = new McMDK2.UI.Controls.ContentControl(StringToObjectConverter.StringToComponents(node.Name))
+                            control = new UI.Controls.ContentControl(StringToObjectConverter.StringToComponents(node.Name))
                             {
                                 // ContentControl
                                 Content = element.GetAttribute("Content")
@@ -374,7 +374,7 @@ namespace McMDK2.Core.Plugin
                 {
                     return new Thickness(int.Parse(s[0]));
                 }
-                else if (s.Length == 4)
+                if (s.Length == 4)
                 {
                     return new Thickness(int.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
                 }

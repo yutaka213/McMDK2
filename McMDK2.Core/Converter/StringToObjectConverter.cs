@@ -50,10 +50,7 @@ namespace McMDK2.Core.Converter
             {
                 return default(Type);
             }
-            else
-            {
-                return (Type)def;
-            }
+            return (Type)def;
         }
 
         /// <summary>
@@ -117,7 +114,7 @@ namespace McMDK2.Core.Converter
                 }
                 if (obj.StartsWith("#"))
                 {
-                    Color color = new Color();
+                    var color = new Color();
                     if (obj.Length == 9)
                     {
                         color.A = (byte)Convert.ToInt32(obj.Substring(1, 2), 16);

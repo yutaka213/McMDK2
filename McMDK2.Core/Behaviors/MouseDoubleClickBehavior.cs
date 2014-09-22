@@ -35,7 +35,7 @@ namespace McMDK2.Core.Behaviors
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            Control control = target as Control;
+            var control = target as Control;
             if (control != null)
             {
                 if (e.NewValue != null && e.OldValue == null)
@@ -51,7 +51,7 @@ namespace McMDK2.Core.Behaviors
 
         private static void OnMouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            Control control = sender as Control;
+            var control = sender as Control;
             var command = (ICommand)control.GetValue(CommandProperty);
             object commandParameter = control.GetValue(CommandParameterProperty);
             command.Execute(commandParameter);

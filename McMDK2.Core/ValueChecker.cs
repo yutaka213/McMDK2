@@ -13,16 +13,7 @@ namespace McMDK2.Core
         /// </summary>
         public static bool IsNull(params object[] objects)
         {
-            bool flag = true;
-            foreach (object obj in objects)
-            {
-                if (obj != null)
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            return flag;
+            return objects.All(obj => obj == null);
         }
 
         /// <summary>
@@ -30,16 +21,7 @@ namespace McMDK2.Core
         /// </summary>
         public static bool IsNotNull(params object[] objects)
         {
-            bool flag = true;
-            foreach (object obj in objects)
-            {
-                if (obj == null)
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            return flag;
+            return objects.All(obj => obj != null);
         }
 
         /// <summary>

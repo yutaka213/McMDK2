@@ -134,7 +134,7 @@ namespace McMDK2.ViewModels
                 int i = 1;
                 while (FileController.Exists(projectPath))
                 {
-                    projectPath = Define.ProjectsDirectory + "\\" + _ProjectName + (i++).ToString();
+                    projectPath = Define.ProjectsDirectory + "\\" + _ProjectName + (i++);
                 }
                 this.ProjectPath = projectPath;
                 RaisePropertyChanged();
@@ -210,7 +210,7 @@ namespace McMDK2.ViewModels
             FileController.CreateDirectory(newProject.Path);
 
             var template = this.SelectedItem;
-            string root = "";
+            string root;
             Stream stream;
             if (template.TemplateFile.Split(';').Length == 2)
             {
@@ -223,7 +223,7 @@ namespace McMDK2.ViewModels
                 stream = new FileStream(template.TemplateFile, FileMode.Open, FileAccess.Read);
                 root = Path.GetFileNameWithoutExtension(template.TemplateFile);
             }
-            FileStream fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
+            var fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
             int nbyte;
             while ((nbyte = stream.ReadByte()) != -1)
             {

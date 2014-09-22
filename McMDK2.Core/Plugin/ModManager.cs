@@ -31,19 +31,12 @@ namespace McMDK2.Core.Plugin
 
         public static void Register(IMod mod)
         {
-            try
+            if (mods.Where(w => w.Id == mod.Id).ToArray().Length != 0)
             {
-                if (mods.Where(w => w.Id == mod.Id).ToArray().Length != 0)
-                {
-                    throw new Exception("既に同じIDをもつModが登録されています。 : " + mod.Id);
-                }
-                mods.Add(mod);
-                Define.GetLogger().Info(String.Format("Register Mod : {0}({1}).", mod.Name, mod.Id));
+                throw new Exception("既に同じIDをもつModが登録されています。 : " + mod.Id);
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            mods.Add(mod);
+            Define.GetLogger().Info(String.Format("Register Mod : {0}({1}).", mod.Name, mod.Id));
         }
     }
 }

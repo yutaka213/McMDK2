@@ -31,12 +31,14 @@ namespace McMDK2.Core.Minecaft
 
             var jt = JToken.Parse(new System.IO.StreamReader(stream).ReadToEnd());
 
-            var up = new UserProfile();
-            up.AccessToken = (string)jt["accessToken"];
-            up.ClientToken = (string)jt["clientToken"];
+            var up = new UserProfile
             {
-                var inner = (JToken)jt["selectedProfile"];
-                Profile profile = new Profile
+                AccessToken = (string)jt["accessToken"],
+                ClientToken = (string)jt["clientToken"]
+            };
+            {
+                var inner = jt["selectedProfile"];
+                var profile = new Profile
                 {
                     Id = (string)inner["id"],
                     Name = (string)inner["name"]
@@ -49,7 +51,7 @@ namespace McMDK2.Core.Minecaft
                 var list = new List<Profile>();
                 foreach (var item in (JToken)inner)
                 {
-                    Profile profile = new Profile
+                    var profile = new Profile
                     {
                         Id = (string)item["id"],
                         Name = (string)item["name"]

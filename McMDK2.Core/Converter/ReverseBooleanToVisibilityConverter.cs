@@ -18,10 +18,7 @@ namespace McMDK2.Core.Converter
                 {
                     return Visibility.Visible;
                 }
-                else
-                {
-                    return Visibility.Collapsed;
-                }
+                return Visibility.Collapsed;
             }
             return Visibility.Visible;
         }

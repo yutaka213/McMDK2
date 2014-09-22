@@ -66,8 +66,10 @@ namespace McMDK2.ViewModels.TabPages
         {
             try
             {
-                var client = new WebClient();
-                client.Encoding = Encoding.UTF8;
+                var client = new WebClient
+                {
+                    Encoding = Encoding.UTF8
+                };
                 string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
 
                 var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
