@@ -72,11 +72,11 @@ namespace Fireworks
             ItemManager.RegisterExtension("lang", "PROPERTIES", null);
             ItemManager.RegisterExtension("properties", "PROPERTIES", null);
             ItemManager.RegisterExtension("json", "SCRIPT FILE", null);
-            ItemManager.RegisterExtension("java", "SCRIPT FILE", null);
+            ItemManager.RegisterExtension("java", "SCRIPT FILE", new TextEditPage(), new TextEditPageViewModel("Java"));
             ItemManager.RegisterExtension("jar", "JAR FILE", null);            // Preview unavailable
-            ItemManager.RegisterExtension("xml", "XML FILE", null);
+            ItemManager.RegisterExtension("xml", "XML FILE", new TextEditPage(), new TextEditPageViewModel("XML"));
             ItemManager.RegisterExtension("page", "HTML PAGE", null);
-            ItemManager.RegisterExtension("html", "HTML PAGE", null);
+            ItemManager.RegisterExtension("html", "HTML PAGE", new TextEditPage(), new TextEditPageViewModel("HTML"));
             ItemManager.RegisterExtension("js", "JAVASCRIPT", null);
             ItemManager.RegisterExtension("", "DIRECTORY", null);              // Preview unavailable
 

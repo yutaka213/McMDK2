@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\..\packages\AvalonEdit.4.4.2.9744\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
     <Reference Include="Livet">
       <HintPath>..\..\McMDK2\InfrastructureAssemblies\Livet.dll</HintPath>
     </Reference>
@@ -58,6 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\TextEditorBindSupportBehavior.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Items\Block.cs" />
     <Compile Include="Items\ViewModels\BlockViewViewModel.cs" />
@@ -65,9 +69,13 @@
       <DependentUpon>BlockView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemViewers\ViewModels\ImagePageViewModel.cs" />
+    <Compile Include="ItemViewers\ViewModels\TextEditPageViewModel.cs" />
     <Compile Include="ItemViewers\ViewModels\TextPageViewModel.cs" />
     <Compile Include="ItemViewers\Views\ImagePage.xaml.cs">
       <DependentUpon>ImagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemViewers\Views\TextEditPage.xaml.cs">
+      <DependentUpon>TextEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemViewers\Views\TextPage.xaml.cs">
       <DependentUpon>TextPage.xaml</DependentUpon>
@@ -118,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ItemViewers\Views\ImagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemViewers\Views\TextEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
