@@ -17,10 +17,22 @@ using McMDK2.Plugin;
 
 namespace McMDK2.ViewModels.TabPages
 {
-    public class ModdingPageViewModel : ViewModel
+    public class ModdingPageViewModel : ViewModel, ItemViewEx
     {
-        public void Initialize()
+        public void Initialize(string path)
         {
+            if (this.ModdingContent != null)
+            {
+
+            }
+        }
+
+        public void Closing()
+        {
+            if (this.ModdingContent != null)
+            {
+                this.ModdingContent.Closing();
+            }
         }
 
 

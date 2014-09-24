@@ -24,7 +24,7 @@
                    Visibility="{Binding Loaded, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <avalonedit:TextEditor FontFamily="Consolas" FontSize="13"
-                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                               VerticalScrollBarVisibility="Auto"
                                SyntaxHighlighting="{Binding SyntaxHighlighting, Mode=TwoWay}"
                                Background="White"
                                ShowLineNumbers="True"

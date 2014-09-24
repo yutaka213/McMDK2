@@ -85,10 +85,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="ViewModels\Dialogs\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\NullPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\StartPageViewModel.cs" />
+    <Compile Include="Views\Dialogs\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewWizardWindow.xaml.cs">
       <DependentUpon>NewWizardWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,10 @@
     <Compile Include="Views\TabPages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Dialogs\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -208,10 +216,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Dialogs\" />
-    <Folder Include="Views\Dialogs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

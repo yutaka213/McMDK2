@@ -79,9 +79,7 @@ namespace McMDK2.Core
         public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
 
 
-        private static readonly string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
-        public static readonly string ApiLogin = ApiEndPoint + "account/login.php";
-        public static readonly string ApiRegister = ApiEndPoint + "account/register.php";
+        private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
 
         public static readonly string ApiVersionsList = ApiEndPoint + "versions/list.php";
         public static readonly string ApiForgeVerList = ApiEndPoint + "versions/all_versions/{0}";
