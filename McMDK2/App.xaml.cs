@@ -7,7 +7,8 @@ using System.Linq;
 using System.Windows;
 
 using Livet;
-
+using McMDK2.ViewModels.TabPages;
+using McMDK2.Views.TabPages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -110,7 +111,8 @@ namespace McMDK2
 
             // Default
             // XML FORMAT
-            ItemManager.RegisterExtension("mod", "Mod", null);
+#pragma warning disable 612
+            ItemManager.RegisterExtension("mod", "Mod", new ModdingPage(), new ModdingPageViewModel());
             ItemManager.RegisterIcon("Mod", "pack://application:,,,/Resources/ASCube_16xLG.png");
 
             // Load Plugins from PluginDirectory.

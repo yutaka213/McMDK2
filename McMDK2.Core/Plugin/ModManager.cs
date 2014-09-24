@@ -24,9 +24,9 @@ namespace McMDK2.Core.Plugin
             }
         }
 
-        public static IMod GetModFromName(string name)
+        public static IMod GetModFromId(string id)
         {
-            return mods.Single(w => w.Name == name);
+            return mods.Single(w => w.Id == id);
         }
 
         public static void Register(IMod mod)

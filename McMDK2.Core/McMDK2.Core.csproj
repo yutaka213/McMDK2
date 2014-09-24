@@ -57,12 +57,12 @@
     <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\StringToBitmapConverter.cs" />
     <Compile Include="Converter\StringToObjectConverter.cs" />
+    <Compile Include="Data\ItemData.cs" />
     <Compile Include="Data\NewsFeeds.cs" />
     <Compile Include="Data\Project.cs" />
     <Compile Include="Data\ProjectItem.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="FileController.cs" />
-    <Compile Include="Items\ItemMod.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Log\LogLevel.cs" />
     <Compile Include="MetroDialogWrapper.cs" />
@@ -110,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
