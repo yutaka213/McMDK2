@@ -30,5 +30,10 @@ namespace McMDK2.Core.Plugin.Internal
         /// template.xml Version
         /// </summary>
         public string XmlVersion { set; get; }
+
+        public string SetupProcId
+        {
+            get { return "MinecraftForge"; }
+        }
     }
 }
