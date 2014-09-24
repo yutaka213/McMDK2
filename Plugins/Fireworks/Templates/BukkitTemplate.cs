@@ -39,5 +39,10 @@ namespace Fireworks.Templates
         {
             get { return Id + ";Fireworks.Templates.BukkitTemplate.zip"; }
         }
+
+        public string SetupProcId
+        {
+            get { return "CraftBukkit"; }
+        }
     }
 }

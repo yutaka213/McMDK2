@@ -43,5 +43,11 @@ namespace McMDK2.Plugin
         /// アセンブリ内に埋め込む場合は"ID;FilePath",埋め込まない場合は"FilePath"とします。
         /// </summary>
         string TemplateFile { get; }
+
+        /// <summary>
+        /// セットアッププロセスを行うためのIDを設定します。<para />
+        /// Fireworks.dllないで定義されている"MinecraftForge"、"ModLoader"の他に、ユーザーが任意に追加したものも利用できます。
+        /// </summary>
+        string SetupProcId { get; }
     }
 }

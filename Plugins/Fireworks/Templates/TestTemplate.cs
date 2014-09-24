@@ -43,5 +43,10 @@ namespace Fireworks.Templates
         {
             get { return Id + ";Fireworks.Templates.TestTemplate.zip"; }
         }
+
+        public string SetupProcId
+        {
+            get { return "MinecraftForge"; }
+        }
     }
 }
