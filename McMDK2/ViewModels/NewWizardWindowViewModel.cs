@@ -300,7 +300,10 @@ namespace McMDK2.ViewModels
             this.MainWindowViewModel.IsLoadedProject = true;
             this.MainWindowViewModel.CurrentProject = newProject;
             this.MainWindowViewModel.RecentProjects.Add(newProject);
-
+            //
+            var setup = ProcessManager.GetSetupProcessFromId(template.SetupProcId);
+            setup.Setup(newProject.Path, this.ProjectVersion);
+            //
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 
             var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */ == "Start");

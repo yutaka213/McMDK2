@@ -291,7 +291,11 @@ namespace McMDK2.ViewModels
                 return;
 
             if (this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name) != null)
+            {
+                //Open Tab
+                this.SelectedTabIndex = this.Tabs.IndexOf(this.Tabs.Single(w => (string)w.Header == item.Name));
                 return;
+            }
 
             var newtab = new TabItem { Header = item.Name };
             var view = ItemManager.GetItemViewFromExtension(Path.GetExtension(item.Name));
