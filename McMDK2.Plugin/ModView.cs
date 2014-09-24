@@ -27,11 +27,18 @@ namespace McMDK2.Plugin
         /// <returns></returns>
         public Dictionary<string, object> ModProperties { set; get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
         public override void Initialize(string path)
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Closing()
         {
 

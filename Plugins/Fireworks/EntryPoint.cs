@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Fireworks.Process;
+
 using McMDK2.Core;
-using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
 
@@ -62,8 +63,6 @@ namespace Fireworks
 #if DEBUG
             TemplateManager.Register(new TestTemplate());
 #endif
-            //TemplateManager.Register(new BukkitTemplate());
-            //TemplateManager.Register(new ServerTemplate());
             //拡張子の登録
 #pragma warning disable 612
             ItemManager.RegisterExtension("png", "IMAGE", new ImagePage(), new ImagePageViewModel());
@@ -90,6 +89,10 @@ namespace Fireworks
             ItemManager.RegisterIcon("HTML PAGE", this.Id + ";Fireworks.Resources.HTMLPage(HTM)_825_16x_color.png");
             ItemManager.RegisterIcon("JAVASCRIPT", this.Id + ";Fireworks.Resources.LanguageOverlay_JS_32xSM.png");
             ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
+
+            //処理機構の登録
+            ProcessManager.RegisterProcess(new ForgeSupport());
+            ProcessManager.RegisterProcess(new ModLoaderSupport());
         }
 
         public void Updated() { }

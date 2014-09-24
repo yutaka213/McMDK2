@@ -45,6 +45,13 @@ namespace McMDK2.Core.Plugin
                     ModManager.Register(p);
                 }
             }
+            if (asmPlugins.setup != null)
+            {
+                foreach (var p in asmPlugins.setup)
+                {
+                    ProcessManager.RegisterProcess(p);
+                }
+            }
 
             var xmlPlugins = new XmlBasePluginLoader();
             if (xmlPlugins.plugins != null)
@@ -82,6 +89,9 @@ namespace McMDK2.Core.Plugin
 
             [ImportMany]
             public List<IMod> mods = null;
+
+            [ImportMany]
+            public List<ISetup> setup = null;
 
             public AssemblyPluginLoader()
             {
