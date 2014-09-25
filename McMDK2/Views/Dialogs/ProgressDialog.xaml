@@ -13,10 +13,12 @@
         TitlebarHeight="0"
         Height="100" Width="400">
     
+    <!--
     <Window.DataContext>
         <vm:ProgressDialogViewModel/>
     </Window.DataContext>
-
+    -->
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
@@ -24,6 +26,9 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger}">
+            <l:WindowInteractionMessageAction  InvokeActionOnlyWhenWindowIsActive="False"/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <Window.Resources>

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-
+using System.Windows;
 using Livet;
+using Livet.Behaviors.Messaging;
 using Livet.Commands;
 using Livet.Messaging;
 using Livet.Messaging.IO;
@@ -15,15 +16,46 @@ using McMDK2.Models;
 
 namespace McMDK2.ViewModels.Dialogs
 {
+    public delegate void DoAction();
+
     public class ProgressDialogViewModel : ViewModel
     {
+        public event DoAction Action;
+
+        public ProgressDialogViewModel()
+        {
+            this.IsIndeterminate = true;
+            this.Value = 0;
+        }
 
         public void Initialize()
         {
-            this.IsIndeterminate = true;
-            this.Value = 100;
+            DoAction act = Action;
+            if (act != null)
+            {
+                Action();
+            }
         }
 
+        public void SetIndeterminate(bool i)
+        {
+            this.IsIndeterminate = i;
+        }
+
+        public void SetValue(int v)
+        {
+            this.Value = v;
+        }
+
+        public void SetText(string t)
+        {
+            this.Text = t;
+        }
+
+        public async void Close()
+        {
+            await Messenger.RaiseAsync(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+        }
 
         #region IsIndeterminate変更通知プロパティ
         private bool _IsIndeterminate;
