@@ -5,7 +5,9 @@
                       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
                       xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
                       xmlns:v="clr-namespace:McMDK2.Views"
+                      xmlns:vd="clr-namespace:McMDK2.Views.Dialogs"
                       xmlns:vm="clr-namespace:McMDK2.ViewModels"
+                      xmlns:vmd="clr-namespace:McMDK2.ViewModels.Dialogs"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:Data="clr-namespace:McMDK2.Core.Data;assembly=McMDK2.Core"
                       xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
@@ -36,6 +38,10 @@
         
         <l:InteractionMessageTrigger MessageKey="ShowNewWizard" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction WindowType="{x:Type v:NewWizardWindow}"                                          
+                                                  Mode="Modal" />
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="ProgressDialog" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:ProgressDialog}"
                                                   Mode="Modal" />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>

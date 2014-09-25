@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-
+﻿using System.Windows.Media;
 using Livet;
 using Livet.Commands;
 
-namespace McMDK2.Models
+namespace McMDK2.Core.Objects
 {
     public delegate void LinkClickedCommand(object sender, object args);
 

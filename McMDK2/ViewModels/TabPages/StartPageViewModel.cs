@@ -16,6 +16,7 @@ using Livet.Messaging.Windows;
 
 using McMDK2.Core;
 using McMDK2.Core.Data;
+using McMDK2.Core.Objects;
 using McMDK2.Models;
 
 using Microsoft.WindowsAPICodePack.Dialogs;

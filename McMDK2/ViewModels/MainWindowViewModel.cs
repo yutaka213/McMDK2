@@ -207,6 +207,7 @@ namespace McMDK2.ViewModels
                     System.Windows.MessageBox.Show("ファイルを開けませんでした。");
                 }
             }
+            Messenger.Raise(new TransitionMessage("ProgressDialog"));
         }
         #endregion
 
