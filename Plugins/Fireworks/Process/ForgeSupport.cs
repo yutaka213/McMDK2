@@ -7,16 +7,20 @@ using McMDK2.Plugin;
 
 namespace Fireworks.Process
 {
-    public class ForgeSupport : ISetup
+    public class ForgeSupport : Setup
     {
-        public string Id
+        public override string Id
         {
-            get { return "MinecraftForge"; }
+            get
+            {
+                return "MinecraftForge";
+            }
         }
 
-        public void Setup(string path, string version)
+        public override void Process(string path, string version)
         {
-
+            this.SetIsIndeterminate(false);
+            this.SetValue(50);
         }
     }
 }

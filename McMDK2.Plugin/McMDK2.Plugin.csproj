@@ -45,7 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMod.cs" />
-    <Compile Include="ISetup.cs" />
+    <Compile Include="Internal\Progress.cs" />
+    <Compile Include="Setup.cs" />
     <Compile Include="ItemView.cs" />
     <Compile Include="ItemViewEx.cs" />
     <Compile Include="ModView.cs" />

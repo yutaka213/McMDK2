@@ -9,9 +9,9 @@ namespace McMDK2.Core.Plugin
 {
     public class ProcessManager
     {
-        private static List<ISetup> setupProcs = new List<ISetup>();
+        private static List<Setup> setupProcs = new List<Setup>();
 
-        public static ISetup GetSetupProcessFromId(string id)
+        public static Setup GetSetupProcessFromId(string id)
         {
             return setupProcs.Single(w => w.Id == id);
         }
@@ -24,9 +24,9 @@ namespace McMDK2.Core.Plugin
         {
             try
             {
-                if (obj is ISetup)
+                if (obj is Setup)
                 {
-                    var setup = (ISetup)obj;
+                    var setup = (Setup)obj;
                     if (setupProcs.Where(w => w.Id == setup.Id).ToArray().Length != 0)
                     {
                         throw new Exception("既に同じIDを持つプロセスが登録されています。");

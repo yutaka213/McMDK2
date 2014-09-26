@@ -7,16 +7,16 @@ using McMDK2.Plugin;
 
 namespace Fireworks.Process
 {
-    public class ModLoaderSupport : ISetup
+    public class ModLoaderSupport : Setup
     {
-        public string Id
+        public override string Id
         {
             get { return "ModLoader"; }
         }
 
-        public void Setup(string path, string version)
+        public override void Process(string path, string version)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

@@ -22,7 +22,7 @@ using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
-
+using McMDK2.ViewModels.Dialogs;
 using Newtonsoft.Json;
 
 namespace McMDK2.ViewModels
@@ -198,117 +198,132 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
-            var newProject = new Project
+            var progress = new ProgressDialogViewModel();
+            progress.SetIndeterminate(true);
+            progress.SetText("プロジェクトを取り出しています...");
+            progress.Action += () =>
             {
-                Version = "1.0.0",
-                Path = this.ProjectPath,
-                Name = this.ProjectName,
-                Items = new ObservableCollection<ProjectItem>(),
-                Id = Guid.NewGuid().ToString()
-            };
-
-            FileController.CreateDirectory(newProject.Path);
-
-            var template = this.SelectedItem;
-            string root;
-            Stream stream;
-            if (template.TemplateFile.Split(';').Length == 2)
-            {
-                string path = template.TemplateFile.Split(';')[1];
-                stream = Assembly.GetAssembly(template.GetType()).GetManifestResourceStream(path);
-                root = path.Replace(".zip", "").Split('.')[path.Replace(".zip", "").Split('.').Length - 1];
-            }
-            else
-            {
-                stream = new FileStream(template.TemplateFile, FileMode.Open, FileAccess.Read);
-                root = Path.GetFileNameWithoutExtension(template.TemplateFile);
-            }
-            var fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
-            int nbyte;
-            while ((nbyte = stream.ReadByte()) != -1)
-            {
-                fs.WriteByte((byte)nbyte);
-            }
-            fs.Close();
-            stream.Close();
-
-            ZipFile.ExtractToDirectory(newProject.Path + "//Template.zip", newProject.Path);
-            FileController.Delete(newProject.Path + "//Template.zip");
-            FileController.Rename(newProject.Path + "//" + root + ".mmproj", newProject.Path + "//" + newProject.Name + ".mmproj");
-
-            var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
-            using (var sw = new StreamWriter(newProject.Path + "//project.mdk") /* JSON FORMAT */)
-            {
-                sw.WriteLine(json);
-            }
-
-            string rootpath = newProject.Path + "\\";
-            // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
-            var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
-            var q = from p in element.Element("Items").Elements()
-                    select new
-                    {
-                        Include = p.Attribute("Include").Value
-                    };
-
-            foreach (var item in q)
-            {
-                string[] path = item.Include.Split('\\');
-                ObservableCollection<ProjectItem> cur = newProject.Items;
-                for (int i = 0; i < path.Length; i++)
+                var newProject = new Project
                 {
-                    if (path.Length - 1 == 0)
-                    {
-                        newProject.Items.Add(new ProjectItem
+                    Version = "1.0.0",
+                    Path = this.ProjectPath,
+                    Name = this.ProjectName,
+                    Items = new ObservableCollection<ProjectItem>(),
+                    Id = Guid.NewGuid().ToString()
+                };
+
+                FileController.CreateDirectory(newProject.Path);
+
+                var template = this.SelectedItem;
+                string root;
+                Stream stream;
+                if (template.TemplateFile.Split(';').Length == 2)
+                {
+                    string path = template.TemplateFile.Split(';')[1];
+                    stream = Assembly.GetAssembly(template.GetType()).GetManifestResourceStream(path);
+                    root = path.Replace(".zip", "").Split('.')[path.Replace(".zip", "").Split('.').Length - 1];
+                }
+                else
+                {
+                    stream = new FileStream(template.TemplateFile, FileMode.Open, FileAccess.Read);
+                    root = Path.GetFileNameWithoutExtension(template.TemplateFile);
+                }
+                var fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
+                int nbyte;
+                while ((nbyte = stream.ReadByte()) != -1)
+                {
+                    fs.WriteByte((byte)nbyte);
+                }
+                fs.Close();
+                stream.Close();
+
+                progress.SetText("展開しています...");
+
+                ZipFile.ExtractToDirectory(newProject.Path + "//Template.zip", newProject.Path);
+                FileController.Delete(newProject.Path + "//Template.zip");
+                FileController.Rename(newProject.Path + "//" + root + ".mmproj",
+                    newProject.Path + "//" + newProject.Name + ".mmproj");
+
+                var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
+                using (var sw = new StreamWriter(newProject.Path + "//project.mdk") /* JSON FORMAT */)
+                {
+                    sw.WriteLine(json);
+                }
+
+                string rootpath = newProject.Path + "\\";
+                // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
+                var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
+                var q = from p in element.Element("Items").Elements()
+                        select new
                         {
-                            Name = path[0],
-                            FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                            FilePath = rootpath + item.Include
-                        });
-                    }
-                    else
+                            Include = p.Attribute("Include").Value
+                        };
+
+                foreach (var item in q)
+                {
+                    string[] path = item.Include.Split('\\');
+                    ObservableCollection<ProjectItem> cur = newProject.Items;
+                    for (int i = 0; i < path.Length; i++)
                     {
-                        // do not FILE
-                        if (i != path.Length - 1)
+                        if (path.Length - 1 == 0)
                         {
-                            // nf directory
-                            if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                            newProject.Items.Add(new ProjectItem
+                            {
+                                Name = path[0],
+                                FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                FilePath = rootpath + item.Include
+                            });
+                        }
+                        else
+                        {
+                            // do not FILE
+                            if (i != path.Length - 1)
+                            {
+                                // nf directory
+                                if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                                {
+                                    cur.Add(new ProjectItem
+                                    {
+                                        Name = path[i],
+                                        FileType = "DIRECTORY",
+                                        FilePath = rootpath + item.Include
+                                    });
+                                }
+                                cur = cur.Single(w => w.Name == path[i]).Children;
+                            }
+                            // FILE
+                            else
                             {
                                 cur.Add(new ProjectItem
                                 {
                                     Name = path[i],
-                                    FileType = "DIRECTORY",
+                                    FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
                                     FilePath = rootpath + item.Include
                                 });
                             }
-                            cur = cur.Single(w => w.Name == path[i]).Children;
-                        }
-                        // FILE
-                        else
-                        {
-                            cur.Add(new ProjectItem
-                            {
-                                Name = path[i],
-                                FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
-                                FilePath = rootpath + item.Include
-                            });
                         }
                     }
                 }
-            }
 
-            this.MainWindowViewModel.IsLoadedProject = true;
-            this.MainWindowViewModel.CurrentProject = newProject;
-            this.MainWindowViewModel.RecentProjects.Add(newProject);
-            //
-            var setup = ProcessManager.GetSetupProcessFromId(template.SetupProcId);
-            setup.Setup(newProject.Path, this.ProjectVersion);
-            //
+                this.MainWindowViewModel.IsLoadedProject = true;
+                this.MainWindowViewModel.CurrentProject = newProject;
+                this.MainWindowViewModel.RecentProjects.Add(newProject);
+                //
+                progress.SetText("セットアップしています...");
+                var setup = ProcessManager.GetSetupProcessFromId(template.SetupProcId);
+                setup.Text = progress.SetText;
+                setup.Value = progress.SetValue;
+                setup.Indeterminate = progress.SetIndeterminate;
+                setup.Process(newProject.Path, this.ProjectVersion);
+                progress.Close();
+
+                var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */== "Start");
+                if (tab != null)
+                    this.MainWindowViewModel.Tabs.Remove(tab);
+            };
+            Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 
-            var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */ == "Start");
-            if (tab != null)
-                this.MainWindowViewModel.Tabs.Remove(tab);
         }
 
         public bool CanOK()

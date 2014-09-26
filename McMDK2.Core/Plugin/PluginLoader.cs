@@ -91,7 +91,7 @@ namespace McMDK2.Core.Plugin
             public List<IMod> mods = null;
 
             [ImportMany]
-            public List<ISetup> setup = null;
+            public List<Setup> setup = null;
 
             public AssemblyPluginLoader()
             {
