@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 
 using Livet;
+using McMDK2.Core.Net;
 using McMDK2.ViewModels.TabPages;
 using McMDK2.Views.TabPages;
 using Newtonsoft.Json;
@@ -102,6 +103,65 @@ namespace McMDK2
             }
             #endregion
 #endif
+            // Checking New Version
+            string response = SimpleHttp.Get(Define.ApiUpdate);
+            var json = JObject.Parse(response);
+            if (int.Parse(Define.Version.Replace(".", "")) < int.Parse(((string)json["McMDK2"]["version"]).Replace(".", "")))
+            {
+                // New version found
+                bool force = bool.Parse((string)json["McMDK2"]["force_update"]);
+                Define.FoundNewVersion = true;
+                if (force)
+                {
+                    var taskDialog = new TaskDialog();
+                    taskDialog.Caption = "Update";
+                    taskDialog.InstructionText = "McMDKの更新があります。";
+                    taskDialog.Text = String.Format(
+                        "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
+                        Environment.NewLine +
+                        "現在使用中のバージョン　　：{0}" + Environment.NewLine +
+                        "現在使用可能なバージョン ：{1}",
+                        Define.Version,
+                        (string)json["McMDK2"]["version"]
+                    );
+                    taskDialog.Icon = TaskDialogStandardIcon.Information;
+                    taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                    taskDialog.Opened += (_sender, _e) =>
+                    {
+                        ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                    };
+                    taskDialog.Show();
+
+                    //以下更新
+                }
+                else
+                {
+                    var taskDialog = new TaskDialog();
+                    taskDialog.Caption = "Update";
+                    taskDialog.InstructionText = "McMDKの更新があります。";
+                    taskDialog.Text = String.Format(
+                        "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
+                        "最新版へと更新を行いますか？" + Environment.NewLine +
+                        Environment.NewLine +
+                        "現在使用中のバージョン　　：{0}" + Environment.NewLine +
+                        "現在使用可能なバージョン ：{1}",
+                        Define.Version,
+                        (string)json["McMDK2"]["version"]
+                    );
+                    taskDialog.Icon = TaskDialogStandardIcon.Information;
+                    taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                    taskDialog.Opened += (_sender, _e) =>
+                    {
+                        ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                    };
+                    if (taskDialog.Show() == TaskDialogResult.Yes)
+                    {
+                        //以下更新
+                    }
+                }
+            }
+
+
             // Creating some directories.
             FileController.CreateDirectory(Define.AssetsDirectory);
             FileController.CreateDirectory(Define.CacheDirectory);

@@ -47,9 +47,26 @@ namespace McMDK2.Core
             }
         }
 
+        private static bool? _FoundNewVersion = null;
+
+        public static bool FoundNewVersion
+        {
+            get
+            {
+                if (_FoundNewVersion == null)
+                    return false;
+                return (bool)_FoundNewVersion;
+            }
+            set
+            {
+                if (_FoundNewVersion == null)
+                    _FoundNewVersion = value;
+            }
+        }
+
         private static readonly string VersionNo = "2.0.0";
 
-        private static readonly long ReleaseNo = 27;
+        private static readonly long ReleaseNo = 25;
 
         public static readonly string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
 
@@ -80,6 +97,8 @@ namespace McMDK2.Core
 
 
         private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
+
+        public static readonly string ApiUpdate = ApiEndPoint + "client/update.json/";
 
         public static readonly string ApiVersionsList = ApiEndPoint + "versions/list.php";
         public static readonly string ApiForgeVerList = ApiEndPoint + "versions/all_versions/{0}";

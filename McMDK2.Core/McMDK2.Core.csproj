@@ -44,6 +44,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +76,7 @@
     <Compile Include="Minecaft\ServerStatus.cs" />
     <Compile Include="Minecaft\Session.cs" />
     <Compile Include="Minecaft\UserAuthentication.cs" />
+    <Compile Include="Net\SimpleHttp.cs" />
     <Compile Include="Objects\Composition.cs" />
     <Compile Include="Objects\Notification.cs" />
     <Compile Include="Patcher.cs" />
