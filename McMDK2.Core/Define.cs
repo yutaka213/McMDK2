@@ -98,7 +98,9 @@ namespace McMDK2.Core
 
         private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
 
-        public static readonly string ApiUpdate = ApiEndPoint + "client/update.json/";
+        public static readonly string ApiUpdate = ApiEndPoint + "client/update.json";
+        public static readonly string ApiCreateClientToken = ApiEndPoint + "client/token/create/{0}.json";
+        public static readonly string ApiValidateClientToken = ApiEndPoint + "client/token/validation/{0}.json";
 
         public static readonly string ApiVersionsList = ApiEndPoint + "versions/list.php";
         public static readonly string ApiForgeVerList = ApiEndPoint + "versions/all_versions/{0}";

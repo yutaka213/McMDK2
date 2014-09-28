@@ -36,7 +36,7 @@ namespace McMDK2.Core.Plugin
                     return;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("プロセスの登録に失敗しました。");
             }

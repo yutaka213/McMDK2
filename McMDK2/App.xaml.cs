@@ -116,16 +116,15 @@ namespace McMDK2
                     var taskDialog = new TaskDialog();
                     taskDialog.Caption = "Update";
                     taskDialog.InstructionText = "McMDKの更新があります。";
-                    taskDialog.Text = String.Format(
-                        "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
-                        Environment.NewLine +
+                    taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。";
+                    taskDialog.DetailsExpandedText = String.Format(
                         "現在使用中のバージョン　　：{0}" + Environment.NewLine +
                         "現在使用可能なバージョン ：{1}",
                         Define.Version,
-                        (string)json["McMDK2"]["version"]
-                    );
-                    taskDialog.Icon = TaskDialogStandardIcon.Information;
-                    taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                        (string)json["McMDK2"]["version"]);
+                    taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
+                    taskDialog.DetailsExpanded = false;
+                    taskDialog.Icon = TaskDialogStandardIcon.Information; taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
                     taskDialog.Opened += (_sender, _e) =>
                     {
                         ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
@@ -139,15 +138,15 @@ namespace McMDK2
                     var taskDialog = new TaskDialog();
                     taskDialog.Caption = "Update";
                     taskDialog.InstructionText = "McMDKの更新があります。";
-                    taskDialog.Text = String.Format(
-                        "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
-                        "最新版へと更新を行いますか？" + Environment.NewLine +
-                        Environment.NewLine +
+                    taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
+                                      "最新版へと更新を行いますか？";
+                    taskDialog.DetailsExpandedText = String.Format(
                         "現在使用中のバージョン　　：{0}" + Environment.NewLine +
                         "現在使用可能なバージョン ：{1}",
                         Define.Version,
-                        (string)json["McMDK2"]["version"]
-                    );
+                        (string)json["McMDK2"]["version"]);
+                    taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
+                    taskDialog.DetailsExpanded = false;
                     taskDialog.Icon = TaskDialogStandardIcon.Information;
                     taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
                     taskDialog.Opened += (_sender, _e) =>
