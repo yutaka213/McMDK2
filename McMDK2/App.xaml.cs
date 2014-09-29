@@ -31,36 +31,19 @@ namespace McMDK2
             DispatcherHelper.UIDispatcher = Dispatcher;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+#if !DEBUG
             // Checking Account Information
             // あくまで簡易的なもの
-#if !DEBUG
             #region MINECRAFT ACCOUNT CHECK
-            string mcdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft"; /* %appdata%/.minecraft */
-            if (!FileController.Exists(mcdir + "\\launcher_profiles.json"))
+            if(!Define.GetSettings().IsCheckedAccount)
             {
-                var taskDialog = new TaskDialog();
-                taskDialog.Caption = "Error";
-                taskDialog.InstructionText = ".minecraft を確認できませんでした。";
-                taskDialog.Text = "Minecraft Launcherを一度起動させて、ログインしてから、もう一度試してください。";
-                taskDialog.Icon = TaskDialogStandardIcon.Error;
-                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
-                taskDialog.Opened += (_sender, _e) =>
-                {
-                    ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
-                };
-                taskDialog.Show();
-
-                Environment.Exit(0);
-            }
-            using (var reader = File.OpenText(mcdir + "\\launcher_profiles.json"))
-            {
-                var o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-                if (o["selectedUser"] == null)
+                string mcdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft"; /* %appdata%/.minecraft */
+                if (!FileController.Exists(mcdir + "\\launcher_profiles.json"))
                 {
                     var taskDialog = new TaskDialog();
                     taskDialog.Caption = "Error";
-                    taskDialog.InstructionText = "Profile を確認できませんでした。";
-                    taskDialog.Text = "Minecraft Launcherでログインしてから、もう一度試してください。";
+                    taskDialog.InstructionText = ".minecraft を確認できませんでした。";
+                    taskDialog.Text = "Minecraft Launcherを一度起動させて、ログインしてから、もう一度試してください。";
                     taskDialog.Icon = TaskDialogStandardIcon.Error;
                     taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
                     taskDialog.Opened += (_sender, _e) =>
@@ -71,35 +54,57 @@ namespace McMDK2
 
                     Environment.Exit(0);
                 }
-
-                string uuid = (string)o["selectedUser"];
-                Session session = new Session();
-                Session.User profile;
-                try
+                using (var reader = File.OpenText(mcdir + "\\launcher_profiles.json"))
                 {
-                    profile = session.GetUserProfileFromUUID(uuid);
-                }
-                catch (Exception)
-                {
-                    profile = null;
-                }
-                if (ValueChecker.IsNull(profile))
-                {
-                    var taskDialog = new TaskDialog();
-                    taskDialog.Caption = "Error";
-                    taskDialog.InstructionText = "不正な UUID を検出しました。";
-                    taskDialog.Text = "Minecraft Launcher に登録されているユーザーのUUIDが不正です。再度ログインした後、もう一度試してください。";
-                    taskDialog.Icon = TaskDialogStandardIcon.Error;
-                    taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
-                    taskDialog.Opened += (_sender, _e) =>
+                    var o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                    if (o["selectedUser"] == null)
                     {
-                        ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
-                    };
-                    taskDialog.Show();
+                        var taskDialog = new TaskDialog();
+                        taskDialog.Caption = "Error";
+                        taskDialog.InstructionText = "Profile を確認できませんでした。";
+                        taskDialog.Text = "Minecraft Launcherでログインしてから、もう一度試してください。";
+                        taskDialog.Icon = TaskDialogStandardIcon.Error;
+                        taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                        taskDialog.Opened += (_sender, _e) =>
+                        {
+                            ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                        };
+                        taskDialog.Show();
 
-                    Environment.Exit(0);
+                        Environment.Exit(0);
+                    }
+
+                    string uuid = (string)o["selectedUser"];
+                    Session session = new Session();
+                    Session.User profile;
+                    try
+                    {
+                        profile = session.GetUserProfileFromUUID(uuid);
+                    }
+                    catch (Exception)
+                    {
+                        profile = null;
+                    }
+                    if (ValueChecker.IsNull(profile))
+                    {
+                        var taskDialog = new TaskDialog();
+                        taskDialog.Caption = "Error";
+                        taskDialog.InstructionText = "不正な UUID を検出しました。";
+                        taskDialog.Text = "Minecraft Launcher に登録されているユーザーのUUIDが不正です。再度ログインした後、もう一度試してください。";
+                        taskDialog.Icon = TaskDialogStandardIcon.Error;
+                        taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                        taskDialog.Opened += (_sender, _e) =>
+                        {
+                            ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                        };
+                        taskDialog.Show();
+
+                        Environment.Exit(0);
+                    }
+                    Define.GetLogger().Info("Loggined : " + profile.Name);
+                    Define.GetSettings().IsCheckedAccount = true;
                 }
-                Define.GetLogger().Info("Loggined : " + profile.Name);
+
             }
             #endregion
 #endif
@@ -113,6 +118,7 @@ namespace McMDK2
                 Define.FoundNewVersion = true;
                 if (force)
                 {
+                    // クリ
                     var taskDialog = new TaskDialog();
                     taskDialog.Caption = "Update";
                     taskDialog.InstructionText = "McMDKの更新があります。";
@@ -124,7 +130,8 @@ namespace McMDK2
                         (string)json["McMDK2"]["version"]);
                     taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
                     taskDialog.DetailsExpanded = false;
-                    taskDialog.Icon = TaskDialogStandardIcon.Information; taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                    taskDialog.Icon = TaskDialogStandardIcon.Information;
+                    taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
                     taskDialog.Opened += (_sender, _e) =>
                     {
                         ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
@@ -176,8 +183,6 @@ namespace McMDK2
 
             // Load Plugins from PluginDirectory.
             PluginLoader.Load();
-
-            // Checking Updates
         }
 
         //集約エラーハンドラ

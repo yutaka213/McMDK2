@@ -36,8 +36,6 @@ namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
-        public ApplicationInternalSettings internalSettings;
-
         public MainWindowViewModel()
         {
             this.Tabs = new ObservableCollection<TabItem>();
@@ -46,15 +44,9 @@ namespace McMDK2.ViewModels
             this.TaskText = "準備完了";
             this.SelectedTabIndex = -1;
 
-            if (this.internalSettings == null)
+            if (Define.GetSettings().RecentProjects != null)
             {
-                this.internalSettings = new ApplicationInternalSettings();
-            }
-
-            this.internalSettings.Reload();
-            if (this.internalSettings.RecentProjects != null)
-            {
-                foreach (var item in this.internalSettings.RecentProjects)
+                foreach (var item in Define.GetSettings().RecentProjects)
                 {
                     if (item != null)
                         this.RecentProjects.Add(item);
@@ -83,8 +75,8 @@ namespace McMDK2.ViewModels
                 items[j] = this.RecentProjects[i];
             }
 
-            this.internalSettings.RecentProjects = items;
-            this.internalSettings.Save();
+            Define.GetSettings().RecentProjects = items;
+            Define.GetSettings().Save();
         }
 
 

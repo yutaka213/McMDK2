@@ -29,5 +29,18 @@ namespace McMDK2.Core
                 this["recentprojects"] = value;
             }
         }
+
+        [UserScopedSetting]
+        public bool IsCheckedAccount
+        {
+            get
+            {
+                return (bool)this["ischecked"];
+            }
+            set
+            {
+                this["ischecked"] = value;
+            }
+        }
     }
 }

@@ -35,6 +35,17 @@ namespace McMDK2.Core
             return _logger;
         }
 
+        private static ApplicationInternalSettings _settings;
+        public static ApplicationInternalSettings GetSettings()
+        {
+            if (_settings == null)
+            {
+                _settings = new ApplicationInternalSettings();
+                _settings.Reload();
+            }
+            return _settings;
+        }
+
         public static bool IsDebug
         {
             get
