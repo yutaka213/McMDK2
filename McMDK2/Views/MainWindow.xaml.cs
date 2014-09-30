@@ -68,14 +68,5 @@ namespace McMDK2.Views
                 this.WindowSettings.Save();
             }
         }
-
-        public void OnMouseRightButtonDownEvent(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is TreeViewItem)
-            {
-                ((TreeViewItem)sender).IsSelected = true;
-                e.Handled = true;
-            }
-        }
     }
 }

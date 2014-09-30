@@ -330,13 +330,33 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
-        #region MouseRightButtonDownEvent
 
-        public void MouseRightButtonDownEvent(object sender, EventArgs e)
+        #region MouseRightButtonDownCommand
+        private ListenerCommand<object> _MouseRightButtonDownCommand;
+
+        public ListenerCommand<object> MouseRightButtonDownCommand
         {
-
+            get
+            {
+                if (_MouseRightButtonDownCommand == null)
+                {
+                    _MouseRightButtonDownCommand = new ListenerCommand<object>(MouseRightButtonDown);
+                }
+                return _MouseRightButtonDownCommand;
+            }
         }
 
+        public void MouseRightButtonDown(object parameter)
+        {
+            object sender = ((object[])parameter)[0];
+            var e = (MouseButtonEventArgs)((object[])parameter)[1];
+
+            if (sender is TreeViewItem)
+            {
+                ((TreeViewItem)sender).IsSelected = true;
+                e.Handled = true;
+            }
+        }
         #endregion
 
 
