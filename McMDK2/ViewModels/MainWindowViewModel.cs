@@ -330,6 +330,15 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+        #region MouseRightButtonDownEvent
+
+        public void MouseRightButtonDownEvent(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
 
         #region CurrentProject変更通知プロパティ
         private Project _CurrentProject;

@@ -206,8 +206,12 @@
                     <TreeView ItemsSource="{Binding CurrentProject.Items, Mode=TwoWay}">
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MetroTreeViewItem}">
+                                <!-- Select Item and Opening Viewer -->
                                 <Setter Property="Behaviors:MouseDoubleClickBehavior.Command" Value="{Binding DataContext.MouseDoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
                                 <Setter Property="Behaviors:MouseDoubleClickBehavior.CommandParameter" Value="{Binding}" />
+                                
+                                <!-- TODO: Remove from Code Bihind -->
+                                <EventSetter Event="TreeViewItem.MouseRightButtonDown" Handler="OnMouseRightButtonDownEvent" />
                             </Style>
                         </TreeView.ItemContainerStyle>
                         <TreeView.ItemTemplate>

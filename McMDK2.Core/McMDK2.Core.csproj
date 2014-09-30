@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationInternalSettings.cs" />
+    <Compile Include="Behaviors\DynamicContextMenuBehavior.cs" />
     <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Converter\ItemTypeToBitmapConverter.cs" />
     <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />
