@@ -77,7 +77,6 @@ namespace Fireworks
             ItemManager.RegisterExtension("page", "HTML PAGE", null);
             ItemManager.RegisterExtension("html", "HTML PAGE", new TextEditPage(), new TextEditPageViewModel("HTML"));
             ItemManager.RegisterExtension("js", "JAVASCRIPT", new TextEditPage(), new TextEditPageViewModel("JavaScript"));
-            ItemManager.RegisterExtension("", "DIRECTORY", null);              // Preview unavailable
 
             ItemManager.RegisterIcon("IMAGE", this.Id + ";Fireworks.Resources.Image_24x.png");
             ItemManager.RegisterIcon("SOUND", this.Id + ";Fireworks.Resources.Soundfile_461.png");
@@ -88,7 +87,9 @@ namespace Fireworks
             ItemManager.RegisterIcon("XML FILE", this.Id + ";Fireworks.Resources.XMLFile_828_16x.png");
             ItemManager.RegisterIcon("HTML PAGE", this.Id + ";Fireworks.Resources.HTMLPage(HTM)_825_16x_color.png");
             ItemManager.RegisterIcon("JAVASCRIPT", this.Id + ";Fireworks.Resources.LanguageOverlay_JS_32xSM.png");
-            ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
+
+            // McMDK.exe内部のものは、以下のようにすれば指定できます。
+            //ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
 
             //処理機構の登録
             ProcessManager.RegisterProcess(new ForgeSupport());

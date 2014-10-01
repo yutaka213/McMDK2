@@ -180,6 +180,9 @@ namespace McMDK2
 #pragma warning disable 612
             ItemManager.RegisterExtension("mod", "Mod", new ModdingPage(), new ModdingPageViewModel());
             ItemManager.RegisterIcon("Mod", "pack://application:,,,/Resources/ASCube_16xLG.png");
+            ItemManager.RegisterExtension("", "DIRECTORY", null);// Preview unavailable
+            ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
+
 
             // Load Plugins from PluginDirectory.
             PluginLoader.Load();
