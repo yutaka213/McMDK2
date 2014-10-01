@@ -204,14 +204,26 @@
                           Background="{DynamicResource WindowGlowBrush}"
                           BorderBrush="{DynamicResource WindowTitleForeground}">
                     <TreeView ItemsSource="{Binding CurrentProject.Items, Mode=TwoWay}">
+                        <TreeView.Resources>
+                            <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource MetroContextMenu}">
+                                <Style.Resources>
+                                    <SolidColorBrush x:Key="MenuItemSelectionFill" Color="#54545C" />
+                                </Style.Resources>
+                                <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+                            </Style>
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
+                                <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />                                
+                            </Style>
+                        </TreeView.Resources>
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MetroTreeViewItem}">
                                 <!-- Select Item and Opening Viewer -->
                                 <Setter Property="Behaviors:MouseDoubleClickBehavior.Command" Value="{Binding DataContext.MouseDoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
                                 <Setter Property="Behaviors:MouseDoubleClickBehavior.CommandParameter" Value="{Binding}" />
-                                <Setter Property="Behaviors:EventHandleBehavior.Command" Value="{Binding DataContext.MouseRightButtonDownCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
-                                <Setter Property="Behaviors:EventHandleBehavior.EventName" Value="MouseRightButtonDown" />
-                            </Style>
+                                <Setter Property="Behaviors:EventHandleBehavior.Command" Value="{Binding DataContext.PreviewMouseRightButtonDownCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
+                                <Setter Property="Behaviors:EventHandleBehavior.EventName" Value="PreviewMouseRightButtonDown" />
+                             </Style>
                         </TreeView.ItemContainerStyle>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">

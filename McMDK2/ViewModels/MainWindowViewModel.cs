@@ -40,6 +40,7 @@ namespace McMDK2.ViewModels
         {
             this.Tabs = new ObservableCollection<TabItem>();
             this.RecentProjects = new ObservableCollection<Project>();
+            this.ContextMenuItems = new ObservableCollection<string>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
             this.SelectedTabIndex = -1;
@@ -331,29 +332,46 @@ namespace McMDK2.ViewModels
         #endregion
 
 
-        #region MouseRightButtonDownCommand
-        private ListenerCommand<object> _MouseRightButtonDownCommand;
+        #region PreviewMouseRightButtonDownCommand
+        private ListenerCommand<object> _PreviewMouseRightButtonDownCommand;
 
-        public ListenerCommand<object> MouseRightButtonDownCommand
+        public ListenerCommand<object> PreviewMouseRightButtonDownCommand
         {
             get
             {
-                if (_MouseRightButtonDownCommand == null)
+                if (_PreviewMouseRightButtonDownCommand == null)
                 {
-                    _MouseRightButtonDownCommand = new ListenerCommand<object>(MouseRightButtonDown);
+                    _PreviewMouseRightButtonDownCommand = new ListenerCommand<object>(PreviewMouseRightButtonDown);
                 }
-                return _MouseRightButtonDownCommand;
+                return _PreviewMouseRightButtonDownCommand;
             }
         }
 
-        public void MouseRightButtonDown(object parameter)
+        public void PreviewMouseRightButtonDown(object parameter)
         {
             object sender = ((object[])parameter)[0];
             var e = (MouseButtonEventArgs)((object[])parameter)[1];
 
             if (sender is TreeViewItem)
             {
+                // Generate ContextMenu
+                var contextMenu = new ContextMenu();
+                var item = new MenuItem { Header = "a" };
+                contextMenu.Items.Add(item);
+                ((TreeViewItem)sender).ContextMenu = contextMenu;
+
+                // Added Event
+                ((TreeViewItem)sender).MouseRightButtonDown += MouseRightButtonDown;
+            }
+        }
+
+        public void MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (sender is TreeViewItem)
+            {
                 ((TreeViewItem)sender).IsSelected = true;
+                ((TreeViewItem)sender).MouseRightButtonDown -= MouseRightButtonDown;
                 e.Handled = true;
             }
         }
@@ -444,6 +462,24 @@ namespace McMDK2.ViewModels
                 if (_RecentProjects == value)
                     return;
                 _RecentProjects = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region ContextMenuItems変更通知プロパティ
+        private ObservableCollection<string> _ContextMenuItems;
+
+        public ObservableCollection<string> ContextMenuItems
+        {
+            get
+            { return _ContextMenuItems; }
+            set
+            {
+                if (_ContextMenuItems == value)
+                    return;
+                _ContextMenuItems = value;
                 RaisePropertyChanged();
             }
         }
