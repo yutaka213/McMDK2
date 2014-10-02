@@ -35,12 +35,23 @@ namespace McMDK2.Core
             return _logger;
         }
 
-        private static ApplicationInternalSettings _settings;
-        public static ApplicationInternalSettings GetSettings()
+        private static ApplicationInternalSettings _internalSettings;
+        public static ApplicationInternalSettings GetInternalSettings()
+        {
+            if (_internalSettings == null)
+            {
+                _internalSettings = new ApplicationInternalSettings();
+                _internalSettings.Reload();
+            }
+            return _internalSettings;
+        }
+
+        private static ApplicationSettings _settings;
+        public static ApplicationSettings GetSettings()
         {
             if (_settings == null)
             {
-                _settings = new ApplicationInternalSettings();
+                _settings = new ApplicationSettings();
                 _settings.Reload();
             }
             return _settings;
@@ -77,7 +88,7 @@ namespace McMDK2.Core
 
         private static readonly string VersionNo = "2.0.0";
 
-        private static readonly long ReleaseNo = 25;
+        private static readonly long ReleaseNo = 27;
 
         public static readonly string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
 
@@ -106,6 +117,8 @@ namespace McMDK2.Core
         /// </summary>
         public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
 
+
+        public static readonly string SettingFile = AssetsDirectory + "\\settings.xml";
 
         private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
 

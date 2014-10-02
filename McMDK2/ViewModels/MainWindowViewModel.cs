@@ -45,9 +45,9 @@ namespace McMDK2.ViewModels
             this.TaskText = "準備完了";
             this.SelectedTabIndex = -1;
 
-            if (Define.GetSettings().RecentProjects != null)
+            if (Define.GetInternalSettings().RecentProjects != null)
             {
-                foreach (var item in Define.GetSettings().RecentProjects)
+                foreach (var item in Define.GetInternalSettings().RecentProjects)
                 {
                     if (item != null)
                         this.RecentProjects.Add(item);
@@ -76,8 +76,8 @@ namespace McMDK2.ViewModels
                 items[j] = this.RecentProjects[i];
             }
 
-            Define.GetSettings().RecentProjects = items;
-            Define.GetSettings().Save();
+            Define.GetInternalSettings().RecentProjects = items;
+            Define.GetInternalSettings().Save();
         }
 
 
@@ -350,7 +350,6 @@ namespace McMDK2.ViewModels
         public void PreviewMouseRightButtonDown(object parameter)
         {
             object sender = ((object[])parameter)[0];
-            var e = (MouseButtonEventArgs)((object[])parameter)[1];
 
             if (sender is TreeViewItem)
             {
@@ -371,6 +370,8 @@ namespace McMDK2.ViewModels
             if (sender is TreeViewItem)
             {
                 ((TreeViewItem)sender).IsSelected = true;
+
+                // Removed Event
                 ((TreeViewItem)sender).MouseRightButtonDown -= MouseRightButtonDown;
                 e.Handled = true;
             }

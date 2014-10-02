@@ -164,9 +164,8 @@
             </Button>
             <ComboBox ToolTip="実行構成"
                       Margin="5,0,0,0" Width="100"
-                      BorderBrush="{DynamicResource BackgroundNormal}"
-                      Foreground="{DynamicResource BlackColorBrush}">
-                <!-- Default Mode -->
+                      BorderBrush="{StaticResource BackgroundNormal}"
+                      Foreground="{StaticResource BlackColorBrush}">
                 <ComboBoxItem IsSelected="True">クライアント</ComboBoxItem>
                 <ComboBoxItem>サーバー</ComboBoxItem>
                 <ComboBoxItem>構成設定...</ComboBoxItem>
