@@ -121,7 +121,6 @@ namespace McMDK2
                     Define.FoundNewVersion = true;
                     if (force)
                     {
-                        // クリ
                         var taskDialog = new TaskDialog();
                         taskDialog.Caption = "Update";
                         taskDialog.InstructionText = "McMDKの更新があります。";

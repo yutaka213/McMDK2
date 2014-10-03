@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Media;
 using System.Xml.Linq;
 
 using Livet;
@@ -39,21 +40,15 @@ namespace McMDK2.ViewModels.TabPages
 
             this.RecentProjects = this.MainWindowViewModel.RecentProjects;
 
-#if DEBUG
+            if (Define.FoundNewVersion)
+            {
+                var item = new Notification();
+                item.NotificationText = "最新版が公開されています。" + Environment.NewLine + "「更新する」をクリックして、更新を行ってください。";
+                item.NotificationLikedText = "更新する";
+                item.NotificationBorderBrush = Brushes.Red;
 
-            var n = new Notification();
-            n.NotificationText = "最新版(2.0.0.26)が公開されています。";
-            n.NotificationLikedText = "更新する";
-            n.OnClicked += (_, __) => System.Windows.MessageBox.Show("aa");
-
-            this.Notifications.Add(n);
-
-            var n2 = new Notification();
-            n2.NotificationText = "Fireworks.dllの更新があります。";
-            n2.NotificationLikedText = "詳細を確認する";
-
-            this.Notifications.Add(n2);
-#endif
+                this.Notifications.Add(item);
+            }
 
             this.UpdateNewsFeeds();
         }
