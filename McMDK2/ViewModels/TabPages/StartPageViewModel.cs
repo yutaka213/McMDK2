@@ -217,13 +217,14 @@ namespace McMDK2.ViewModels.TabPages
         }
         #endregion
 
+
         #region OpenRecentProject
 
         public void OpenRecentProject(Project parameter)
         {
             if (FileController.Exists(parameter.Path + "\\" + parameter.Name + ".mmproj"))
             {
-                this.MainWindowViewModel.CurrentProject = parameter;
+                this.MainWindowViewModel.OpenProject(parameter.Path + "\\project.mdk");
                 var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
                 if (tab != null)
                     this.MainWindowViewModel.Tabs.Remove(tab);
@@ -246,6 +247,7 @@ namespace McMDK2.ViewModels.TabPages
         }
 
         #endregion
+
 
         #region UpdateCommand
         private ViewModelCommand _UpdateCommand;

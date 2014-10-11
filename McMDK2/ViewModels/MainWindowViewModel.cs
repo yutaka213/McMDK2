@@ -123,21 +123,33 @@ namespace McMDK2.ViewModels
 
         public void OpenProject()
         {
-            var ofd = new OpenFileDialog
+            this.OpenProject("");
+        }
+
+        public void OpenProject(string openPath)
+        {
+            if (String.IsNullOrEmpty(openPath))
             {
-                FileName = "",
-                Filter = "McMDK Main Project File (*.mdk)|*.mdk"
-            };
-            if (ofd.ShowDialog() == true)
+                var ofd = new OpenFileDialog
+                {
+                    FileName = "",
+                    Filter = "McMDK Main Project File (*.mdk)|*.mdk"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    openPath = ofd.FileName;
+                }
+            }
+            if (!String.IsNullOrEmpty(openPath))
             {
-                if (FileController.Exists(ofd.FileName))
+                if (FileController.Exists(openPath))
                 {
                     var progress = new ProgressDialogViewModel();
                     progress.SetIndeterminate(true);
                     progress.SetText("プロジェクトを読み込んでいます...");
                     progress.Action += () =>
                     {
-                        string file = ofd.FileName;
+                        string file = openPath;
                         string json;
                         using (var sr = new StreamReader(file))
                         {
@@ -161,6 +173,8 @@ namespace McMDK2.ViewModels
                             ObservableCollection<ProjectItem> cur = obj.Items;
                             for (int i = 0; i < path.Length; i++)
                             {
+                                Define.GetLogger().Debug(i + ":" + path.Length);
+
                                 if (path.Length - 1 == 0)
                                 {
                                     obj.Items.Add(new ProjectItem
@@ -174,13 +188,14 @@ namespace McMDK2.ViewModels
                                 {
                                     if (i != path.Length - 1)
                                     {
+                                        Define.GetLogger().Debug(path[i]);
                                         if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
                                         {
                                             cur.Add(new ProjectItem
                                             {
                                                 Name = path[i],
                                                 FileType = "DIRECTORY",
-                                                FilePath = rootpath + item.Include
+                                                FilePath = Path.GetDirectoryName(rootpath + item.Include)
                                             });
                                         }
                                         cur = cur.Single(w => w.Name == path[i]).Children;
@@ -358,6 +373,7 @@ namespace McMDK2.ViewModels
             {
                 var selectedItem = (ProjectItem)((TreeViewItem)sender).Header;
 
+                #region ContextMenu
                 var contextMenu = new ContextMenu();
 
                 var addMenu = new MenuItem();
@@ -401,6 +417,7 @@ namespace McMDK2.ViewModels
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
                 bitmap.EndInit();
                 subMenu.Icon = new Image { Source = bitmap };
+                subMenu.Click += DeleteItem;
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -412,6 +429,8 @@ namespace McMDK2.ViewModels
                 }
                 // Generate ContextMenu
                 ((TreeViewItem)sender).ContextMenu = contextMenu;
+
+                #endregion
 
                 // Added Event
                 ((TreeViewItem)sender).MouseRightButtonDown += MouseRightButtonDown;
@@ -430,6 +449,77 @@ namespace McMDK2.ViewModels
                 e.Handled = true;
             }
         }
+
+        private void AddItem(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #region Delete a selected item.
+        private void DeleteItem(object sender, RoutedEventArgs e)
+        {
+            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            if (FileController.Exists(item.FilePath))
+            {
+                if (MessageBox.Show("ファイルを削除しますか？", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    RemoveItem(item);
+                }
+            }
+            else
+            {
+                RemoveItem(item);
+            }
+        }
+
+        private void RemoveItem(ProjectItem item)
+        {
+            foreach (var j in this.CurrentProject.Items)
+            {
+                Define.GetLogger().Debug(j.FilePath + ":" + j.FileType);
+            }
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
+            if (i != null)
+            {
+                Define.GetLogger().Debug("OUTER:" + i.FilePath);
+                this.CurrentProject.Items.Remove(i);
+                return;
+            }
+
+            foreach (var innerItem in this.CurrentProject.Items)
+            {
+                Define.GetLogger().Debug("INNER_1:" + innerItem);
+                RecursiveRemoveItem(innerItem, item);
+            }
+        }
+
+        private void RecursiveRemoveItem(ProjectItem item, ProjectItem targetItem)
+        {
+            foreach (var innerItem in item.Children)
+            {
+                Define.GetLogger().Debug("INNER_2:" + innerItem);
+                if (innerItem.FilePath == targetItem.FilePath)
+                {
+                    Define.GetLogger().Debug("INNER_2_A:" + innerItem);
+                    item.Children.Remove(targetItem);
+                    FileController.Delete(targetItem.FileType);
+                    break;
+                }
+                else
+                {
+                    Define.GetLogger().Debug("INNER_2_B:" + innerItem);
+                    RecursiveRemoveItem(innerItem, targetItem);
+                }
+            }
+        }
+
+        #endregion
+
+        private void RenameItem(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
 
 
