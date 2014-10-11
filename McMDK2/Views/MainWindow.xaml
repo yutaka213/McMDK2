@@ -38,6 +38,10 @@
         
         <l:InteractionMessageTrigger MessageKey="ShowNewWizard" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction WindowType="{x:Type v:NewWizardWindow}"                                          
+                                                  Mode="Modal" />    
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="ShowRenameDialog" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:RenameDialog}"
                                                   Mode="Modal" />
         </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="ProgressDialog" Messenger="{Binding Messenger}">
@@ -214,6 +218,7 @@
                                 <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
                                 <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
                                 <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+                                <Setter Property="FontSize" Value="12" />
                             </Style>
                         </TreeView.Resources>
                         <TreeView.ItemContainerStyle>

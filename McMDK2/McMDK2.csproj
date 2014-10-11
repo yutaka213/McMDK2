@@ -87,6 +87,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModels\Dialogs\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\RenameDialogViewModel.cs" />
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\NullPageViewModel.cs" />
@@ -96,6 +97,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\RenameDialog.xaml.cs">
+      <DependentUpon>RenameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewWizardWindow.xaml.cs">
       <DependentUpon>NewWizardWindow.xaml</DependentUpon>
@@ -114,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ProgressDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\RenameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

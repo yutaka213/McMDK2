@@ -177,12 +177,15 @@ namespace McMDK2.ViewModels
 
                                 if (path.Length - 1 == 0)
                                 {
-                                    obj.Items.Add(new ProjectItem
+                                    if (FileController.Exists(rootpath + path[0]))
                                     {
-                                        Name = path[0],
-                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                        FilePath = rootpath + item.Include
-                                    });
+                                        obj.Items.Add(new ProjectItem
+                                        {
+                                            Name = path[0],
+                                            FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                            FilePath = rootpath + item.Include
+                                        });
+                                    }
                                 }
                                 else
                                 {
@@ -227,7 +230,7 @@ namespace McMDK2.ViewModels
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("ファイルを開けませんでした。");
+                    MessageBox.Show("ファイルを開けませんでした。");
                 }
             }
         }
@@ -422,6 +425,7 @@ namespace McMDK2.ViewModels
 
                 subMenu = new MenuItem();
                 subMenu.Header = "名前を変更";
+                subMenu.Click += RenameItem;
                 contextMenu.Items.Add(subMenu);
 
                 if (selectedItem.FileType == "DIRECTORY")
@@ -470,25 +474,22 @@ namespace McMDK2.ViewModels
             {
                 RemoveItem(item);
             }
+            var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name);
+            if (tab != null)
+                this.Tabs.Remove(tab);
         }
 
         private void RemoveItem(ProjectItem item)
         {
-            foreach (var j in this.CurrentProject.Items)
-            {
-                Define.GetLogger().Debug(j.FilePath + ":" + j.FileType);
-            }
             var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
             if (i != null)
             {
-                Define.GetLogger().Debug("OUTER:" + i.FilePath);
                 this.CurrentProject.Items.Remove(i);
                 return;
             }
 
             foreach (var innerItem in this.CurrentProject.Items)
             {
-                Define.GetLogger().Debug("INNER_1:" + innerItem);
                 RecursiveRemoveItem(innerItem, item);
             }
         }
@@ -497,17 +498,14 @@ namespace McMDK2.ViewModels
         {
             foreach (var innerItem in item.Children)
             {
-                Define.GetLogger().Debug("INNER_2:" + innerItem);
                 if (innerItem.FilePath == targetItem.FilePath)
                 {
-                    Define.GetLogger().Debug("INNER_2_A:" + innerItem);
                     item.Children.Remove(targetItem);
                     FileController.Delete(targetItem.FileType);
                     break;
                 }
                 else
                 {
-                    Define.GetLogger().Debug("INNER_2_B:" + innerItem);
                     RecursiveRemoveItem(innerItem, targetItem);
                 }
             }
@@ -515,10 +513,18 @@ namespace McMDK2.ViewModels
 
         #endregion
 
+        #region Rename a  selected item.
         private void RenameItem(object sender, RoutedEventArgs e)
         {
-
+            // Input New Name
+            Messenger.Raise(new TransitionMessage("ShowRenameDialog"));
         }
+
+        public void RenameItem(ProjectItem item)
+        {
+        }
+
+        #endregion
 
         #endregion
 
