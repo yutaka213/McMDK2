@@ -212,7 +212,8 @@
                             </Style>
                             <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
                                 <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
-                                <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />                                
+                                <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
+                                <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
                             </Style>
                         </TreeView.Resources>
                         <TreeView.ItemContainerStyle>

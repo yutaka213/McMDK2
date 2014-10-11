@@ -83,6 +83,7 @@
     <Compile Include="Objects\Composition.cs" />
     <Compile Include="Objects\Notification.cs" />
     <Compile Include="Patcher.cs" />
+    <Compile Include="Plugin\ContextMenuManager.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
     <Compile Include="Plugin\Internal\XmlBaseMod.cs" />
     <Compile Include="Plugin\Internal\XmlBaseModView.cs" />
@@ -123,7 +124,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Extensions\" />
     <Folder Include="Items\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

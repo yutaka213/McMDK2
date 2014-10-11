@@ -6,8 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
 using Livet;
@@ -349,14 +352,65 @@ namespace McMDK2.ViewModels
 
         public void PreviewMouseRightButtonDown(object parameter)
         {
+            /* parameter[0] is sender, parameter[1] is EventArgs */
             object sender = ((object[])parameter)[0];
-
             if (sender is TreeViewItem)
             {
-                // Generate ContextMenu
+                var selectedItem = (ProjectItem)((TreeViewItem)sender).Header;
+
                 var contextMenu = new ContextMenu();
-                var item = new MenuItem { Header = "a" };
-                contextMenu.Items.Add(item);
+
+                var addMenu = new MenuItem();
+                addMenu.Header = "追加";
+                contextMenu.Items.Add(addMenu);
+
+                var sep = new Separator();
+                contextMenu.Items.Add(sep);
+
+                var subMenu = new MenuItem();
+                subMenu.Header = "切り取り";
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
+                bitmap.EndInit();
+                subMenu.Icon = new Image { Source = bitmap };
+                contextMenu.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "コピー";
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
+                bitmap.EndInit();
+                subMenu.Icon = new Image { Source = bitmap };
+                contextMenu.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "貼り付け";
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
+                bitmap.EndInit();
+                subMenu.Icon = new Image { Source = bitmap };
+                contextMenu.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "削除";
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
+                bitmap.EndInit();
+                subMenu.Icon = new Image { Source = bitmap };
+                contextMenu.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "名前を変更";
+                contextMenu.Items.Add(subMenu);
+
+                if (selectedItem.FileType == "DIRECTORY")
+                {
+                }
+                // Generate ContextMenu
                 ((TreeViewItem)sender).ContextMenu = contextMenu;
 
                 // Added Event
