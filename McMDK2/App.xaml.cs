@@ -36,7 +36,7 @@ namespace McMDK2
             // Checking Account Information
             // あくまで簡易的なもの
             #region MINECRAFT ACCOUNT CHECK
-            if(!Define.GetSettings().IsCheckedAccount)
+            if (!(bool)Define.GetSettings().Settings["IsCheckedAccount"])
             {
                 string mcdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft"; /* %appdata%/.minecraft */
                 if (!FileController.Exists(mcdir + "\\launcher_profiles.json"))
@@ -103,7 +103,7 @@ namespace McMDK2
                         Environment.Exit(0);
                     }
                     Define.GetLogger().Info("Loggined : " + profile.Name);
-                    Define.GetSettings().IsCheckedAccount = true;
+                    Define.GetSettings().Settings["IsCheckedAccount"] = true;
                 }
 
             }
