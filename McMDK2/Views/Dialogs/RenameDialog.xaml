@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:McMDK2.ViewModels.Dialogs"
         WindowStartupLocation="CenterOwner"
         Title="名前の変更"
-        Height="150" Width="525">
+        Height="140" Width="525">
     
     <Window.DataContext>
         <vm:RenameDialogViewModel/>
@@ -18,8 +18,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -31,9 +29,35 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger}">
+            <l:WindowInteractionMessageAction  InvokeActionOnlyWhenWindowIsActive="False"/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     
     <Grid>
-        
+        <TextBlock Text="名前を変更" FontSize="13" Margin="10,10,0,0"
+                   Foreground="{StaticResource Foreground}"/>
+        <TextBox Text="{Binding ToName}" 
+                 FontSize="12"
+                 Height="22"
+                 Style="{x:Null}"
+                 Margin="20,35,50,0"
+                 VerticalAlignment="Top"
+                 Background="{StaticResource Foreground}"
+                 Foreground="{StaticResource Background}"/>
+        <Button Content="OK" 
+                Style="{x:Null}"
+                Command="{Binding OkCommand}"
+                Height="25" Width="80"
+                Margin="0,0,100,10"
+                Foreground="{StaticResource Background}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <Button Content="Cancel"
+                Style="{x:Null}"
+                Command="{Binding CancelCommand}"
+                Height="25" Width="80"
+                Margin="0,0,10,10"
+                Foreground="{StaticResource Background}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
 </Window>

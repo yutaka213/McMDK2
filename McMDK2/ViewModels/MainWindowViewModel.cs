@@ -173,8 +173,6 @@ namespace McMDK2.ViewModels
                             ObservableCollection<ProjectItem> cur = obj.Items;
                             for (int i = 0; i < path.Length; i++)
                             {
-                                Define.GetLogger().Debug(i + ":" + path.Length);
-
                                 if (path.Length - 1 == 0)
                                 {
                                     if (FileController.Exists(rootpath + path[0]))
@@ -191,7 +189,6 @@ namespace McMDK2.ViewModels
                                 {
                                     if (i != path.Length - 1)
                                     {
-                                        Define.GetLogger().Debug(path[i]);
                                         if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
                                         {
                                             cur.Add(new ProjectItem
@@ -516,12 +513,61 @@ namespace McMDK2.ViewModels
         #region Rename a  selected item.
         private void RenameItem(object sender, RoutedEventArgs e)
         {
+            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            var vm = new RenameDialogViewModel();
+            vm.ToName = item.Name;
             // Input New Name
-            Messenger.Raise(new TransitionMessage("ShowRenameDialog"));
+            Messenger.Raise(new TransitionMessage(vm, "ShowRenameDialog"));
+            this.RenameItem(item, vm.ToName);
         }
 
-        public void RenameItem(ProjectItem item)
+        public void RenameItem(ProjectItem item, string newName)
         {
+            if (String.IsNullOrWhiteSpace(newName))
+            {
+                return;
+            }
+
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
+            if (i != null)
+            {
+                string oldPath = i.FilePath;
+
+                item.Name = newName;
+                item.FilePath = Path.GetDirectoryName(item.FilePath) + "\\" + newName;
+                this.CurrentProject.Items.Remove(i);
+                this.CurrentProject.Items.Add(item);
+                FileController.Rename(oldPath, item.FilePath);
+                return;
+            }
+
+            foreach (var innerItem in this.CurrentProject.Items)
+            {
+                RecursiveRenameItem(innerItem, item, newName);
+            }
+        }
+
+        private void RecursiveRenameItem(ProjectItem item, ProjectItem targetItem, string newName)
+        {
+            foreach (var innerItem in item.Children)
+            {
+                if (innerItem.FilePath == targetItem.FilePath)
+                {
+                    string oldPath = innerItem.FilePath;
+
+                    targetItem.Name = newName;
+                    targetItem.FilePath = Path.GetDirectoryName(targetItem.FilePath) + "\\" + newName;
+                    item.Children.Remove(innerItem);
+                    item.Children.Add(targetItem);
+
+                    FileController.Rename(oldPath, targetItem.FilePath);
+                    break;
+                }
+                else
+                {
+                    RecursiveRenameItem(innerItem, targetItem, newName);
+                }
+            }
         }
 
         #endregion
