@@ -173,6 +173,7 @@ namespace McMDK2.ViewModels
                             ObservableCollection<ProjectItem> cur = obj.Items;
                             for (int i = 0; i < path.Length; i++)
                             {
+                                // Include="ITEM.EXT"
                                 if (path.Length - 1 == 0)
                                 {
                                     if (FileController.Exists(rootpath + path[0]))
@@ -181,25 +182,38 @@ namespace McMDK2.ViewModels
                                         {
                                             Name = path[0],
                                             FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                            FilePath = rootpath + item.Include
+                                            FilePath = rootpath + path[0]
                                         });
                                     }
                                 }
+                                // Include="DIR/ITEM.EXT"
                                 else
                                 {
+                                    Define.GetLogger().Debug(i);
+                                    // DIR
                                     if (i != path.Length - 1)
                                     {
-                                        if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                                        var sb = new StringBuilder();
+                                        for (int j = 0; j < i + 1; j++)
+                                        {
+                                            sb.Append(path[j]);
+                                            sb.Append("\\");
+                                        }
+                                        sb.Remove(sb.Length - 1, 1);
+                                        Define.GetLogger().Debug(rootpath + sb.ToString());
+
+                                        if (cur.SingleOrDefault(w => w.FilePath == rootpath + sb.ToString()) == null)
                                         {
                                             cur.Add(new ProjectItem
                                             {
                                                 Name = path[i],
                                                 FileType = "DIRECTORY",
-                                                FilePath = Path.GetDirectoryName(rootpath + item.Include)
+                                                FilePath = rootpath + sb.ToString()
                                             });
                                         }
-                                        cur = cur.Single(w => w.Name == path[i]).Children;
+                                        cur = cur.Single(w => w.FilePath == rootpath + sb.ToString()).Children;
                                     }
+                                    // ITEM.EXT
                                     else
                                     {
                                         cur.Add(new ProjectItem
@@ -482,6 +496,7 @@ namespace McMDK2.ViewModels
             if (i != null)
             {
                 this.CurrentProject.Items.Remove(i);
+                FileController.Delete(i.FilePath);
                 return;
             }
 
@@ -498,7 +513,8 @@ namespace McMDK2.ViewModels
                 if (innerItem.FilePath == targetItem.FilePath)
                 {
                     item.Children.Remove(targetItem);
-                    FileController.Delete(targetItem.FileType);
+                    Define.GetLogger().Debug(targetItem.FilePath);
+                    FileController.Delete(targetItem.FilePath);
                     break;
                 }
                 else
@@ -537,6 +553,7 @@ namespace McMDK2.ViewModels
                 item.FilePath = Path.GetDirectoryName(item.FilePath) + "\\" + newName;
                 this.CurrentProject.Items.Remove(i);
                 this.CurrentProject.Items.Add(item);
+
                 FileController.Rename(oldPath, item.FilePath);
                 return;
             }
@@ -559,6 +576,9 @@ namespace McMDK2.ViewModels
                     targetItem.FilePath = Path.GetDirectoryName(targetItem.FilePath) + "\\" + newName;
                     item.Children.Remove(innerItem);
                     item.Children.Add(targetItem);
+
+                    Define.GetLogger().Debug("2:" + oldPath);
+                    Define.GetLogger().Debug("2:" + targetItem.FilePath);
 
                     FileController.Rename(oldPath, targetItem.FilePath);
                     break;
