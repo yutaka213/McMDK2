@@ -189,7 +189,6 @@ namespace McMDK2.ViewModels
                                 // Include="DIR/ITEM.EXT"
                                 else
                                 {
-                                    Define.GetLogger().Debug(i);
                                     // DIR
                                     if (i != path.Length - 1)
                                     {
@@ -200,7 +199,6 @@ namespace McMDK2.ViewModels
                                             sb.Append("\\");
                                         }
                                         sb.Remove(sb.Length - 1, 1);
-                                        Define.GetLogger().Debug(rootpath + sb.ToString());
 
                                         if (cur.SingleOrDefault(w => w.FilePath == rootpath + sb.ToString()) == null)
                                         {
@@ -513,7 +511,6 @@ namespace McMDK2.ViewModels
                 if (innerItem.FilePath == targetItem.FilePath)
                 {
                     item.Children.Remove(targetItem);
-                    Define.GetLogger().Debug(targetItem.FilePath);
                     FileController.Delete(targetItem.FilePath);
                     break;
                 }
@@ -576,9 +573,6 @@ namespace McMDK2.ViewModels
                     targetItem.FilePath = Path.GetDirectoryName(targetItem.FilePath) + "\\" + newName;
                     item.Children.Remove(innerItem);
                     item.Children.Add(targetItem);
-
-                    Define.GetLogger().Debug("2:" + oldPath);
-                    Define.GetLogger().Debug("2:" + targetItem.FilePath);
 
                     FileController.Rename(oldPath, targetItem.FilePath);
                     break;
