@@ -67,7 +67,7 @@ namespace Fireworks
 #pragma warning disable 612
             ItemManager.RegisterExtension("png", "IMAGE", new ImagePage(), new ImagePageViewModel());
             ItemManager.RegisterExtension("ogg", "SOUND", null);               // Preview unavailable
-            ItemManager.RegisterExtension("txt", "PLAIN TEXT", new TextPage(), new TextPageViewModel());
+            ItemManager.RegisterExtension("txt", "PLAIN TEXT", new TextEditPage(), new TextEditPageViewModel(""));
             ItemManager.RegisterExtension("lang", "PROPERTIES", null);
             ItemManager.RegisterExtension("properties", "PROPERTIES", null);
             ItemManager.RegisterExtension("json", "SCRIPT FILE", null);

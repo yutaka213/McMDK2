@@ -41,17 +41,25 @@ namespace Fireworks.Behaviors
             var texteditor = behavior.AssociatedObject as TextEditor;
             if (texteditor != null)
             {
-                if (e.OldValue == e.NewValue)
+                if (e.NewValue == null)
                 {
                     return;
                 }
-                texteditor.Text = (string)e.NewValue;
+                if (texteditor.Document != null)
+                {
+                    var offset = texteditor.CaretOffset;
+                    texteditor.Document.Text = (string)e.NewValue;
+                    texteditor.CaretOffset = offset;
+                }
             }
         }
 
         public void TextChangedEvent(object sender, EventArgs e)
         {
-            this.Text = ((TextEditor)sender).Text;
+            var textEditor = sender as TextEditor;
+            if (textEditor != null)
+                if (textEditor.Document != null)
+                    Text = textEditor.Document.Text;
         }
 
         protected override void OnAttached()
