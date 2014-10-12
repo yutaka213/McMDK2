@@ -233,6 +233,7 @@ namespace McMDK2.ViewModels
                             this.Tabs.Remove(tab);
 
                         this.RecentProjects.Add(obj);
+                        this.IsLoadedProject = true;
                     };
                     Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
 
@@ -472,24 +473,23 @@ namespace McMDK2.ViewModels
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
             var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
-            if (FileController.Exists(item.FilePath))
-            {
-                if (MessageBox.Show("ファイルを削除しますか？", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    RemoveItem(item);
-                }
-            }
-            else
-            {
-                RemoveItem(item);
-            }
-            var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name);
-            if (tab != null)
-                this.Tabs.Remove(tab);
+            RemoveItem(item);
         }
 
         private void RemoveItem(ProjectItem item)
         {
+            if (FileController.Exists(item.FilePath))
+            {
+                if (MessageBox.Show("ファイルを削除しますか？", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
+            var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name);
+            if (tab != null)
+                this.Tabs.Remove(tab);
+
+
             var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
             if (i != null)
             {
@@ -586,6 +586,29 @@ namespace McMDK2.ViewModels
 
         #endregion
 
+        #endregion
+
+
+        // from Menu Bar.
+        #region DeleteItemCommand
+        private ViewModelCommand _DeleteItemCommand;
+
+        public ViewModelCommand DeleteItemCommand
+        {
+            get
+            {
+                if (_DeleteItemCommand == null)
+                {
+                    _DeleteItemCommand = new ViewModelCommand(DeleteItem);
+                }
+                return _DeleteItemCommand;
+            }
+        }
+
+        public void DeleteItem()
+        {
+
+        }
         #endregion
 
 

@@ -59,6 +59,7 @@
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="Behaviors\DynamicContextMenuBehavior.cs" />
     <Compile Include="Behaviors\EventHandleBehavior.cs" />
+    <Compile Include="Behaviors\Internal\AsmResolver.cs" />
     <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Converter\ItemTypeToBitmapConverter.cs" />
     <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />

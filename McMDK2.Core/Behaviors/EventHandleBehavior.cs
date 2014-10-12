@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using McMDK2.Core.Behaviors.Internal;
 
 namespace McMDK2.Core.Behaviors
 {
@@ -49,8 +50,8 @@ namespace McMDK2.Core.Behaviors
                     }
                     catch (Exception e_)
                     {
-                        // PresentationCore.dll から取得しとけばいい感じある(
-                        _d = Delegate.CreateDelegate(typeof(EventRoute).Assembly.GetType(GetTargetHandler(e_.Message)), info);
+                        string typeName = GetTargetHandler(e_.Message);
+                        _d = Delegate.CreateDelegate(AsmResolver.GetTypeFromString(typeName), info);
                         element.GetType().GetEvent((string)e.NewValue).AddEventHandler(element, _d);
                     }
                 }
@@ -65,8 +66,8 @@ namespace McMDK2.Core.Behaviors
                     }
                     catch (Exception e_)
                     {
-                        // PresentationCore.dll から取得しとけばいい感じある(
-                        _d = Delegate.CreateDelegate(typeof(EventRoute).Assembly.GetType(GetTargetHandler(e_.Message)), info);
+                        string typeName = GetTargetHandler(e_.Message);
+                        _d = Delegate.CreateDelegate(AsmResolver.GetTypeFromString(typeName), info);
                         element.GetType().GetEvent((string)e.NewValue).RemoveEventHandler(element, _d);
                     }
                 }
