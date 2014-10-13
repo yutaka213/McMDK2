@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 using System.Xml.Linq;
 
 using Livet;
@@ -71,16 +72,83 @@ namespace McMDK2.ViewModels
 
         public void Uninitialize()
         {
-            //TODO: Check
-            var items = new Project[5];
-            int length = this.RecentProjects.Count > 5 ? this.RecentProjects.Count - 5 : 0;
-            for (int i = this.RecentProjects.Count - 1, j = 0; i >= length; i--, j++)
+            // If loaded project, save it.
+            if (this.CurrentProject != null)
             {
-                items[j] = this.RecentProjects[i];
+                using (var sw = new StreamWriter(Path.Combine(this.CurrentProject.Path, this.CurrentProject.Name + ".mmproj")))
+                {
+                    var xws = new XmlWriterSettings();
+                    xws.Encoding = Encoding.UTF8;
+                    xws.Indent = true;
+                    xws.IndentChars = "  ";
+
+                    using (var xtw = XmlWriter.Create(sw, xws))
+                    {
+                        xtw.WriteStartElement("Project");
+                        xtw.WriteStartElement("Items");
+
+                        foreach (var item in this.CurrentProject.Items)
+                        {
+                            RecursiveWrite(item, xtw);
+                        }
+
+                        xtw.WriteEndElement();
+                        xtw.WriteEndElement();
+                    }
+                }
             }
 
-            Define.GetInternalSettings().RecentProjects = items;
+            var items = new List<Project>();
+            // 保存されている個数
+            int i = 0;
+            if (Define.GetInternalSettings().RecentProjects != null)
+                i = Define.GetInternalSettings().RecentProjects.Length;
+            // 新しく開かれたプロジェクトの数
+            int g = this.RecentProjects.Count - i;
+            var rlist = this.RecentProjects.Reverse().ToList();
+            // 新しく開かれたプロジェクトの分だけ取り出す
+            for (int j = 0; j < g; j++)
+            {
+                // 重複を除外
+                if (items.Where(w => w.Id == rlist[j].Id).ToArray().Length >= 1)
+                    return;
+                items.Add(rlist[j]);
+            }
+            // 保存されている分を追加
+            for (int j = 0; j < i; j++)
+            {
+                // 同じく重複を除外
+                if (items.Where(w => w.Id == Define.GetInternalSettings().RecentProjects[j].Id).ToArray().Length >= 1)
+                    return;
+                items.Add(Define.GetInternalSettings().RecentProjects[j]);
+            }
+
+            var saveItems = new List<Project>();
+            int k = items.Count >= 5 ? 5 : items.Count;
+            for (int j = 0; j < k; j++)
+            {
+                // Items の中身をなくす
+                items[j].Items.Clear();
+                saveItems.Add(items[j]);
+            }
+
+            Define.GetInternalSettings().RecentProjects = saveItems.ToArray();
             Define.GetInternalSettings().Save();
+        }
+
+        private void RecursiveWrite(ProjectItem item, XmlWriter xtw)
+        {
+            if (item.Children.Count == 0)
+            {
+                xtw.WriteStartElement("Content");
+                xtw.WriteAttributeString("Include", item.FilePath.Replace(this.CurrentProject.Path + "\\", ""));
+                xtw.WriteEndElement();
+                return;
+            }
+            foreach (var innerItem in item.Children)
+            {
+                RecursiveWrite(innerItem, xtw);
+            }
         }
 
 
@@ -176,15 +244,12 @@ namespace McMDK2.ViewModels
                                 // Include="ITEM.EXT"
                                 if (path.Length - 1 == 0)
                                 {
-                                    if (FileController.Exists(rootpath + path[0]))
+                                    obj.Items.Add(new ProjectItem
                                     {
-                                        obj.Items.Add(new ProjectItem
-                                        {
-                                            Name = path[0],
-                                            FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                            FilePath = rootpath + path[0]
-                                        });
-                                    }
+                                        Name = path[0],
+                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                        FilePath = rootpath + path[0]
+                                    });
                                 }
                                 // Include="DIR/ITEM.EXT"
                                 else
