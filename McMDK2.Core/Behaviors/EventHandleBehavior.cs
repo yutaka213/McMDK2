@@ -45,7 +45,7 @@ namespace McMDK2.Core.Behaviors
                     var _d = Delegate.CreateDelegate(type, info);
                     try
                     {
-                        // サンプル通りなのに、通してくれない。
+                        // EventHandlerで通せない場合は、例外キャッチ先で適切な方でリフレクションを行います。
                         element.GetType().GetEvent((string)e.NewValue).AddEventHandler(element, _d);
                     }
                     catch (Exception e_)

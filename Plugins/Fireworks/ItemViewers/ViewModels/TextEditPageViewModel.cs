@@ -30,7 +30,7 @@ namespace Fireworks.ItemViewers.ViewModels
         public void Initialize(string path)
         {
             this.LoadedText = "";
-            this.Path = "";
+            this.Path = null;
             this.Loaded = false;
 
             if (FileController.Exists(path))
@@ -57,6 +57,11 @@ namespace Fireworks.ItemViewers.ViewModels
 
         public void Closing()
         {
+            if (this.Path == null || !FileController.Exists(this.Path))
+            {
+                return;
+            }
+
             if (this.Text != this.LoadedText)
             {
                 var taskDialog = new TaskDialog
