@@ -6,33 +6,125 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:McMDK2.Views.Dialogs"
         xmlns:vm="clr-namespace:McMDK2.ViewModels.Dialogs"
-        Title="AboutDialog" Height="350" Width="525">
+        xmlns:behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
+        Title="McMDK2 について"
+        WindowStartupLocation="CenterOwner"
+        MaxHeight="350" MinHeight="350" Height="350"
+        MaxWidth="740" MinWidth="740" Width="740">
     
     <Window.DataContext>
         <vm:AboutDialogViewModel/>
     </Window.DataContext>
-    
-     <i:Interaction.Triggers>
-     
-     	<!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
-    	<!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
-    	<!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています --> 
-        
-        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Hyperlink" BasedOn="{StaticResource {x:Type Hyperlink}}">
+                <Setter Property="Foreground" Value="PowderBlue" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
         </i:EventTrigger>
-
-        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
-
-        <!--WindowのCloseキャンセル処理に対応する場合は、WindowCloseCancelBehaviorの使用を検討してください-->
-
     </i:Interaction.Triggers>
     
     <Grid>
+        <TextBlock Text="McMDK" FontSize="45" FontFamily="Segoe UI Light" 
+                   Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}"/>
+        <TextBlock Text="Minecraft Mod Development Kit" FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="10,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}"/>
+        <TextBlock Text="Version" FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="10,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}" />
+        <TextBlock Text="{Binding Version}" FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="70,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Foreground="{StaticResource Foreground}"/>
+        <Image Source="{Binding UpdateStatus}" Height="16px" Width="16px"
+               UseLayoutRounding="True"
+               Margin="140,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock Text="{Binding UpdateStatusText}" FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="160,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}" />
+
+        <Separator Height="10" Margin="0,110,0,0" VerticalAlignment="Top"/>
         
+        <TextBlock FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="10,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}">
+            <Run>McMDK Home : </Run>
+            <Hyperlink NavigateUri="http://tuyapin.net/mcmdk/">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>http://tuyapin.net/mcmdk/</TextBlock>
+            </Hyperlink>
+            <Run>, McMDK.Web : </Run>
+            <Hyperlink NavigateUri="http://mcmdk.tuyapin.net/">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>http://mcmdk.tuyapin.net</TextBlock>
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="10,150,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}">
+            <Run>Build with </Run>
+            <Hyperlink NavigateUri="https://github.com/JamesNK/Newtonsoft.Json">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>Json.NET</TextBlock>
+            </Hyperlink>
+            <Run>, </Run>
+            <Hyperlink NavigateUri="https://github.com/ugaya40/Livet">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>Livet</TextBlock>
+            </Hyperlink>
+            <Run>, </Run>
+            <Run>System.Windows.Interactivity</Run>
+            <Run>, </Run>
+            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>MahApps.Metro</TextBlock>
+            </Hyperlink>
+            <Run>, </Run>
+            <LineBreak />
+            <Run>Microsoft.Expression.Interactions</Run>
+            <Run>, </Run>
+            <Hyperlink NavigateUri="http://archive.msdn.microsoft.com/WindowsAPICodePack/">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>Windows API Code Pack</TextBlock>
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock FontSize="17" FontFamily="Segoe UI Light"
+                   Margin="10,210,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{StaticResource Foreground}">
+            <Run>McMDK2 is under </Run>
+            <Hyperlink NavigateUri="http://opensource.org/licenses/MIT">
+                <i:Interaction.Behaviors>
+                    <behaviors:NavigateHyperlinkBehavior />
+                </i:Interaction.Behaviors>
+                <TextBlock>The MIT License</TextBlock>
+            </Hyperlink>
+            <Run>.</Run>
+        </TextBlock>
     </Grid>
 </Window>

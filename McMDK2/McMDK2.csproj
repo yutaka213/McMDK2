@@ -190,6 +190,9 @@
     </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
+    <Resource Include="Resources\StatusAnnotations_Complete_and_ok_16xLG_color.png" />
+    <Resource Include="Resources\StatusAnnotations_Critical_16xLG_color.png" />
+    <Resource Include="Resources\StatusAnnotations_Information_16xLG_color.png" />
     <Resource Include="Resources\ASCube_16xLG.png" />
     <Resource Include="Resources\minecraft.png" />
     <Resource Include="Resources\Content_6017.png" />

@@ -48,6 +48,10 @@
             <l:TransitionInteractionMessageAction WindowType="{x:Type vd:ProgressDialog}"
                                                   Mode="Modal" />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="ShowAboutDialog" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:AboutDialog}"
+                                                  Mode="Modal" />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <Window.Resources>
@@ -147,7 +151,8 @@
                 <MenuItem Header="Bukkit Server" />
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)" TextOptions.TextFormattingMode="Display">
-                <MenuItem Header="McMDKについて" />
+                <MenuItem Header="McMDKについて" TextOptions.TextFormattingMode="Display"
+                          Command="{Binding ShowAboutDialogCommand}"/>
             </MenuItem>
         </Menu>
 

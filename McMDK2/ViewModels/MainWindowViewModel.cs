@@ -103,7 +103,7 @@ namespace McMDK2.ViewModels
             int i = 0;
             if (Define.GetInternalSettings().RecentProjects != null)
                 i = Define.GetInternalSettings().RecentProjects.Length;
-            // 新しく開かれたプロジェクトの数
+            // 新しく開かれたプロジェクトの数を算出
             int g = this.RecentProjects.Count - i;
             var rlist = this.RecentProjects.Reverse().ToList();
             // 新しく開かれたプロジェクトの分だけ取り出す
@@ -672,6 +672,29 @@ namespace McMDK2.ViewModels
 
         public void DeleteItem()
         {
+
+        }
+        #endregion
+
+
+        #region ShowAboutDialogCommand
+        private ViewModelCommand _ShowAboutDialogCommand;
+
+        public ViewModelCommand ShowAboutDialogCommand
+        {
+            get
+            {
+                if (_ShowAboutDialogCommand == null)
+                {
+                    _ShowAboutDialogCommand = new ViewModelCommand(ShowAboutDialog);
+                }
+                return _ShowAboutDialogCommand;
+            }
+        }
+
+        public void ShowAboutDialog()
+        {
+            Messenger.Raise(new TransitionMessage("ShowAboutDialog"));
 
         }
         #endregion
