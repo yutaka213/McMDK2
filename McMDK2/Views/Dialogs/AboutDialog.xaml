@@ -126,5 +126,9 @@
             </Hyperlink>
             <Run>.</Run>
         </TextBlock>
+        
+        <Button Content="プラグイン情報" 
+                Height="25" Width="120"
+                Margin="10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

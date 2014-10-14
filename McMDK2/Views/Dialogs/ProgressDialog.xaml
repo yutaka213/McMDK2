@@ -12,13 +12,6 @@
         WindowStartupLocation="CenterOwner"
         TitlebarHeight="0"
         Height="100" Width="400">
-    
-    <!--
-    <Window.DataContext>
-        <vm:ProgressDialogViewModel/>
-    </Window.DataContext>
-    -->
-    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
