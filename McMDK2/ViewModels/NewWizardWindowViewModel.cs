@@ -22,6 +22,8 @@ using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
+using McMDK2.Plugin.Process;
+using McMDK2.Plugin.Process.Internal;
 using McMDK2.ViewModels.Dialogs;
 using Newtonsoft.Json;
 
@@ -215,6 +217,11 @@ namespace McMDK2.ViewModels
                 FileController.CreateDirectory(newProject.Path);
 
                 var template = this.SelectedItem;
+                var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate);
+
+                // Send Pre initialization event
+                template.PreInitialization(new PreInitializationArgs(newProject.Path) { Progress = ps });
+
                 string root;
                 Stream stream;
                 if (template.TemplateFile.Split(';').Length == 2)
@@ -258,6 +265,9 @@ namespace McMDK2.ViewModels
                         {
                             Include = p.Attribute("Include").Value
                         };
+
+                // Send initialization event
+                template.Initialization(new InitializationArgs(newProject.Path, q.Select(item => item.Include).ToList().AsReadOnly()) { Progress = ps });
 
                 foreach (var item in q)
                 {
@@ -308,13 +318,11 @@ namespace McMDK2.ViewModels
                 this.MainWindowViewModel.IsLoadedProject = true;
                 this.MainWindowViewModel.CurrentProject = newProject;
                 this.MainWindowViewModel.RecentProjects.Add(newProject);
-                //
                 progress.SetText("セットアップしています...");
-                var setup = ProcessManager.GetSetupProcessFromId(template.SetupProcId);
-                setup.Text = progress.SetText;
-                setup.Value = progress.SetValue;
-                setup.Indeterminate = progress.SetIndeterminate;
-                setup.Process(newProject.Path, this.ProjectVersion);
+
+                // Send post initialization event
+                template.PostInitialization(new PostInitializationArgs(newProject.Path) { Progress = ps });
+
                 progress.Close();
 
                 var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */== "Start");

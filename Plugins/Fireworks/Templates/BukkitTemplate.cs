@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using McMDK2.Plugin;
+using McMDK2.Plugin.Process;
 
 namespace Fireworks.Templates
 {
@@ -44,5 +45,18 @@ namespace Fireworks.Templates
         {
             get { return "CraftBukkit"; }
         }
+
+        public void PreInitialization(PreInitializationArgs args)
+        {
+        }
+
+        public void Initialization(InitializationArgs args)
+        {
+        }
+
+        public void PostInitialization(PostInitializationArgs args)
+        {
+        }
+
     }
 }

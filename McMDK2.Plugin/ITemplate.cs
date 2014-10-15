@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using McMDK2.Plugin.Process;
 
 namespace McMDK2.Plugin
 {
@@ -45,9 +46,19 @@ namespace McMDK2.Plugin
         string TemplateFile { get; }
 
         /// <summary>
-        /// セットアッププロセスを行うためのIDを設定します。<para />
-        /// Fireworks.dllないで定義されている"MinecraftForge"、"ModLoader"の他に、ユーザーが任意に追加したものも利用できます。
+        /// 新規プロジェクト作成プロセスの開始直後に呼び出されます。<para />
         /// </summary>
-        string SetupProcId { get; }
+        void PreInitialization(PreInitializationArgs args);
+
+        /// <summary>
+        /// TemplateFile で指定したファイルの展開直後に呼び出されます。 <para />
+        /// </summary>
+        void Initialization(InitializationArgs argsBase);
+
+        /// <summary>
+        /// 新規プロジェクト作成プロセスの終了直前に呼び出されます。<para />
+        /// FML/MLやBukkitなどのセットアップはここで行うべきです。
+        /// </summary>
+        void PostInitialization(PostInitializationArgs argsBase);
     }
 }

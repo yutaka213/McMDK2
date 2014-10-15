@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using McMDK2.Plugin;
+using McMDK2.Plugin.Process;
 
 namespace McMDK2.Core.Plugin.Internal
 {
@@ -31,9 +32,16 @@ namespace McMDK2.Core.Plugin.Internal
         /// </summary>
         public string XmlVersion { set; get; }
 
-        public string SetupProcId
+        public void Initialization(InitializationArgs args)
         {
-            get { return "MinecraftForge"; }
+        }
+
+        public void PostInitialization(PostInitializationArgs args)
+        {
+        }
+
+        public void PreInitialization(PreInitializationArgs args)
+        {
         }
     }
 }

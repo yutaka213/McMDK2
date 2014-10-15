@@ -45,8 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMod.cs" />
-    <Compile Include="Internal\Progress.cs" />
-    <Compile Include="Setup.cs" />
+    <Compile Include="Process\InitializationArgs.cs" />
+    <Compile Include="Process\Internal\ProgressSupporter.cs" />
+    <Compile Include="Process\PostInitializationArgs.cs" />
+    <Compile Include="Process\PreInitializationArgs.cs" />
+    <Compile Include="Process\ProcessArgs.cs" />
     <Compile Include="ItemView.cs" />
     <Compile Include="ItemViewEx.cs" />
     <Compile Include="ModView.cs" />
