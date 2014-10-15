@@ -111,7 +111,7 @@ namespace McMDK2.ViewModels
             {
                 // 重複を除外
                 if (items.Where(w => w.Id == rlist[j].Id).ToArray().Length >= 1)
-                    return;
+                    continue;
                 items.Add(rlist[j]);
             }
             // 保存されている分を追加
@@ -119,7 +119,7 @@ namespace McMDK2.ViewModels
             {
                 // 同じく重複を除外
                 if (items.Where(w => w.Id == Define.GetInternalSettings().RecentProjects[j].Id).ToArray().Length >= 1)
-                    return;
+                    continue;
                 items.Add(Define.GetInternalSettings().RecentProjects[j]);
             }
 
