@@ -25,13 +25,14 @@ using McMDK2.Models;
 using McMDK2.Plugin.Process;
 using McMDK2.Plugin.Process.Internal;
 using McMDK2.ViewModels.Dialogs;
+using McMDK2.ViewModels.Internal;
 using Newtonsoft.Json;
 
 namespace McMDK2.ViewModels
 {
     public class NewWizardWindowViewModel : ViewModel
     {
-        private MainWindowViewModel MainWindowViewModel;
+        private readonly MainWindowViewModel MainWindowViewModel;
 
         public NewWizardWindowViewModel(MainWindowViewModel main)
         {
@@ -218,9 +219,12 @@ namespace McMDK2.ViewModels
 
                 var template = this.SelectedItem;
                 var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate);
+                var im = new IndirectlyMessenger(this.Messenger);
+                var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
 
                 // Send Pre initialization event
-                template.PreInitialization(new PreInitializationArgs(newProject.Path) { Progress = ps });
+                var userProperties = new Dictionary<string, object>();
+                template.PreInitialization(new PreInitializationArgs(newProject.Path, userProperties, wts, ps));
 
                 string root;
                 Stream stream;
@@ -267,7 +271,7 @@ namespace McMDK2.ViewModels
                         };
 
                 // Send initialization event
-                template.Initialization(new InitializationArgs(newProject.Path, q.Select(item => item.Include).ToList().AsReadOnly()) { Progress = ps });
+                template.Initialization(new InitializationArgs(newProject.Path, q.Select(item => item.Include).ToList().AsReadOnly(), wts, ps));
 
                 foreach (var item in q)
                 {
@@ -321,7 +325,7 @@ namespace McMDK2.ViewModels
                 progress.SetText("セットアップしています...");
 
                 // Send post initialization event
-                template.PostInitialization(new PostInitializationArgs(newProject.Path) { Progress = ps });
+                template.PostInitialization(new PostInitializationArgs(newProject.Path, wts, ps));
 
                 progress.Close();
 

@@ -88,6 +88,7 @@
     <Compile Include="ViewModels\Dialogs\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RenameDialogViewModel.cs" />
+    <Compile Include="ViewModels\Internal\IndirectlyMessenger.cs" />
     <Compile Include="ViewModels\NewWizardWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\NullPageViewModel.cs" />

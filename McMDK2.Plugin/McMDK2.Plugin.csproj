@@ -47,6 +47,7 @@
     <Compile Include="IMod.cs" />
     <Compile Include="Process\InitializationArgs.cs" />
     <Compile Include="Process\Internal\ProgressSupporter.cs" />
+    <Compile Include="Process\Internal\WindowTransitionSupporter.cs" />
     <Compile Include="Process\PostInitializationArgs.cs" />
     <Compile Include="Process\PreInitializationArgs.cs" />
     <Compile Include="Process\ProcessArgs.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Process\Internal\Readme.txt" />
     <Content Include="Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

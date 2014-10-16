@@ -20,6 +20,8 @@ namespace McMDK2.Core.Data
         /// </summary>
         public string Version { set; get; }
 
+        public Dictionary<string, object> UserProperties { set; get; }
+
         public ObservableCollection<ProjectItem> Items { set; get; }
     }
 }

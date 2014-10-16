@@ -14,6 +14,11 @@ namespace McMDK2.Plugin.Process
         /// <summary>
         /// Progress Dialogを操作するやつ。
         /// </summary>
-        public ProgressSupporter Progress { set; get; }
+        public ProgressSupporter ProgressWindow { private set; get; }
+
+        public ProcessArgs(ProgressSupporter supporter)
+        {
+            this.ProgressWindow = supporter;
+        }
     }
 }
