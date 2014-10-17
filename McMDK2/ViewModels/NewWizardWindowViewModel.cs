@@ -230,7 +230,7 @@ namespace McMDK2.ViewModels
             }
         }
 
-        public async void OK()
+        public void OK()
         {
             var progress = new ProgressDialogViewModel();
             progress.SetIndeterminate(true);
@@ -252,7 +252,7 @@ namespace McMDK2.ViewModels
 
                 var template = this.SelectedItem;
                 var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate);
-                var im = new IndirectlyMessenger(progress.Messenger);
+                var im = new IndirectlyMessenger(this.Messenger);
                 var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
 
                 // Send Pre initialization event

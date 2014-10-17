@@ -13,7 +13,8 @@
         xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
         Title="新規作成ウィザード"
         Height="580" Width="825"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -109,7 +110,7 @@
                     Foreground="{DynamicResource WhiteColorBrush}"
                     Command="{Binding OKCommand}"/>
             
-            <Button Content="Cancel" FontSize="12"
+            <Button Content="キャンセル" FontSize="12"
                     Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Height="22" Width="80"
                     Style="{x:Null}"

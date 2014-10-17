@@ -10,7 +10,8 @@
         Title="McMDK2 について"
         WindowStartupLocation="CenterOwner"
         MaxHeight="350" MinHeight="350" Height="350"
-        MaxWidth="740" MinWidth="740" Width="740">
+        MaxWidth="740" MinWidth="740" Width="740"
+        ShowInTaskbar="False">
     
     <Window.DataContext>
         <vm:AboutDialogViewModel/>
