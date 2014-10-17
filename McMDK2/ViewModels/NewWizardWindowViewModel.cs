@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -16,7 +17,7 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
-
+using McMDK2.Core.Net;
 using McMDK2.Plugin;
 using McMDK2.Core;
 using McMDK2.Core.Data;
@@ -27,6 +28,7 @@ using McMDK2.Plugin.Process.Internal;
 using McMDK2.ViewModels.Dialogs;
 using McMDK2.ViewModels.Internal;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace McMDK2.ViewModels
 {
@@ -38,12 +40,23 @@ namespace McMDK2.ViewModels
         {
             this.MainWindowViewModel = main;
             this.Templates = new ObservableCollection<ITemplate>(TemplateManager.Templates);
+            this.Versions = new ObservableCollection<string>();
             this.ProjectPath = Define.ProjectsDirectory;
         }
 
         public void Initialize()
         {
-
+            Task.Run(() =>
+            {
+                var json = JArray.Parse(SimpleHttp.Get(Define.ApiVersionsList));
+                foreach (var jobj in json)
+                {
+                    DispatcherHelper.UIDispatcher.Invoke(() =>
+                    {
+                        this.Versions.Add((string)jobj["Version"]);
+                    });
+                }
+            });
         }
 
 
@@ -179,6 +192,24 @@ namespace McMDK2.ViewModels
                 _ProjectVersion = value;
                 RaisePropertyChanged();
                 this.OKCommand.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
+
+
+        #region Versions変更通知プロパティ
+        private ObservableCollection<string> _Versions;
+
+        public ObservableCollection<string> Versions
+        {
+            get
+            { return _Versions; }
+            set
+            {
+                if (_Versions == value)
+                    return;
+                _Versions = value;
+                RaisePropertyChanged();
             }
         }
         #endregion

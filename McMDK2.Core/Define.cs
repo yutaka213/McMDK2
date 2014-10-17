@@ -122,13 +122,21 @@ namespace McMDK2.Core
 
         private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
 
+        /// <summary>
+        /// https://api.tuyapin.net/mcmdk/2/client/update.json
+        /// </summary>
         public static readonly string ApiUpdate = ApiEndPoint + "client/update.json";
+
+        [Obsolete]
         public static readonly string ApiCreateClientToken = ApiEndPoint + "client/token/create/{0}.json";
+
+        [Obsolete]
         public static readonly string ApiValidateClientToken = ApiEndPoint + "client/token/validation/{0}.json";
 
-        public static readonly string ApiVersionsList = ApiEndPoint + "versions/list.php";
-        public static readonly string ApiForgeVerList = ApiEndPoint + "versions/all_versions/{0}";
-        public static readonly string ApiForgeRecommendedVerList = ApiEndPoint + "versions/recommended/{0}";
+        /// <summary>
+        /// https://api.tuyapin.net/mcmdk/2/minecraft/version.json
+        /// </summary>
+        public static readonly string ApiVersionsList = ApiEndPoint + "minecraft/version.json";
 
 
         public static readonly string UpdateUrl = "http://tuyapin.net/mcmdk/update.xml";

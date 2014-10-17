@@ -45,14 +45,17 @@ namespace Fireworks.Templates
 
         public void PreInitialization(PreInitializationArgs args)
         {
+
         }
 
         public void Initialization(InitializationArgs args)
         {
+
         }
 
         public void PostInitialization(PostInitializationArgs args)
         {
+
         }
     }
 }
