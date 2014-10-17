@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fireworks.Templates.Views;
+using McMDK2.Core;
 using McMDK2.Plugin;
 using McMDK2.Plugin.Process;
 
@@ -15,7 +17,7 @@ namespace Fireworks.Templates
     {
         public string Name
         {
-            get { return "スタンダードプロジェクト(ユニバーサル)"; }
+            get { return "スタンダードプロジェクト(Minecraft Forge ユニバーサル)"; }
         }
 
         public string Id
@@ -35,7 +37,7 @@ namespace Fireworks.Templates
 
         public string Description
         {
-            get { return "標準的なModのプロジェクトです。通常はこのプロジェクトを使用してください。"; }
+            get { return "Minecraft Forge Universalを前提Modとした、Modの作成を行うためのテンプレートです。" + Environment.NewLine + "Minecraft 1.3.2以降を対象としたModを作成することができます。"; }
         }
 
         public string TemplateFile

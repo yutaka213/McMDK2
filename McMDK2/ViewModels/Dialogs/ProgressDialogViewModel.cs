@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Livet;
 using Livet.Behaviors.Messaging;
@@ -28,13 +30,15 @@ namespace McMDK2.ViewModels.Dialogs
             this.Value = 0;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            DoAction act = Action;
-            if (act != null)
+            await Task.Run(() =>
             {
+                DoAction act = Action;
+                if (act == null)
+                    return;
                 Action();
-            }
+            });
         }
 
         public void SetIndeterminate(bool i)

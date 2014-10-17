@@ -22,7 +22,7 @@ namespace McMDK2.ViewModels.Internal
         {
             if (viewModel is ViewModel)
             {
-                this.Messenger.Raise(new TransitionMessage(windowType, (ViewModel)viewModel, GetTransitionModeFromString(transitionMode)));
+                this.Messenger.Raise(new TransitionMessage(windowType, (ViewModel)viewModel, GetTransitionModeFromString(transitionMode), "Transition"));
             }
             else
             {
@@ -46,7 +46,7 @@ namespace McMDK2.ViewModels.Internal
         {
             if (viewModel is ViewModel)
             {
-                await this.Messenger.RaiseAsync(new TransitionMessage(windowType, (ViewModel)viewModel, GetTransitionModeFromString(transitionMode)));
+                await this.Messenger.RaiseAsync(new TransitionMessage(windowType, (ViewModel)viewModel, GetTransitionModeFromString(transitionMode), "Transition"));
             }
             else
             {

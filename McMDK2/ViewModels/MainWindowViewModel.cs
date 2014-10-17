@@ -129,6 +129,7 @@ namespace McMDK2.ViewModels
             {
                 // Items の中身をなくす
                 items[j].Items.Clear();
+                items[j].UserProperties = null;
                 saveItems.Add(items[j]);
             }
 

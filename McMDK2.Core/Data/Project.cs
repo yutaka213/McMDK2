@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace McMDK2.Core.Data
 {
@@ -20,6 +21,7 @@ namespace McMDK2.Core.Data
         /// </summary>
         public string Version { set; get; }
 
+        [XmlIgnore]
         public Dictionary<string, object> UserProperties { set; get; }
 
         public ObservableCollection<ProjectItem> Items { set; get; }

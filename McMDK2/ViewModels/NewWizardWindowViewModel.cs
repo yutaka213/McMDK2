@@ -230,11 +230,13 @@ namespace McMDK2.ViewModels
             }
         }
 
-        public void OK()
+        public async void OK()
         {
             var progress = new ProgressDialogViewModel();
             progress.SetIndeterminate(true);
             progress.SetText("プロジェクトを取り出しています...");
+            // Actionは非同期で行われます。
+            // UI要素を変更する際は、Dispatcherを使用してください。
             progress.Action += () =>
             {
                 var newProject = new Project
@@ -250,12 +252,13 @@ namespace McMDK2.ViewModels
 
                 var template = this.SelectedItem;
                 var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate);
-                var im = new IndirectlyMessenger(this.Messenger);
+                var im = new IndirectlyMessenger(progress.Messenger);
                 var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
 
                 // Send Pre initialization event
                 var userProperties = new Dictionary<string, object>();
-                template.PreInitialization(new PreInitializationArgs(newProject.Path, userProperties, wts, ps));
+                template.PreInitialization(new PreInitializationArgs(newProject.Path, userProperties, wts, this.ProjectVersion, ps));
+                newProject.UserProperties = userProperties;
 
                 string root;
                 Stream stream;
@@ -350,20 +353,23 @@ namespace McMDK2.ViewModels
                     }
                 }
 
-                this.MainWindowViewModel.IsLoadedProject = true;
-                this.MainWindowViewModel.CurrentProject = newProject;
-                this.MainWindowViewModel.RecentProjects.Add(newProject);
-                progress.SetText("セットアップしています...");
-
                 // Send post initialization event
                 template.PostInitialization(new PostInitializationArgs(newProject.Path, wts, ps));
 
                 progress.Close();
 
-                var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */== "Start");
-                if (tab != null)
-                    this.MainWindowViewModel.Tabs.Remove(tab);
+                DispatcherHelper.UIDispatcher.Invoke(() =>
+                {
+                    this.MainWindowViewModel.IsLoadedProject = true;
+                    this.MainWindowViewModel.CurrentProject = newProject;
+                    this.MainWindowViewModel.RecentProjects.Add(newProject);
+
+                    var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */== "Start");
+                    if (tab != null)
+                        this.MainWindowViewModel.Tabs.Remove(tab);
+                });
             };
+            //await Messenger.RaiseAsync(new TransitionMessage(progress, "ProgressDialog"));
             Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 

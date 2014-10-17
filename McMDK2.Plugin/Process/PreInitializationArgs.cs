@@ -27,12 +27,18 @@ namespace McMDK2.Plugin.Process
         /// </summary>
         public Dictionary<string, object> UserProperties { private set; get; }
 
-        public PreInitializationArgs(string p1, Dictionary<string, object> p2, WindowTransitionSupporter p3, ProgressSupporter p4)
-            : base(p4)
+        /// <summary>
+        /// Minecraftのバージョン
+        /// </summary>
+        public string MinecraftVersion { private set; get; }
+
+        public PreInitializationArgs(string p1, Dictionary<string, object> p2, WindowTransitionSupporter p3, string p4, ProgressSupporter p5)
+            : base(p5)
         {
             this.ProjectPath = p1;
             this.UserProperties = p2;
             this.WindowTransition = p3;
+            this.MinecraftVersion = p4;
         }
     }
 }

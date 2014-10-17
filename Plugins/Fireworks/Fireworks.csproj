@@ -86,8 +86,16 @@
     <Compile Include="Templates\ServerTemplate.cs" />
     <Compile Include="Templates\StandardTemplate.cs" />
     <Compile Include="Templates\TestTemplate.cs" />
+    <Compile Include="Templates\ViewModels\ForgeSelectWindowViewModel.cs" />
+    <Compile Include="Templates\Views\ForgeSelectWindow.xaml.cs">
+      <DependentUpon>ForgeSelectWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj">
+      <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
+      <Name>MahApps.Metro.NET45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\McMDK2.Core\McMDK2.Core.csproj">
       <Project>{e935f123-1b66-4ef2-9790-13fd5340f3be}</Project>
       <Name>McMDK2.Core</Name>
@@ -136,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ItemViewers\Views\TextPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\Views\ForgeSelectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

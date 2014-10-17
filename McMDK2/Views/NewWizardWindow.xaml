@@ -58,6 +58,9 @@
             <l:TransitionInteractionMessageAction WindowType="{x:Type vd:ProgressDialog}"
                                                   Mode="Modal" />
         </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="Transition" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <Grid>
