@@ -19,10 +19,10 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <!--<Style TargetType="ListBox" BasedOn="{StaticResource StandardListBox}" />-->
             <Converter:StringToBitmapConverter x:Key="StringToBitmapConverter" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fireworks.Templates.ViewModels;
 using Fireworks.Templates.Views;
 using McMDK2.Core;
 using McMDK2.Plugin;
@@ -47,17 +48,18 @@ namespace Fireworks.Templates
 
         public void PreInitialization(PreInitializationArgs args)
         {
-
+            var vm = new ForgeSelectWindowViewModel(args.MinecraftVersion, args.UserProperties);
+            args.WindowTransition.Raise(typeof(ForgeSelectWindow), new ForgeSelectWindowViewModel(args.MinecraftVersion, args.UserProperties), "Modal");
         }
 
         public void Initialization(InitializationArgs args)
         {
-
+            //
         }
 
         public void PostInitialization(PostInitializationArgs args)
         {
-
+            //
         }
     }
 }

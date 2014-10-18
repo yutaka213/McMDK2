@@ -6,8 +6,24 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:Fireworks.Templates.Views"
         xmlns:vm="clr-namespace:Fireworks.Templates.ViewModels"
-        Title="ForgeSelectWindow" Height="350" Width="525"
+        Title="ForgeSelectWindow"
+        MaxHeight="170" Height="170" MinHeight="170"
+        MaxWidth="525" Width="525" MinWidth="525"
         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
      <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
@@ -15,9 +31,35 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     
     <Grid>
-        
+        <TextBlock Text="Select version of Minecraft Forge." FontSize="17"
+                   Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{DynamicResource Foreground}"/>
+        <TextBlock Text="Minecraft Version : " FontSize="14"
+                   Margin="20,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{DynamicResource Foreground}"/>
+        <TextBlock Text="{Binding McVersion}" FontSize="14"
+                   Margin="210,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{DynamicResource Foreground}" />
+        <TextBlock Text="Minecraft Forge Version : " FontSize="14"
+                   Margin="20,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Foreground="{DynamicResource Foreground}"/>
+        <ComboBox Height="22" Margin="210,69,50,0" VerticalAlignment="Top"
+                  Style="{x:Null}"
+                  SelectedValue="{Binding SelectedVersion}"
+                  ItemsSource="{Binding Versions}"
+                  Foreground="{DynamicResource WhiteBrush}"
+                  MaxDropDownHeight="100"/>
+        <Button Content="OK" 
+                Height="20" Width="60"
+                Margin="10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Style="{x:Null}"
+                Foreground="{DynamicResource WhiteBrush}"
+                Command="{Binding OKCommand}" />
     </Grid>
 </Window>
