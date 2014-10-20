@@ -120,6 +120,7 @@ namespace Fireworks.Templates.ViewModels
         public void OK()
         {
             this.obj.Add("Source", this.SelectedVersion.SrcUri);
+            this.obj.Add("MinecraftForge", this.SelectedVersion.Version);
             Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
         }
 
