@@ -74,7 +74,7 @@
 
                         <StackPanel Orientation="Vertical" Margin="0,20,0,0">
                             <TextBlock Text="最近開いたプロジェクト" FontSize="17" />
-                            <ItemsControl Margin="15,5,0,0"
+                            <ItemsControl Margin="15,5,10,0"
                                           ItemsSource="{Binding RecentProjects}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -88,7 +88,8 @@
                                                                                      MethodParameter="{Binding}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                    <Run Text="{Binding Name}" FontSize="13" />
+                                                    <TextBlock Text="{Binding Name}" FontSize="13"
+                                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                                                 </Hyperlink>
                                             </TextBlock>
                                         </Grid>
