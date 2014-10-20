@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -12,6 +13,7 @@ using McMDK2.Core;
 using McMDK2.Plugin;
 using McMDK2.Plugin.Process;
 using McMDK2.Plugin.Process.Internal;
+using Newtonsoft.Json.Linq;
 
 // ReSharper disable AssignNullToNotNullAttribute
 namespace Fireworks.Templates
@@ -52,7 +54,7 @@ namespace Fireworks.Templates
         }
 
         #region PreInitialization
-        public void PreInitialization(PreInitializationArgs args)
+        public async void PreInitialization(PreInitializationArgs args)
         {
             var vm = new ForgeSelectWindowViewModel(args.MinecraftVersion, args.UserProperties);
             args.WindowTransition.Raise(typeof(ForgeSelectWindow), vm, "Modal");
@@ -70,11 +72,42 @@ namespace Fireworks.Templates
 
             if (FileController.Exists(Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri), "gradlew")))
             {
+                args.ProgressWindow.SetIsIndetermiate(true);
+                var sb = new StringBuilder();
+                sb.AppendLine("設定を行っています。");
+                sb.AppendLine("しばらくお待ちください...");
+                args.ProgressWindow.SetText(sb.ToString());
+                args.UserProperties.Add("Mode", "Gradle");
                 // Gradlew
+                var proc = new Process();
+                proc.StartInfo.FileName = Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri), "gradlew.bat");
+                proc.StartInfo.WorkingDirectory = Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri));
+                proc.StartInfo.Arguments = "setupDevWorkspace eclipse";
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.OutputDataReceived += (a, b) => Define.GetLogger().Info(b.Data);
+                proc.ErrorDataReceived += (a, b) => Define.GetLogger().Error(b.Data);
+                proc.Start();
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
+                proc.WaitForExit();
             }
             else
             {
+                args.UserProperties.Add("Mode", "Mcp");
                 // MCP
+                string json = DownloadString(String.Format("https://api.tuyapin.net/mcmdk/2/mcp/version/{0}.json", forge.MinecraftVersion));
+                var o = JArray.Parse(json);
+                string target = ((string)((JObject)o.Last)["Version"]).Replace(".", "");
+                DownloadFile(String.Format("http://mcp.ocean-labs.de/files/archive/mcp{0}.zip", target), args.ProgressWindow).Wait();
+                ExtractFile(
+                    Path.Combine(Define.CacheDirectory, Path.GetFileName(String.Format("mcp{0}.zip", target))),
+                    Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri)),
+                    args.ProgressWindow).Wait();
+
+
             }
         }
 
@@ -85,6 +118,12 @@ namespace Fireworks.Templates
             var client = new WebClient();
             client.DownloadProgressChanged += (a, b) => s.SetProgressValue(b.ProgressPercentage);
             await client.DownloadFileTaskAsync(new Uri(uri), Path.Combine(Define.CacheDirectory, Path.GetFileName(uri)));
+        }
+
+        private string DownloadString(string uri)
+        {
+            var client = new WebClient();
+            return client.DownloadString(new Uri(uri));
         }
 
         private async Task ExtractFile(string path1, string path2, ProgressSupporter s)

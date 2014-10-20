@@ -11,7 +11,8 @@
         NonActiveWindowTitleBrush="{DynamicResource WindowTitleColorBrush}"
         WindowStartupLocation="CenterOwner"
         TitlebarHeight="0"
-        Height="100" Width="400"
+        MinHeight="100" Height="100" MaxHeight="100"
+        MinWidth="400" Width="400" MaxWidth="400"
         ShowInTaskbar="False">
     
     <i:Interaction.Triggers>
