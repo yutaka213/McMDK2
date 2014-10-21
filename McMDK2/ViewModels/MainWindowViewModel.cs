@@ -47,6 +47,7 @@ namespace McMDK2.ViewModels
             this.ContextMenuItems = new ObservableCollection<string>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
+            this.Title = "McMDK2";
             this.SelectedTabIndex = -1;
 
             if (Define.GetInternalSettings().RecentProjects != null)
@@ -71,6 +72,7 @@ namespace McMDK2.ViewModels
             this.SelectedTabIndex = 0;
         }
 
+        #region Uninitialize
         public void Uninitialize()
         {
             // If loaded project, save it.
@@ -153,6 +155,7 @@ namespace McMDK2.ViewModels
                 RecursiveWrite(innerItem, xtw);
             }
         }
+        #endregion
 
 
         #region NewWizardCommand
@@ -228,6 +231,7 @@ namespace McMDK2.ViewModels
                         }
                         var obj = JsonConvert.DeserializeObject<Project>(json);
                         obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
+                        this.Title = obj.Name + " - McMDK2";
                         string rootpath = obj.Path + "\\";
 
                         // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
@@ -835,6 +839,25 @@ namespace McMDK2.ViewModels
             }
         }
         #endregion
+
+
+        #region Title変更通知プロパティ
+        private string _Title;
+
+        public string Title
+        {
+            get
+            { return _Title; }
+            set
+            {
+                if (_Title == value)
+                    return;
+                _Title = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
     }
 }

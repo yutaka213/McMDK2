@@ -12,7 +12,7 @@
                       xmlns:Data="clr-namespace:McMDK2.Core.Data;assembly=McMDK2.Core"
                       xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
                       xmlns:Behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
-                      Title="McMDK BETA"
+                      Title="{Binding Title}"
                       Height="820" Width="1350"
                       TitleCaps="False"
                       GlowBrush="{DynamicResource WindowGlowBrush}"
