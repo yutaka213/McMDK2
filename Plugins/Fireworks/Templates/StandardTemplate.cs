@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using Fireworks.Templates.ViewModels;
 using Fireworks.Templates.Views;
 using McMDK2.Core;
+using McMDK2.Core.Utils;
 using McMDK2.Plugin;
 using McMDK2.Plugin.Process;
 using McMDK2.Plugin.Process.Internal;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -56,6 +58,27 @@ namespace Fireworks.Templates
         #region PreInitialization
         public async void PreInitialization(PreInitializationArgs args)
         {
+            // If Minecraft version is older than 1.3.2, Return process to New Project Wizard.
+            if (Versioning.GetVersionNo(args.MinecraftVersion) < 132)
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "Invalid Argument";
+                taskDialog.InstructionText = "不正なバージョンです。";
+                taskDialog.Text =
+@"Minecraftのバージョンに、1.3.2より前のものが指定されています。
+このテンプレートでは、Minecraft 1.3.2以降のバージョンにしか対応していません。
+バージョンを1.3.2以上に設定しなおしてから、もう一度試してください。";
+                taskDialog.Icon = TaskDialogStandardIcon.Information;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.Opened += (_sender, _e) =>
+                {
+                    ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                };
+                taskDialog.Show();
+                args.Cancel = true;
+                return;
+            }
+
             var vm = new ForgeSelectWindowViewModel(args.MinecraftVersion, args.UserProperties);
             args.WindowTransition.Raise(typeof(ForgeSelectWindow), vm, "Modal");
 

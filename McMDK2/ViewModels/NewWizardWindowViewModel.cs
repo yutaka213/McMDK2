@@ -232,6 +232,7 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
+            bool Cancel = false;
             var progress = new ProgressDialogViewModel();
             progress.SetIndeterminate(true);
             progress.SetText("プロジェクトを取り出しています...");
@@ -257,7 +258,17 @@ namespace McMDK2.ViewModels
 
                 // Send Pre initialization event
                 var userProperties = new Dictionary<string, object>();
-                template.PreInitialization(new PreInitializationArgs(newProject.Path, userProperties, wts, this.ProjectVersion, ps));
+                var pre = new PreInitializationArgs(newProject.Path, userProperties, wts, this.ProjectVersion, ps);
+                template.PreInitialization(pre);
+                if (pre.Cancel)
+                {
+                    FileController.Delete(newProject.Path);
+                    Cancel = pre.Cancel;
+                    progress.Close();
+                    return;
+                }
+                // Handled
+
                 newProject.UserProperties = userProperties;
 
                 string root;
@@ -305,7 +316,16 @@ namespace McMDK2.ViewModels
                         };
 
                 // Send initialization event
-                template.Initialization(new InitializationArgs(newProject.Path, q.Select(item => item.Include).ToList().AsReadOnly(), wts, ps));
+                var init = new InitializationArgs(newProject.Path, q.Select(item => item.Include).ToList().AsReadOnly(), wts, ps);
+                template.Initialization(init);
+                if (init.Cancel)
+                {
+                    FileController.Delete(newProject.Path);
+                    Cancel = pre.Cancel;
+                    progress.Close();
+                    return;
+                }
+                // Handled
 
                 foreach (var item in q)
                 {
@@ -354,8 +374,15 @@ namespace McMDK2.ViewModels
                 }
 
                 // Send post initialization event
-                template.PostInitialization(new PostInitializationArgs(newProject.Path, wts, ps));
-
+                var post = new PostInitializationArgs(newProject.Path, wts, ps);
+                template.PostInitialization(post);
+                if (post.Cancel)
+                {
+                    FileController.Delete(newProject.Path);
+                    Cancel = pre.Cancel;
+                    progress.Close();
+                    return;
+                }
                 progress.Close();
 
                 DispatcherHelper.UIDispatcher.Invoke(() =>
@@ -371,7 +398,10 @@ namespace McMDK2.ViewModels
             };
             //await Messenger.RaiseAsync(new TransitionMessage(progress, "ProgressDialog"));
             Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
-            Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+
+            // If handeld Cancel Handler, do not work progress.
+            if (!Cancel)
+                Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
 
         }
 

@@ -12,13 +12,21 @@ namespace McMDK2.Plugin.Process
     public class ProcessArgs
     {
         /// <summary>
-        /// Progress Dialogを操作するやつ。
+        /// Progress Dialogを操作するメソッドを提供します。
         /// </summary>
         public ProgressSupporter ProgressWindow { private set; get; }
+
+        /// <summary>
+        /// イベントのキャンセルをおこないます。<para />
+        /// trueを指定することで、PreInitialization以降の動作が行われずに、キャンセルされます。
+        /// </summary>
+        public bool Cancel { set; get; }
+
 
         public ProcessArgs(ProgressSupporter supporter)
         {
             this.ProgressWindow = supporter;
+            this.Cancel = false;
         }
     }
 }
