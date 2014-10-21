@@ -15,6 +15,8 @@ namespace McMDK2.Core.Data
 
         public string FilePath { set; get; }
 
+        public string Id { set; get; }
+
         /* should be used ReadOnlyObservableCollection<ProjectItem> ? */
         public ObservableCollection<ProjectItem> Children { set; get; }
 

@@ -18,7 +18,7 @@ namespace McMDK2.Plugin.Process
 
         /// <summary>
         /// イベントのキャンセルをおこないます。<para />
-        /// trueを指定することで、PreInitialization以降の動作が行われずに、キャンセルされます。
+        /// trueを指定することで、該当のイベント以降の動作が行われずに、キャンセルされます。
         /// </summary>
         public bool Cancel { set; get; }
 

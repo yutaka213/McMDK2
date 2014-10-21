@@ -64,7 +64,8 @@ namespace McMDK2.ViewModels
             var startPage = new TabItem
             {
                 Header = "Start",
-                Content = new StartPage { DataContext = new StartPageViewModel(this) }
+                Content = new StartPage { DataContext = new StartPageViewModel(this) },
+                Tag = "D74F9B4E-A99F-49FE-B2EC-F90B92031504"
             };
             this.Tabs.Add(startPage);
             this.SelectedTabIndex = 0;
@@ -143,6 +144,7 @@ namespace McMDK2.ViewModels
             {
                 xtw.WriteStartElement("Content");
                 xtw.WriteAttributeString("Include", item.FilePath.Replace(this.CurrentProject.Path + "\\", ""));
+                xtw.WriteAttributeString("Id", item.Id);
                 xtw.WriteEndElement();
                 return;
             }
@@ -233,7 +235,8 @@ namespace McMDK2.ViewModels
                         var q = from p in element.Element("Items").Elements()
                                 select new
                                 {
-                                    Include = p.Attribute("Include").Value
+                                    Include = p.Attribute("Include").Value,
+                                    Id = p.Attribute("Id") == null ? Guid.NewGuid().ToString() : p.Attribute("Id").Value
                                 };
 
                         foreach (var item in q)
@@ -249,7 +252,8 @@ namespace McMDK2.ViewModels
                                     {
                                         Name = path[0],
                                         FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                        FilePath = rootpath + path[0]
+                                        FilePath = rootpath + path[0],
+                                        Id = item.Id
                                     });
                                 }
                                 // Include="DIR/ITEM.EXT"
@@ -285,7 +289,8 @@ namespace McMDK2.ViewModels
                                             Name = path[i],
                                             FileType =
                                                 ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
-                                            FilePath = rootpath + item.Include
+                                            FilePath = rootpath + item.Include,
+                                            Id = item.Id
                                         });
                                     }
                                 }
@@ -294,12 +299,17 @@ namespace McMDK2.ViewModels
 
                         this.CurrentProject = obj;
                         progress.Close();
-                        var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == "Start");
-                        if (tab != null)
-                            this.Tabs.Remove(tab);
 
-                        this.RecentProjects.Add(obj);
-                        this.IsLoadedProject = true;
+                        DispatcherHelper.UIDispatcher.Invoke(() =>
+                        {
+                            var tab = this.Tabs.SingleOrDefault(w => (string)w.Tag == "D74F9B4E-A99F-49FE-B2EC-F90B92031504");
+                            if (tab != null)
+                                this.Tabs.Remove(tab);
+
+                            this.RecentProjects.Add(obj);
+                            this.IsLoadedProject = true;
+                        });
+
                     };
                     Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
 
@@ -392,14 +402,14 @@ namespace McMDK2.ViewModels
             if (item.FileType == "DIRECTORY")
                 return;
 
-            if (this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name) != null)
+            if (this.Tabs.SingleOrDefault(w => (string)w.Tag == item.Id) != null)
             {
                 //Open Tab
-                this.SelectedTabIndex = this.Tabs.IndexOf(this.Tabs.Single(w => (string)w.Header == item.Name));
+                this.SelectedTabIndex = this.Tabs.IndexOf(this.Tabs.Single(w => (string)w.Tag == item.Id));
                 return;
             }
 
-            var newtab = new TabItem { Header = item.Name };
+            var newtab = new TabItem { Header = item.Name, Tag = item.Id };
             var view = ItemManager.GetItemViewFromExtension(Path.GetExtension(item.Name));
             if (view == null)
             {

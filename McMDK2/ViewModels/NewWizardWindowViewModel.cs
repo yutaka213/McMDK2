@@ -312,7 +312,8 @@ namespace McMDK2.ViewModels
                 var q = from p in element.Element("Items").Elements()
                         select new
                         {
-                            Include = p.Attribute("Include").Value
+                            Include = p.Attribute("Include").Value,
+                            Id = p.Attribute("Id") == null ? Guid.NewGuid().ToString() : p.Attribute("Id").Value
                         };
 
                 // Send initialization event
@@ -339,7 +340,8 @@ namespace McMDK2.ViewModels
                             {
                                 Name = path[0],
                                 FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                FilePath = rootpath + item.Include
+                                FilePath = rootpath + item.Include,
+                                Id = item.Id
                             });
                         }
                         else
@@ -366,7 +368,8 @@ namespace McMDK2.ViewModels
                                 {
                                     Name = path[i],
                                     FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
-                                    FilePath = rootpath + item.Include
+                                    FilePath = rootpath + item.Include,
+                                    Id = item.Id
                                 });
                             }
                         }
@@ -391,7 +394,7 @@ namespace McMDK2.ViewModels
                     this.MainWindowViewModel.CurrentProject = newProject;
                     this.MainWindowViewModel.RecentProjects.Add(newProject);
 
-                    var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Header /* Suppress warning CS0253 */== "Start");
+                    var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Tag /* Suppress warning CS0253 */== "D74F9B4E-A99F-49FE-B2EC-F90B92031504");
                     if (tab != null)
                         this.MainWindowViewModel.Tabs.Remove(tab);
                 });
