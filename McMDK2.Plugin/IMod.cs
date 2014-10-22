@@ -11,7 +11,7 @@ namespace McMDK2.Plugin
     /// <summary>
     /// 各Modのアイテム(e.g. Block, Item, Tools, Armors...)の基本クラスです。
     /// </summary>
-    public interface IMod
+    public interface IMod : IItem
     {
         /// <summary>
         /// Modの名前を取得します。
@@ -24,9 +24,9 @@ namespace McMDK2.Plugin
         string Version { get; }
 
         /// <summary>
-        /// 固有のIDを取得します。
+        /// Modの説明を取得します。
         /// </summary>
-        string Id { get; }
+        string Description { get; }
 
         /// <summary>
         /// Modの項目編集時に使用する、Viewを取得します。

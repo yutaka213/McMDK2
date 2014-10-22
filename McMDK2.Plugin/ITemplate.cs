@@ -10,7 +10,7 @@ namespace McMDK2.Plugin
     /// <summary>
     /// 「新規作成ウィザード」で作成可能なテンプレートを定義します。
     /// </summary>
-    public interface ITemplate
+    public interface ITemplate : IItem
     {
         /// <summary>
         /// テンプレートの名前を取得します。
@@ -18,21 +18,10 @@ namespace McMDK2.Plugin
         string Name { get; }
 
         /// <summary>
-        /// テンプレートのユニークIDを取得します。 <para />
-        /// 他のテンプレートと被るIDは使用できません。
-        /// </summary>
-        string Id { get; }
-
-        /// <summary>
         /// プラグインの依存関係を取得します。<para />
         /// "ID1;ID2..."という風に、";"区切りで記述してください。
         /// </summary>
         string Dependents { get; }
-
-        /// <summary>
-        /// テンプレートのアイコンのパスを取得します。
-        /// </summary>
-        string IconPath { get; }
 
         /// <summary>
         /// テンプレートの説明文を取得します。

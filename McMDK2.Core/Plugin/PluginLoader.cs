@@ -157,8 +157,10 @@ namespace McMDK2.Core.Plugin
                                     Name = d.Element("Name") == null ? xmlPlugin.Name : d.Element("Name").Value,
                                     Version = d.Element("Version") == null ? xmlPlugin.Version : d.Element("Version").Value,
                                     Id = d.Element("Id") == null ? xmlPlugin.Id : d.Element("Id").Value,
+                                    Description = d.Element("Description") == null ? xmlPlugin.Dependents : d.Element("Description").Value,
                                     SourceFile = d.Element("SourceFile").Value,
-                                    XmlVersion = d.Element("XmlVersion") == null ? "1.0" : d.Element("XmlVersion").Value
+                                    XmlVersion = d.Element("XmlVersion") == null ? "1.0" : d.Element("XmlVersion").Value,
+                                    IconPath = d.Element("IconPath") == null ? xmlPlugin.IconPath : d.Element("IconPath").Value
                                 };
                         XmlBaseMod xmlMod = null;
                         foreach (var item in c)

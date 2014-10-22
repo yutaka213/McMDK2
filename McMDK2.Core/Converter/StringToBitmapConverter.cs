@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
 using McMDK2.Core.Plugin;
+using McMDK2.Core.Plugin.Internal;
 
 namespace McMDK2.Core.Converter
 {
@@ -26,12 +27,19 @@ namespace McMDK2.Core.Converter
             if (imagepath.Split(';').Length == 2)
             {
                 string[] path = imagepath.Split(';');
-                var template = TemplateManager.GetTemplateFromId(path[0]);
-                image.StreamSource = Assembly.GetAssembly(template.GetType()).GetManifestResourceStream(path[1]);
+                var item = IdStore.GetTypeFromId(path[0]);
+                image.StreamSource = Assembly.GetAssembly(item).GetManifestResourceStream(path[1]);
             }
             else
             {
-                image.UriSource = new Uri(imagepath);
+                if (String.IsNullOrWhiteSpace(imagepath))
+                {
+                    image.UriSource = new Uri("pack://application:,,,/Resources/minecraft.png");
+                }
+                else
+                {
+                    image.UriSource = new Uri(imagepath);
+                }
             }
             image.EndInit();
             return image;

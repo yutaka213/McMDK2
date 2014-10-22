@@ -29,6 +29,10 @@ namespace Fireworks.Items
             }
         }
 
+        public string Description { get { return "単純な無機能ブロックを追加します。"; } }
+
         public string SourceFile { get { return Id + ";Fireworks.Items.Source.Block.java"; } }
+
+        public string IconPath { get { return this.Id + ";Fireworks.Resources.Stone.png"; } }
     }
 }

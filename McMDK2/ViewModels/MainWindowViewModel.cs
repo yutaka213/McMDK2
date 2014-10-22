@@ -27,6 +27,8 @@ using McMDK2.Core.Plugin;
 using McMDK2.Models;
 using McMDK2.Plugin;
 using McMDK2.ViewModels.Dialogs;
+using McMDK2.Views;
+using McMDK2.Views.Dialogs;
 using McMDK2.Views.TabPages;
 using McMDK2.ViewModels.TabPages;
 
@@ -175,7 +177,29 @@ namespace McMDK2.ViewModels
 
         public void NewWizard()
         {
-            Messenger.Raise(new TransitionMessage(new NewWizardWindowViewModel(this), "ShowNewWizard"));
+            Messenger.Raise(new TransitionMessage(typeof(NewWizardWindow), new NewWizardWindowViewModel(this), TransitionMode.Modal, "Transition"));
+        }
+        #endregion
+
+
+        #region AddNewItemCommand
+        private ViewModelCommand _AddNewItemCommand;
+
+        public ViewModelCommand AddNewItemCommand
+        {
+            get
+            {
+                if (_AddNewItemCommand == null)
+                {
+                    _AddNewItemCommand = new ViewModelCommand(AddNewItem);
+                }
+                return _AddNewItemCommand;
+            }
+        }
+
+        public void AddNewItem()
+        {
+            Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
         }
         #endregion
 
@@ -315,7 +339,7 @@ namespace McMDK2.ViewModels
                         });
 
                     };
-                    Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
+                    Messenger.Raise(new TransitionMessage(typeof(ProgressDialog), progress, TransitionMode.Modal, "Transition"));
 
                 }
                 else
@@ -610,7 +634,7 @@ namespace McMDK2.ViewModels
             var vm = new RenameDialogViewModel();
             vm.ToName = item.Name;
             // Input New Name
-            Messenger.Raise(new TransitionMessage(vm, "ShowRenameDialog"));
+            Messenger.Raise(new TransitionMessage(typeof(RenameDialog), vm, TransitionMode.Modal, "Transition"));
             this.RenameItem(item, vm.ToName);
         }
 
@@ -709,7 +733,7 @@ namespace McMDK2.ViewModels
 
         public void ShowAboutDialog()
         {
-            Messenger.Raise(new TransitionMessage("ShowAboutDialog"));
+            Messenger.Raise(new TransitionMessage(typeof(AboutDialog), new AboutDialogViewModel(), TransitionMode.Modal, "Transition"));
 
         }
         #endregion

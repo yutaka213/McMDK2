@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using McMDK2.Core.Plugin.Internal;
 using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin
@@ -36,6 +36,7 @@ namespace McMDK2.Core.Plugin
                 throw new Exception("既に同じIDをもつModが登録されています。 : " + mod.Id);
             }
             mods.Add(mod);
+            IdStore.RegisterId(mod.Id, mod.GetType());
             Define.GetLogger().Info(String.Format("Register Mod : {0}({1}).", mod.Name, mod.Id));
         }
     }

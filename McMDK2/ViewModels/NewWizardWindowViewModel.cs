@@ -386,6 +386,7 @@ namespace McMDK2.ViewModels
                     progress.Close();
                     return;
                 }
+                // Handled
                 progress.Close();
 
                 DispatcherHelper.UIDispatcher.Invoke(() =>

@@ -35,22 +35,8 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
-        
-        <l:InteractionMessageTrigger MessageKey="ShowNewWizard" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type v:NewWizardWindow}"                                          
-                                                  Mode="Modal" />    
-        </l:InteractionMessageTrigger>
-        <l:InteractionMessageTrigger MessageKey="ShowRenameDialog" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:RenameDialog}"
-                                                  Mode="Modal" />
-        </l:InteractionMessageTrigger>
-        <l:InteractionMessageTrigger MessageKey="ProgressDialog" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:ProgressDialog}"
-                                                  Mode="Modal" />
-        </l:InteractionMessageTrigger>
-        <l:InteractionMessageTrigger MessageKey="ShowAboutDialog" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:AboutDialog}"
-                                                  Mode="Modal" />
+        <l:InteractionMessageTrigger MessageKey="Transition" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
@@ -136,7 +122,9 @@
                           IsEnabled="{Binding IsLoadedProject}"/>
             </MenuItem>
             <MenuItem Header="プロジェクト(_P)" TextOptions.TextFormattingMode="Display">
-                <MenuItem Header="アイテム追加ウィザード(_N)" TextOptions.TextFormattingMode="Display" />
+                <MenuItem Header="新しいアイテムを追加(_N)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding AddNewItemCommand}"/>
                 <Separator />
                 <!-- Binding -->
                 <MenuItem Header="ブロック" TextOptions.TextFormattingMode="Display" />

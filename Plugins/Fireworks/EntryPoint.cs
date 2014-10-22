@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Fireworks.Items;
 using McMDK2.Core;
 using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
@@ -88,6 +88,10 @@ namespace Fireworks
 
             // McMDK.exe内部のものは、以下のようにすれば指定できます。
             //ItemManager.RegisterIcon("DIRECTORY", "pack://application:,,,/Resources/Folder_6222.png");
+
+
+            // 各種Modの登録
+            ModManager.Register(new Block());
         }
 
         public void Updated() { }

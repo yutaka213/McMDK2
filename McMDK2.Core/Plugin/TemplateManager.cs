@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using McMDK2.Core.Plugin.Internal;
 using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin
@@ -36,6 +36,7 @@ namespace McMDK2.Core.Plugin
                 throw new Exception("既に同じIDをもつテンプレートが登録されています。 : " + template.Id);
             }
             templates.Add(template);
+            IdStore.RegisterId(template.Id, template.GetType());
             Define.GetLogger().Info(String.Format("Register Template : {0}({1}).", template.Name, template.Id));
         }
     }

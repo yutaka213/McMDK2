@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using McMDK2.Core.Plugin.Internal;
 using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin
@@ -40,6 +40,7 @@ namespace McMDK2.Core.Plugin
 
                 plugin.Loaded();
                 plugins.Add(plugin);
+                IdStore.RegisterId(plugin.Id, plugin.GetType());
                 Define.GetLogger().Info(String.Format("Loading Plugin : {0}({1}).", plugin.Name, plugin.Id));
             }
             catch (Exception e)

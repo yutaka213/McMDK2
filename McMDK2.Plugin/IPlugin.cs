@@ -9,7 +9,7 @@ namespace McMDK2.Plugin
     /// <summary>
     /// 一般的なプラグインのエントリーポイントを定義します。
     /// </summary>
-    public interface IPlugin
+    public interface IPlugin : IItem
     {
         /// <summary>
         /// プラグインの名前を取得します。
@@ -28,21 +28,10 @@ namespace McMDK2.Plugin
         string Author { get; }
 
         /// <summary>
-        /// プラグインのユニークIDを取得します。<para />
-        /// 他のプラグインを被るIDは使用できません。
-        /// </summary>
-        string Id { get; }
-
-        /// <summary>
         /// プラグインの依存関係を取得します。<para />
         /// "ID1;ID2..."という風に、";"区切りで記述してください。
         /// </summary>
         string Dependents { get; }
-
-        /// <summary>
-        /// プラグインのアイコンのパスを取得します。
-        /// </summary>
-        string IconPath { get; }
 
         /// <summary>
         /// プラグインの説明文を取得します。

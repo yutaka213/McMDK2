@@ -20,9 +20,13 @@ namespace McMDK2.Core.Plugin.Internal
 
         public string Id { set; get; }
 
+        public string Description { set; get; }
+
         public ModView View { set; get; }
 
         public string SourceFile { set; get; }
+
+        public string IconPath { set; get; }
 
         /// <summary>
         /// mod.xml Version

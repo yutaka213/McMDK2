@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30915.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMDK2", "McMDK2\McMDK2.csproj", "{6D08B52A-C2B3-431D-AB77-F2F489C6F051}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -26,6 +26,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks", "Plugins\Fireworks\Fireworks.csproj", "{A31A995E-3BCD-451E-8B6E-943FDC5542BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMDK2.UI", "McMDK2.UI\McMDK2.UI.csproj", "{90DCAB7D-4DDB-4859-886D-F63B08AADCD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{568440F5-89C6-461C-995F-0C5711F0C84D}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\packaging.ps1 = scripts\packaging.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
