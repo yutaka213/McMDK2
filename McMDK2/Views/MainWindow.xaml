@@ -105,7 +105,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="削除(_D)" TextOptions.TextFormattingMode="Display"
-                          IsEnabled="{Binding IsLoadedProject}">
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding DeleteItemCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/action_Cancel_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
@@ -195,6 +196,9 @@
                           Background="{DynamicResource WindowGlowBrush}"
                           BorderBrush="{DynamicResource WindowTitleForeground}">
                     <TreeView ItemsSource="{Binding CurrentProject.Items, Mode=TwoWay}">
+                        <i:Interaction.Behaviors>
+                            <Behaviors:SelectedItemBindBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                        </i:Interaction.Behaviors>
                         <TreeView.Resources>
                             <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource MetroContextMenu}">
                                 <Style.Resources>

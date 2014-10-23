@@ -214,6 +214,7 @@ namespace McMDK2.ViewModels
         public void MouseDoubleClick(object parameter)
         {
             var item = parameter as ProjectItem;
+            this.SelectedItem = item;
             if (item.FileType == "DIRECTORY")
                 return;
 
@@ -348,6 +349,7 @@ namespace McMDK2.ViewModels
             if (sender is TreeViewItem)
             {
                 ((TreeViewItem)sender).IsSelected = true;
+                this.SelectedItem = ((TreeViewItem)sender).Header as ProjectItem;
 
                 // Removed Event
                 ((TreeViewItem)sender).MouseRightButtonDown -= MouseRightButtonDown;
@@ -414,7 +416,7 @@ namespace McMDK2.ViewModels
 
         #endregion
 
-        #region Rename a  selected item.
+        #region Rename a selected item.
         private void RenameItem(object sender, RoutedEventArgs e)
         {
             var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
@@ -479,28 +481,6 @@ namespace McMDK2.ViewModels
 
         #endregion
 
-
-        // from Menu Bar.
-        #region DeleteItemCommand
-        private ViewModelCommand _DeleteItemCommand;
-
-        public ViewModelCommand DeleteItemCommand
-        {
-            get
-            {
-                if (_DeleteItemCommand == null)
-                {
-                    _DeleteItemCommand = new ViewModelCommand(DeleteItem);
-                }
-                return _DeleteItemCommand;
-            }
-        }
-
-        public void DeleteItem()
-        {
-
-        }
-        #endregion
 
         // ##############################################################
         // File(_F)
@@ -699,7 +679,31 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // Edit(_E)
         // ##############################################################
+        #region DeleteItemCommand
+        private ViewModelCommand _DeleteItemCommand;
 
+        public ViewModelCommand DeleteItemCommand
+        {
+            get
+            {
+                if (_DeleteItemCommand == null)
+                {
+                    _DeleteItemCommand = new ViewModelCommand(DeleteItem);
+                }
+                return _DeleteItemCommand;
+            }
+        }
+
+        public void DeleteItem()
+        {
+            if (this.SelectedItem != null)
+            {
+                if (this.SelectedItem is TreeViewItem)
+                    this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                this.RemoveItem(this.SelectedItem as ProjectItem);
+            }
+        }
+        #endregion
         // TODO: Implementation
 
         // ##############################################################
@@ -938,6 +942,22 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+
+        #region SelectedItemプロパティ
+        private object _SelectedItem;
+
+        public object SelectedItem
+        {
+            get
+            { return _SelectedItem; }
+            set
+            {
+                if (_SelectedItem == value)
+                    return;
+                _SelectedItem = value;
+            }
+        }
+        #endregion
 
     }
 }

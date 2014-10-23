@@ -66,6 +66,7 @@
     <Compile Include="Behaviors\Internal\AsmResolver.cs" />
     <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Behaviors\NavigateHyperlinkBehavior.cs" />
+    <Compile Include="Behaviors\SelectedItemBindBehavior.cs" />
     <Compile Include="Converter\ItemTypeToBitmapConverter.cs" />
     <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\StringToBitmapConverter.cs" />
