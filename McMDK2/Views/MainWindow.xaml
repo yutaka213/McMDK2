@@ -65,8 +65,6 @@
                     <MenuItem Header="新規作成ウィザード(_N)" TextOptions.TextFormattingMode="Display"
                               InputGestureText="Ctrl+N"
                               Command="{Binding NewWizardCommand}"/>
-                    <MenuItem Header="テンプレートから作成(_T)" TextOptions.TextFormattingMode="Display"
-                              InputGestureText="Ctrl+T" />
                 </MenuItem>
                 <MenuItem Header="開く(_O)" TextOptions.TextFormattingMode="Display"
                           InputGestureText="Ctrl+O"
@@ -126,12 +124,8 @@
                           IsEnabled="{Binding IsLoadedProject}"
                           Command="{Binding AddNewItemCommand}"/>
                 <Separator />
-                <!-- Binding -->
-                <MenuItem Header="ブロック" TextOptions.TextFormattingMode="Display" />
-                <MenuItem Header="アイテム" TextOptions.TextFormattingMode="Display" />
-                <MenuItem Header="バイオーム" TextOptions.TextFormattingMode="Display" />
-                <Separator />
-                <MenuItem Header="プロパティ(_P)" TextOptions.TextFormattingMode="Display" />
+                <MenuItem Header="プロジェクト情報" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}" />
             </MenuItem>
             <MenuItem Header="ツール(_T)" TextOptions.TextFormattingMode="Display">
                 <MenuItem Header="Minecraft" />

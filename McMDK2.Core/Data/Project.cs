@@ -10,6 +10,13 @@ namespace McMDK2.Core.Data
 {
     public class Project
     {
+        public Project()
+        {
+            this.UserProperties = new Dictionary<string, object>();
+            this.ProjectSettings = new Dictionary<string, object>();
+            this.Items = new ObservableCollection<ProjectItem>();
+        }
+
         public string Name { set; get; }
 
         public string Id { set; get; }
@@ -23,6 +30,9 @@ namespace McMDK2.Core.Data
 
         [XmlIgnore]
         public Dictionary<string, object> UserProperties { set; get; }
+
+        [XmlIgnore]
+        public Dictionary<string, object> ProjectSettings { set; get; }
 
         public ObservableCollection<ProjectItem> Items { set; get; }
     }

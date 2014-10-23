@@ -257,8 +257,7 @@ namespace McMDK2.ViewModels
                 var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
 
                 // Send Pre initialization event
-                var userProperties = new Dictionary<string, object>();
-                var pre = new PreInitializationArgs(newProject.Path, userProperties, wts, this.ProjectVersion, ps);
+                var pre = new PreInitializationArgs(newProject.Path, newProject.UserProperties, wts, this.ProjectVersion, ps);
                 template.PreInitialization(pre);
                 if (pre.Cancel)
                 {
@@ -268,8 +267,6 @@ namespace McMDK2.ViewModels
                     return;
                 }
                 // Handled
-
-                newProject.UserProperties = userProperties;
 
                 string root;
                 Stream stream;

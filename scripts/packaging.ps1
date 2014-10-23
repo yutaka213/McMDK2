@@ -1,4 +1,3 @@
-
 # Create new item
 Remove-Item ./Package -Recurse
 New-Item ./Package -ItemType directory
