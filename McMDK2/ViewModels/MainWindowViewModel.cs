@@ -640,7 +640,7 @@ namespace McMDK2.ViewModels
 
         public void RenameItem(ProjectItem item, string newName)
         {
-            if (String.IsNullOrWhiteSpace(newName))
+            if (String.IsNullOrWhiteSpace(newName) || item.Name == newName)
             {
                 return;
             }
