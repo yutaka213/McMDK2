@@ -12,7 +12,7 @@ namespace McMDK2.Core.Plugin.Internal
     /// <summary>
     /// McMDK2 の XML ベースプラグインのデータを保持します。
     /// </summary>
-    public class XmlBasePlugin : IPlugin
+    internal class XmlBasePlugin : IPlugin
     {
         public XmlBasePlugin()
         {

@@ -12,7 +12,7 @@ namespace McMDK2.Core.Plugin.Internal
     /// McMDK2のXMLベースプラグインでのModアイテムのデータを保持します。<para />
     /// ModViewは、ui.xmlから読み込まれたものを、その他のものについてはplugin.xmlから読み込まれたものが適用されます。
     /// </summary>
-    public class XmlBaseMod : IMod
+    internal class XmlBaseMod : IMod
     {
         public string Name { set; get; }
 

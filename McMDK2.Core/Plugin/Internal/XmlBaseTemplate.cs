@@ -13,7 +13,7 @@ namespace McMDK2.Core.Plugin.Internal
     /// McMDK2 のXMLベースプラグインでのテンプレート情報を保持します。<para />
     /// template.xml から読み込まれます。
     /// </summary>
-    public class XmlBaseTemplate : ITemplate
+    internal class XmlBaseTemplate : ITemplate
     {
         public string Name { set; get; }
 

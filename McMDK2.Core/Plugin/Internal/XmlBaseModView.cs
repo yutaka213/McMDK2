@@ -13,7 +13,7 @@ using McMDK2.UI.Controls;
 
 namespace McMDK2.Core.Plugin.Internal
 {
-    public class XmlBaseModView : ModView
+    internal class XmlBaseModView : ModView
     {
         private List<UIControl> controls;
         private List<FrameworkElement> requiredControls;

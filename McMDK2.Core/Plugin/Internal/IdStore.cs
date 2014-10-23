@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core.Plugin.Internal
 {
-    public class IdStore
+    internal class IdStore
     {
         private static readonly Dictionary<string, Type> store = new Dictionary<string, Type>();
 

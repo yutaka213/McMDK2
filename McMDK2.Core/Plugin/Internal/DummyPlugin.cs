@@ -8,7 +8,7 @@ using McMDK2.Plugin;
 
 namespace McMDK2.Core.Plugin.Internal
 {
-    public class DummyPlugin : IPlugin
+    internal class DummyPlugin : IPlugin
     {
         public string Name
         {
