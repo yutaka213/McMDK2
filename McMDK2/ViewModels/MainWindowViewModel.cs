@@ -68,7 +68,7 @@ namespace McMDK2.ViewModels
             {
                 Header = "Start",
                 Content = new StartPage { DataContext = new StartPageViewModel(this) },
-                Tag = "D74F9B4E-A99F-49FE-B2EC-F90B92031504"
+                Tag = Guids.StartPageGuid
             };
             this.Tabs.Add(startPage);
             this.SelectedTabIndex = 0;
@@ -160,197 +160,6 @@ namespace McMDK2.ViewModels
         #endregion
 
 
-        #region NewWizardCommand
-        private ViewModelCommand _NewWizardCommand;
-
-        public ViewModelCommand NewWizardCommand
-        {
-            get
-            {
-                if (_NewWizardCommand == null)
-                {
-                    _NewWizardCommand = new ViewModelCommand(NewWizard);
-                }
-                return _NewWizardCommand;
-            }
-        }
-
-        public void NewWizard()
-        {
-            Messenger.Raise(new TransitionMessage(typeof(NewWizardWindow), new NewWizardWindowViewModel(this), TransitionMode.Modal, "Transition"));
-        }
-        #endregion
-
-
-        #region AddNewItemCommand
-        private ViewModelCommand _AddNewItemCommand;
-
-        public ViewModelCommand AddNewItemCommand
-        {
-            get
-            {
-                if (_AddNewItemCommand == null)
-                {
-                    _AddNewItemCommand = new ViewModelCommand(AddNewItem);
-                }
-                return _AddNewItemCommand;
-            }
-        }
-
-        public void AddNewItem()
-        {
-            Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
-        }
-        #endregion
-
-
-        #region OpenProjectCommand
-        private ViewModelCommand _OpenProjectCommand;
-
-        public ViewModelCommand OpenProjectCommand
-        {
-            get
-            {
-                if (_OpenProjectCommand == null)
-                {
-                    _OpenProjectCommand = new ViewModelCommand(OpenProject);
-                }
-                return _OpenProjectCommand;
-            }
-        }
-
-        public void OpenProject()
-        {
-            this.OpenProject("");
-        }
-
-        public void OpenProject(string openPath)
-        {
-            if (String.IsNullOrEmpty(openPath))
-            {
-                var ofd = new OpenFileDialog
-                {
-                    FileName = "",
-                    Filter = "McMDK Main Project File (*.mdk)|*.mdk"
-                };
-                if (ofd.ShowDialog() == true)
-                {
-                    openPath = ofd.FileName;
-                }
-            }
-            if (!String.IsNullOrEmpty(openPath))
-            {
-                if (FileController.Exists(openPath))
-                {
-                    var progress = new ProgressDialogViewModel();
-                    progress.SetIndeterminate(true);
-                    progress.SetText("プロジェクトを読み込んでいます...");
-                    progress.Action += () =>
-                    {
-                        string file = openPath;
-                        string json;
-                        using (var sr = new StreamReader(file))
-                        {
-                            json = sr.ReadToEnd();
-                        }
-                        var obj = JsonConvert.DeserializeObject<Project>(json);
-                        obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
-                        this.Title = obj.Name + " - McMDK2";
-                        string rootpath = obj.Path + "\\";
-
-                        // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
-                        var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
-                        var q = from p in element.Element("Items").Elements()
-                                select new
-                                {
-                                    Include = p.Attribute("Include").Value,
-                                    Id = p.Attribute("Id") == null ? Guid.NewGuid().ToString() : p.Attribute("Id").Value
-                                };
-
-                        foreach (var item in q)
-                        {
-                            string[] path = item.Include.Split('\\');
-                            ObservableCollection<ProjectItem> cur = obj.Items;
-                            for (int i = 0; i < path.Length; i++)
-                            {
-                                // Include="ITEM.EXT"
-                                if (path.Length - 1 == 0)
-                                {
-                                    obj.Items.Add(new ProjectItem
-                                    {
-                                        Name = path[0],
-                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
-                                        FilePath = rootpath + path[0],
-                                        Id = item.Id
-                                    });
-                                }
-                                // Include="DIR/ITEM.EXT"
-                                else
-                                {
-                                    // DIR
-                                    if (i != path.Length - 1)
-                                    {
-                                        var sb = new StringBuilder();
-                                        for (int j = 0; j < i + 1; j++)
-                                        {
-                                            sb.Append(path[j]);
-                                            sb.Append("\\");
-                                        }
-                                        sb.Remove(sb.Length - 1, 1);
-
-                                        if (cur.SingleOrDefault(w => w.FilePath == rootpath + sb.ToString()) == null)
-                                        {
-                                            cur.Add(new ProjectItem
-                                            {
-                                                Name = path[i],
-                                                FileType = "DIRECTORY",
-                                                FilePath = rootpath + sb.ToString()
-                                            });
-                                        }
-                                        cur = cur.Single(w => w.FilePath == rootpath + sb.ToString()).Children;
-                                    }
-                                    // ITEM.EXT
-                                    else
-                                    {
-                                        cur.Add(new ProjectItem
-                                        {
-                                            Name = path[i],
-                                            FileType =
-                                                ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
-                                            FilePath = rootpath + item.Include,
-                                            Id = item.Id
-                                        });
-                                    }
-                                }
-                            }
-                        }
-
-                        this.CurrentProject = obj;
-                        progress.Close();
-
-                        DispatcherHelper.UIDispatcher.Invoke(() =>
-                        {
-                            var tab = this.Tabs.SingleOrDefault(w => (string)w.Tag == "D74F9B4E-A99F-49FE-B2EC-F90B92031504");
-                            if (tab != null)
-                                this.Tabs.Remove(tab);
-
-                            this.RecentProjects.Add(obj);
-                            this.IsLoadedProject = true;
-                        });
-
-                    };
-                    Messenger.Raise(new TransitionMessage(typeof(ProgressDialog), progress, TransitionMode.Modal, "Transition"));
-
-                }
-                else
-                {
-                    MessageBox.Show("ファイルを開けませんでした。");
-                }
-            }
-        }
-        #endregion
-
-
         #region CloseCommand
         private ListenerCommand<object> _CloseCommand;
 
@@ -382,28 +191,6 @@ namespace McMDK2.ViewModels
                 }
             }
             this.Tabs.Remove((TabItem)parameter);
-        }
-        #endregion
-
-
-        #region CloseAppCommand
-        private ViewModelCommand _CloseAppCommand;
-
-        public ViewModelCommand CloseAppCommand
-        {
-            get
-            {
-                if (_CloseAppCommand == null)
-                {
-                    _CloseAppCommand = new ViewModelCommand(CloseApp);
-                }
-                return _CloseAppCommand;
-            }
-        }
-
-        public void CloseApp()
-        {
-            Environment.Exit(0);
         }
         #endregion
 
@@ -715,7 +502,275 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+        // ##############################################################
+        // File(_F)
+        // ##############################################################
+        #region NewWizardCommand
+        private ViewModelCommand _NewWizardCommand;
 
+        public ViewModelCommand NewWizardCommand
+        {
+            get
+            {
+                if (_NewWizardCommand == null)
+                {
+                    _NewWizardCommand = new ViewModelCommand(NewWizard);
+                }
+                return _NewWizardCommand;
+            }
+        }
+
+        public void NewWizard()
+        {
+            Messenger.Raise(new TransitionMessage(typeof(NewWizardWindow), new NewWizardWindowViewModel(this), TransitionMode.Modal, "Transition"));
+        }
+        #endregion
+
+
+        #region OpenProjectCommand
+        private ViewModelCommand _OpenProjectCommand;
+
+        public ViewModelCommand OpenProjectCommand
+        {
+            get
+            {
+                if (_OpenProjectCommand == null)
+                {
+                    _OpenProjectCommand = new ViewModelCommand(OpenProject);
+                }
+                return _OpenProjectCommand;
+            }
+        }
+
+        public void OpenProject()
+        {
+            this.OpenProject("");
+        }
+
+        public void OpenProject(string openPath)
+        {
+            if (String.IsNullOrEmpty(openPath))
+            {
+                var ofd = new OpenFileDialog
+                {
+                    FileName = "",
+                    Filter = "McMDK Main Project File (*.mdk)|*.mdk"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    openPath = ofd.FileName;
+                }
+            }
+            if (!String.IsNullOrEmpty(openPath))
+            {
+                if (FileController.Exists(openPath))
+                {
+                    var progress = new ProgressDialogViewModel();
+                    progress.SetIndeterminate(true);
+                    progress.SetText("プロジェクトを読み込んでいます...");
+                    progress.Action += () =>
+                    {
+                        string file = openPath;
+                        string json;
+                        using (var sr = new StreamReader(file))
+                        {
+                            json = sr.ReadToEnd();
+                        }
+                        var obj = JsonConvert.DeserializeObject<Project>(json);
+                        obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
+                        this.Title = obj.Name + " - McMDK2";
+                        string rootpath = obj.Path + "\\";
+
+                        // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
+                        var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
+                        var q = from p in element.Element("Items").Elements()
+                                select new
+                                {
+                                    Include = p.Attribute("Include").Value,
+                                    Id = p.Attribute("Id") == null ? Guid.NewGuid().ToString() : p.Attribute("Id").Value
+                                };
+
+                        foreach (var item in q)
+                        {
+                            string[] path = item.Include.Split('\\');
+                            ObservableCollection<ProjectItem> cur = obj.Items;
+                            for (int i = 0; i < path.Length; i++)
+                            {
+                                // Include="ITEM.EXT"
+                                if (path.Length - 1 == 0)
+                                {
+                                    obj.Items.Add(new ProjectItem
+                                    {
+                                        Name = path[0],
+                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                        FilePath = rootpath + path[0],
+                                        Id = item.Id
+                                    });
+                                }
+                                // Include="DIR/ITEM.EXT"
+                                else
+                                {
+                                    // DIR
+                                    if (i != path.Length - 1)
+                                    {
+                                        var sb = new StringBuilder();
+                                        for (int j = 0; j < i + 1; j++)
+                                        {
+                                            sb.Append(path[j]);
+                                            sb.Append("\\");
+                                        }
+                                        sb.Remove(sb.Length - 1, 1);
+
+                                        if (cur.SingleOrDefault(w => w.FilePath == rootpath + sb.ToString()) == null)
+                                        {
+                                            cur.Add(new ProjectItem
+                                            {
+                                                Name = path[i],
+                                                FileType = "DIRECTORY",
+                                                FilePath = rootpath + sb.ToString()
+                                            });
+                                        }
+                                        cur = cur.Single(w => w.FilePath == rootpath + sb.ToString()).Children;
+                                    }
+                                    // ITEM.EXT
+                                    else
+                                    {
+                                        cur.Add(new ProjectItem
+                                        {
+                                            Name = path[i],
+                                            FileType =
+                                                ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
+                                            FilePath = rootpath + item.Include,
+                                            Id = item.Id
+                                        });
+                                    }
+                                }
+                            }
+                        }
+
+                        this.CurrentProject = obj;
+                        progress.Close();
+
+                        DispatcherHelper.UIDispatcher.Invoke(() =>
+                        {
+                            var tab = this.Tabs.SingleOrDefault(w => (string)w.Tag == Guids.StartPageGuid);
+                            if (tab != null)
+                                this.Tabs.Remove(tab);
+
+                            this.RecentProjects.Add(obj);
+                            this.IsLoadedProject = true;
+                        });
+
+                    };
+                    Messenger.Raise(new TransitionMessage(typeof(ProgressDialog), progress, TransitionMode.Modal, "Transition"));
+
+                }
+                else
+                {
+                    MessageBox.Show("ファイルを開けませんでした。");
+                }
+            }
+        }
+        #endregion
+
+
+        #region CloseAppCommand
+        private ViewModelCommand _CloseAppCommand;
+
+        public ViewModelCommand CloseAppCommand
+        {
+            get
+            {
+                if (_CloseAppCommand == null)
+                {
+                    _CloseAppCommand = new ViewModelCommand(CloseApp);
+                }
+                return _CloseAppCommand;
+            }
+        }
+
+        public void CloseApp()
+        {
+            Environment.Exit(0);
+        }
+        #endregion
+
+
+        // ##############################################################
+        // Edit(_E)
+        // ##############################################################
+
+        // TODO: Implementation
+
+        // ##############################################################
+        // View(_V)
+        // ##############################################################
+
+        // TODO: Implementation
+
+        // ##############################################################
+        // Project(_P)
+        // ##############################################################
+        #region AddNewItemCommand
+        private ViewModelCommand _AddNewItemCommand;
+
+        public ViewModelCommand AddNewItemCommand
+        {
+            get
+            {
+                if (_AddNewItemCommand == null)
+                {
+                    _AddNewItemCommand = new ViewModelCommand(AddNewItem);
+                }
+                return _AddNewItemCommand;
+            }
+        }
+
+        public void AddNewItem()
+        {
+            Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
+        }
+        #endregion
+
+
+        #region ProjectInfoCommand
+        private ViewModelCommand _ProjectInfoCommand;
+
+        public ViewModelCommand ProjectInfoCommand
+        {
+            get
+            {
+                if (_ProjectInfoCommand == null)
+                {
+                    _ProjectInfoCommand = new ViewModelCommand(ProjectInfo);
+                }
+                return _ProjectInfoCommand;
+            }
+        }
+
+        public void ProjectInfo()
+        {
+            var projectInfoPage = new TabItem
+            {
+                Header = "プロジェクト設定",
+                Content = new ProjectSettingPage { DataContext = new ProjectSettingPageViewModel() },
+                Tag = Guids.ProjectInfoPageGuid
+            };
+            this.Tabs.Add(projectInfoPage);
+            this.SelectedTabIndex = this.Tabs.IndexOf(projectInfoPage);
+        }
+        #endregion
+
+
+        // ##############################################################
+        // Tool(_T)
+        // ##############################################################
+
+        // TODO: Implementation
+
+        // ##############################################################
+        // Help(_H)
+        // ##############################################################
         #region ShowAboutDialogCommand
         private ViewModelCommand _ShowAboutDialogCommand;
 
@@ -738,6 +793,7 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+        //
 
         #region CurrentProject変更通知プロパティ
         private Project _CurrentProject;

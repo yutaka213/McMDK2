@@ -393,7 +393,7 @@ namespace McMDK2.ViewModels
                     this.MainWindowViewModel.CurrentProject = newProject;
                     this.MainWindowViewModel.RecentProjects.Add(newProject);
 
-                    var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Tag /* Suppress warning CS0253 */== "D74F9B4E-A99F-49FE-B2EC-F90B92031504");
+                    var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Tag /* Suppress warning CS0253 */== Guids.StartPageGuid);
                     if (tab != null)
                         this.MainWindowViewModel.Tabs.Remove(tab);
                 });

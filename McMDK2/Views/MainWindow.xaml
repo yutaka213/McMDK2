@@ -125,7 +125,8 @@
                           Command="{Binding AddNewItemCommand}"/>
                 <Separator />
                 <MenuItem Header="プロジェクト情報" TextOptions.TextFormattingMode="Display"
-                          IsEnabled="{Binding IsLoadedProject}" />
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding ProjectInfoCommand}"/>
             </MenuItem>
             <MenuItem Header="ツール(_T)" TextOptions.TextFormattingMode="Display">
                 <MenuItem Header="Minecraft" />
