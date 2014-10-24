@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
@@ -31,15 +32,20 @@ namespace Fireworks.ItemViewers.ViewModels
             {
                 try
                 {
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(path);
-                    bitmap.EndInit();
+                    using (var stream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite | FileShare.Delete))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.StreamSource = stream;
+                        bitmap.EndInit();
 
-                    this.ImagePath = bitmap;
-                    this.MaxHeight = bitmap.PixelHeight;
-                    this.MaxWidth = bitmap.PixelWidth;
-                    this.Loaded = true;
+                        this.ImagePath = bitmap;
+                        this.MaxHeight = bitmap.PixelHeight;
+                        this.MaxWidth = bitmap.PixelWidth;
+                        this.Loaded = true;
+
+                    }
                 }
                 catch (Exception e)
                 {
@@ -53,7 +59,6 @@ namespace Fireworks.ItemViewers.ViewModels
 
         public void Closing()
         {
-
         }
 
 

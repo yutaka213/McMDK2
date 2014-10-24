@@ -152,6 +152,7 @@ namespace McMDK2.ViewModels
                 else if (((UserControl)content).DataContext != null && ((UserControl)content).DataContext is ItemViewEx)
                 {
                     ((ItemViewEx)((UserControl)content).DataContext).Closing();
+                    ((ViewModel)((UserControl)content).DataContext).Dispose();
                 }
             }
             this.Tabs.Remove((TabItem)parameter);
