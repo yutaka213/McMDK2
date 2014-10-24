@@ -618,6 +618,34 @@ namespace McMDK2.ViewModels
         #endregion
 
 
+        #region CloseProjectCommand
+        private ViewModelCommand _CloseProjectCommand;
+
+        public ViewModelCommand CloseProjectCommand
+        {
+            get
+            {
+                if (_CloseProjectCommand == null)
+                {
+                    _CloseProjectCommand = new ViewModelCommand(CloseProject);
+                }
+                return _CloseProjectCommand;
+            }
+        }
+
+        public void CloseProject()
+        {
+            if (this.CurrentProject != null)
+            {
+                this.CurrentProject.Save();
+                this.CurrentProject = null;
+                this.Title = "McMDK2";
+            }
+        }
+        #endregion
+
+
+
         #region CloseAppCommand
         private ViewModelCommand _CloseAppCommand;
 

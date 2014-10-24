@@ -12,9 +12,12 @@
                       xmlns:Data="clr-namespace:McMDK2.Core.Data;assembly=McMDK2.Core"
                       xmlns:Converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
                       xmlns:Behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib"
                       Title="{Binding Title}"
                       Height="820" Width="1350"
                       TitleCaps="False"
+                      TextOptions.TextFormattingMode="Display"
+                      RenderOptions.ClearTypeHint="Enabled"
                       GlowBrush="{DynamicResource WindowGlowBrush}"
                       NonActiveWindowTitleBrush="{DynamicResource WindowTitleColorBrush}">
 
@@ -47,6 +50,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Converter:ItemTypeToBitmapConverter x:Key="ItemTypeToBitmapConverter" />
+            <FontFamily x:Key="HeaderFontFamily">Meiryo UI</FontFamily>
+            <system:Double x:Key="WindowTitleFontSize">15</system:Double>
         </ResourceDictionary>
     </Window.Resources>
     
@@ -71,7 +76,8 @@
                           Command="{Binding OpenProjectCommand}"/>
                 <Separator />
                 <MenuItem Header="閉じる(_C)" TextOptions.TextFormattingMode="Display"
-                          IsEnabled="{Binding IsLoadedProject}">
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding CloseProjectCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Close_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True"/>
                     </MenuItem.Icon>
