@@ -18,6 +18,8 @@ You must write the following content.
 
 * McMDK Version
 * Firework Plugin Version
-* Contents of bug
+* Contents of bug  
 
- 
+
+#### メモ
+commitメッセージは適当な英語なので、適当に訳せばいいと思います。
