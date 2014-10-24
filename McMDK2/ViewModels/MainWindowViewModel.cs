@@ -258,7 +258,7 @@ namespace McMDK2.ViewModels
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
                 bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap };
+                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -267,7 +267,7 @@ namespace McMDK2.ViewModels
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
                 bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap };
+                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -276,7 +276,7 @@ namespace McMDK2.ViewModels
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
                 bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap };
+                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -285,7 +285,7 @@ namespace McMDK2.ViewModels
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
                 bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap };
+                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
                 subMenu.Click += DeleteItem;
                 contextMenu.Items.Add(subMenu);
 
@@ -352,6 +352,7 @@ namespace McMDK2.ViewModels
             {
                 this.CurrentProject.Items.Remove(i);
                 FileController.Delete(i.FilePath);
+                this.SelectedItem = null;
                 return;
             }
 
@@ -379,6 +380,7 @@ namespace McMDK2.ViewModels
                         // Set item type to "DIRECTORY"
                         item.Id = Guids.DirectoryItemGuid;
                     }
+                    this.SelectedItem = null;
                     break;
                 }
                 else
