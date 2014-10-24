@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace McMDK2.Core.Data
 {
@@ -34,6 +37,55 @@ namespace McMDK2.Core.Data
         [XmlIgnore]
         public Dictionary<string, object> ProjectSettings { set; get; }
 
+        [XmlIgnore]
+        [JsonIgnore]
         public ObservableCollection<ProjectItem> Items { set; get; }
+
+        public void Save()
+        {
+            using (var sw = new StreamWriter(System.IO.Path.Combine(this.Path, this.Name + ".mmproj")))
+            {
+                var xws = new XmlWriterSettings();
+                xws.Encoding = Encoding.UTF8;
+                xws.Indent = true;
+                xws.IndentChars = "  ";
+
+                using (var xw = XmlWriter.Create(sw, xws))
+                {
+                    xw.WriteStartElement("Project");
+                    xw.WriteStartElement("Items");
+
+                    foreach (var item in this.Items)
+                    {
+                        RecursiveWrite(item, xw);
+                    }
+
+                    xw.WriteEndElement();
+                    xw.WriteEndElement();
+                }
+            }
+            var json = JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
+            using (var sw = new StreamWriter(System.IO.Path.Combine(this.Path, "project.mdk")))
+            {
+                sw.WriteLine(json);
+            }
+        }
+
+        private void RecursiveWrite(ProjectItem item, XmlWriter xw)
+        {
+            if (item.Children.Count == 0)
+            {
+                xw.WriteStartElement("Content");
+                xw.WriteAttributeString("Include", item.FilePath.Replace(this.Path + "\\", ""));
+                xw.WriteAttributeString("Id", item.Id);
+                xw.WriteEndElement();
+                return;
+            }
+            foreach (var innerItem in item.Children)
+            {
+                RecursiveWrite(innerItem, xw);
+            }
+        }
+
     }
 }

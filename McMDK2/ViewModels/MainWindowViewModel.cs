@@ -80,27 +80,7 @@ namespace McMDK2.ViewModels
             // If loaded project, save it.
             if (this.CurrentProject != null)
             {
-                using (var sw = new StreamWriter(Path.Combine(this.CurrentProject.Path, this.CurrentProject.Name + ".mmproj")))
-                {
-                    var xws = new XmlWriterSettings();
-                    xws.Encoding = Encoding.UTF8;
-                    xws.Indent = true;
-                    xws.IndentChars = "  ";
-
-                    using (var xtw = XmlWriter.Create(sw, xws))
-                    {
-                        xtw.WriteStartElement("Project");
-                        xtw.WriteStartElement("Items");
-
-                        foreach (var item in this.CurrentProject.Items)
-                        {
-                            RecursiveWrite(item, xtw);
-                        }
-
-                        xtw.WriteEndElement();
-                        xtw.WriteEndElement();
-                    }
-                }
+                this.CurrentProject.Save();
             }
 
             var items = new List<Project>();
@@ -141,25 +121,9 @@ namespace McMDK2.ViewModels
             Define.GetInternalSettings().RecentProjects = saveItems.ToArray();
             Define.GetInternalSettings().Save();
         }
-
-        private void RecursiveWrite(ProjectItem item, XmlWriter xtw)
-        {
-            if (item.Children.Count == 0)
-            {
-                xtw.WriteStartElement("Content");
-                xtw.WriteAttributeString("Include", item.FilePath.Replace(this.CurrentProject.Path + "\\", ""));
-                xtw.WriteAttributeString("Id", item.Id);
-                xtw.WriteEndElement();
-                return;
-            }
-            foreach (var innerItem in item.Children)
-            {
-                RecursiveWrite(innerItem, xtw);
-            }
-        }
         #endregion
 
-
+        // Close Tab.
         #region CloseCommand
         private ListenerCommand<object> _CloseCommand;
 
@@ -704,7 +668,7 @@ namespace McMDK2.ViewModels
             }
         }
         #endregion
-        // TODO: Implementation
+
 
         // ##############################################################
         // View(_V)
