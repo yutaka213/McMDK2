@@ -233,7 +233,7 @@
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image x:Name="ITEM_ICON" Source="{Binding FileType, Converter={StaticResource ItemTypeToBitmapConverter}}"
-                                           Height="16px" Width="16px"
+                                           Height="15px" Width="15px"
                                            UseLayoutRounding="True"/>
                                     <TextBlock Padding="5,0,0,0" Text="{Binding Name}" />
                                 </StackPanel>

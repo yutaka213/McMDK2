@@ -11,13 +11,16 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource MetroTabItem}">
-                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="15" />
+                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="18" />
             </Style>
             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetroTextBlock}">
                 <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -34,6 +37,16 @@
         <TabControl Margin="10,10,10,10" 
                     TabStripPlacement="Left">
             <TabItem Header="プロジェクト">
+                <Grid>
+                    <TextBlock Text="プロジェクト名" FontSize="15" 
+                               Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding ProjecName}" FontSize="15"
+                             Margin="110,8,10,0" VerticalAlignment="Top"
+                             Height="24" />
+                    
+                    <TextBlock Text="バージョン" FontSize="13"
+                               Margin="10,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
             </TabItem>
             <TabItem Header="mcmod.info">
                 

@@ -17,5 +17,10 @@ namespace McMDK2.Models
         {
             get { return "18F32628-5091-4784-997A-D09B6A12433B"; }
         }
+
+        public static string DirectoryItemGuid
+        {
+            get { return "4FFB7136-190E-4BD4-92C7-7FB5E7CA90AE"; }
+        }
     }
 }

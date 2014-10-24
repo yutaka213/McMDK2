@@ -347,7 +347,7 @@ namespace McMDK2.ViewModels
                 this.Tabs.Remove(tab);
 
 
-            var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
             if (i != null)
             {
                 this.CurrentProject.Items.Remove(i);
@@ -365,10 +365,20 @@ namespace McMDK2.ViewModels
         {
             foreach (var innerItem in item.Children)
             {
-                if (innerItem.FilePath == targetItem.FilePath)
+                if (innerItem.Id == targetItem.Id)
                 {
+                    if (innerItem.Id == Guids.DirectoryItemGuid)
+                    {
+                        if (innerItem.FilePath != targetItem.FilePath)
+                            continue;
+                    }
                     item.Children.Remove(targetItem);
                     FileController.Delete(targetItem.FilePath);
+                    if (item.Children.Count == 0)
+                    {
+                        // Set item type to "DIRECTORY"
+                        item.Id = Guids.DirectoryItemGuid;
+                    }
                     break;
                 }
                 else
@@ -546,7 +556,7 @@ namespace McMDK2.ViewModels
                                     obj.Items.Add(new ProjectItem
                                     {
                                         Name = path[0],
-                                        FileType = ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                        FileType = item.Id == Guids.DirectoryItemGuid ? "DIRECTORY" : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
                                         FilePath = rootpath + path[0],
                                         Id = item.Id
                                     });
@@ -583,7 +593,7 @@ namespace McMDK2.ViewModels
                                         {
                                             Name = path[i],
                                             FileType =
-                                                ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
+                                                item.Id == Guids.DirectoryItemGuid ? "DIRECTORY" : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
                                             FilePath = rootpath + item.Include,
                                             Id = item.Id
                                         });
