@@ -77,13 +77,16 @@
                 <Separator />
                 <MenuItem Header="閉じる(_C)" TextOptions.TextFormattingMode="Display"
                           IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding CloseTabCommand}"/>
+                <MenuItem Header="プロジェクトを閉じる(_T)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}"
                           Command="{Binding CloseProjectCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Close_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="保存(_S)" TextOptions.TextFormattingMode="Display"
+                <MenuItem Header="プロジェクトを保存(_S)" TextOptions.TextFormattingMode="Display"
                           IsEnabled="{Binding IsLoadedProject}"
                           Command="{Binding SaveProjectCommand}">
                     <MenuItem.Icon>

@@ -49,7 +49,7 @@ namespace McMDK2.ViewModels
             this.ContextMenuItems = new ObservableCollection<string>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
-            this.Title = "McMDK2";
+            this.Title = "Minecraft Mod Development Kit";
             this.SelectedTabIndex = -1;
 
             if (Define.GetInternalSettings().RecentProjects != null)
@@ -535,7 +535,7 @@ namespace McMDK2.ViewModels
                         }
                         var obj = JsonConvert.DeserializeObject<Project>(json);
                         obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
-                        this.Title = obj.Name + " - McMDK2";
+                        this.Title = obj.Name + " - Minecraft Mod Development Kit";
                         string rootpath = obj.Path + "\\";
 
                         // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
@@ -631,6 +631,28 @@ namespace McMDK2.ViewModels
         #endregion
 
 
+        #region CloseTabCommand
+        private ViewModelCommand _CloseTabCommand;
+
+        public ViewModelCommand CloseTabCommand
+        {
+            get
+            {
+                if (_CloseTabCommand == null)
+                {
+                    _CloseTabCommand = new ViewModelCommand(CloseTab);
+                }
+                return _CloseTabCommand;
+            }
+        }
+
+        public void CloseTab()
+        {
+            this.Tabs.RemoveAt(this.SelectedTabIndex);
+        }
+        #endregion
+
+
         #region CloseProjectCommand
         private ViewModelCommand _CloseProjectCommand;
 
@@ -652,7 +674,7 @@ namespace McMDK2.ViewModels
             {
                 this.CurrentProject.Save();
                 this.CurrentProject = null;
-                this.Title = "McMDK2";
+                this.Title = "Minecraft Mod Development Kit";
             }
         }
         #endregion

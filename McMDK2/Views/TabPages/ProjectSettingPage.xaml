@@ -34,22 +34,84 @@
     </i:Interaction.Triggers>
     
     <Grid Background="{StaticResource WhiteColorBrush}">
-        <TabControl Margin="10,10,10,10" 
+        <TabControl Margin="10,0,0,0" 
                     TabStripPlacement="Left">
             <TabItem Header="プロジェクト">
                 <Grid>
                     <TextBlock Text="プロジェクト名" FontSize="15" 
                                Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBox Text="{Binding ProjecName}" FontSize="15"
+                    <TextBox Text="{Binding ProjecName}" FontSize="14"
                              Margin="110,8,10,0" VerticalAlignment="Top"
                              Height="24" />
                     
-                    <TextBlock Text="バージョン" FontSize="13"
+                    <TextBlock Text="バージョン" FontSize="15"
                                Margin="10,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <ComboBox ItemsSource="{Binding McVersions}" FontSize="14"
+                              SelectedItem="{Binding McVersion}"
+                              Margin="110,33,10,0" VerticalAlignment="Top"
+                              Height="24" MinHeight="24" />
+                    
+                    <TextBlock Text="出力名" FontSize="15"
+                               Margin="10,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding OutputName}" FontSize="14"
+                             Margin="110,58,10,0" VerticalAlignment="Top"
+                             Height="24" />
+                    
+                    <TextBlock Text="出力先" FontSize="15"
+                               Margin="10,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding OutputLoc}" FontSize="14"
+                             Margin="110,83,10,0" VerticalAlignment="Top"
+                             Height="24" />
                 </Grid>
             </TabItem>
             <TabItem Header="mcmod.info">
-                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <TextBlock Text="Mod ID" FontSize="15"
+                               Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.ModID}" FontSize="14"
+                             Margin="110,8,10,0" VerticalAlignment="Top"
+                             Height="24" />
+
+                        <TextBlock Text="名前" FontSize="15"
+                               Margin="10,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.Name}" FontSize="14"
+                             Margin="110,33,10,0" VerticalAlignment="Top"
+                             Height="24" />
+
+                        <TextBlock Text="説明文" FontSize="15"
+                               Margin="10,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.Descripion}" FontSize="14"
+                             Margin="110,58,10,0" VerticalAlignment="Top"
+                             Height="24"/>
+
+                        <TextBlock Text="配布ページUrl" FontSize="15"
+                               Margin="10,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.Url}" FontSize="14"
+                             Margin="110,83,10,0" VerticalAlignment="Top"
+                             Height="24"/>
+
+                        <TextBlock Text="更新用Url" FontSize="15"
+                               Margin="10,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="https://api.tuyapin.net/mcmdk/2/mods/update.json" FontSize="14"
+                             Margin="110,108,10,0" VerticalAlignment="Top"
+                             Height="24"
+                             IsEnabled="False"/>
+
+                        <TextBlock Text="ロゴ" FontSize="15"
+                               Margin="10,135,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.LogoFile}" FontSize="14"
+                             Margin="110,133,10,0" VerticalAlignment="Top"
+                             Height="24"/>
+
+                        <TextBlock Text="バージョン" FontSize="15"
+                               Margin="10,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding McModInfo.Version}" FontSize="14"
+                             Margin="110,158,10,0" VerticalAlignment="Top"
+                             Height="24"/>
+
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="コンパイル順">
                 

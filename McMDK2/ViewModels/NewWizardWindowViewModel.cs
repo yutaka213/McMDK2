@@ -388,7 +388,7 @@ namespace McMDK2.ViewModels
 
                 DispatcherHelper.UIDispatcher.Invoke(() =>
                 {
-                    this.MainWindowViewModel.Title = this.ProjectName;
+                    this.MainWindowViewModel.Title = this.ProjectName + " - Minecraft Mod Development Kit";
                     this.MainWindowViewModel.IsLoadedProject = true;
                     this.MainWindowViewModel.CurrentProject = newProject;
                     this.MainWindowViewModel.RecentProjects.Add(newProject);
