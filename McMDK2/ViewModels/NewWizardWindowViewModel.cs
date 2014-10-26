@@ -27,6 +27,7 @@ using McMDK2.Plugin.Process;
 using McMDK2.Plugin.Process.Internal;
 using McMDK2.ViewModels.Dialogs;
 using McMDK2.ViewModels.Internal;
+using McMDK2.Views.Dialogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -398,8 +399,8 @@ namespace McMDK2.ViewModels
                         this.MainWindowViewModel.Tabs.Remove(tab);
                 });
             };
-            //await Messenger.RaiseAsync(new TransitionMessage(progress, "ProgressDialog"));
-            Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
+            //Messenger.Raise(new TransitionMessage(progress, "ProgressDialog"));
+            Messenger.Raise(new TransitionMessage(typeof(ProgressDialog), progress, TransitionMode.Modal, "Transition"));
 
             // If handeld Cancel Handler, do not work progress.
             if (!Cancel)

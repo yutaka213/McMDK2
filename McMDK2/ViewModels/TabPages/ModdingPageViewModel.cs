@@ -23,6 +23,23 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class ModdingPageViewModel : ViewModel, ItemViewEx
     {
+        public ModdingPageViewModel()
+        {
+
+        }
+
+        public ModdingPageViewModel(ModView view)
+        {
+            this.ModdingContent = view;
+            this.Loaded = true;
+        }
+
+        public void Initialize()
+        {
+
+        }
+
+        // Load from *.mod file.
         public void Initialize(string path)
         {
             this.Loaded = false;

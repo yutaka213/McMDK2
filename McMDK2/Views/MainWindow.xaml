@@ -140,6 +140,8 @@
                           Command="{Binding ProjectInfoCommand}"/>
             </MenuItem>
             <MenuItem Header="ツール(_T)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="オプション" TextOptions.TextFormattingMode="Display"/>
+                <Separator />
                 <MenuItem Header="Minecraft" />
                 <MenuItem Header="Minecraft Server" />
                 <MenuItem Header="Bukkit Server" />

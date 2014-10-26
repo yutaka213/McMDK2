@@ -55,10 +55,6 @@
         <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger, Mode=OneWay}">
             <l:WindowInteractionMessageAction/>
         </l:InteractionMessageTrigger>
-        <l:InteractionMessageTrigger MessageKey="ProgressDialog" Messenger="{Binding Messenger}">
-            <l:TransitionInteractionMessageAction WindowType="{x:Type vd:ProgressDialog}"
-                                                  Mode="Modal" />
-        </l:InteractionMessageTrigger>
         <l:InteractionMessageTrigger MessageKey="Transition" Messenger="{Binding Messenger}">
             <l:TransitionInteractionMessageAction />
         </l:InteractionMessageTrigger>

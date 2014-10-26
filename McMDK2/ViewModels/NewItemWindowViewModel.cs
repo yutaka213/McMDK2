@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-
+using System.Windows.Controls;
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
@@ -14,6 +14,8 @@ using Livet.Messaging.Windows;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
 using McMDK2.Plugin;
+using McMDK2.ViewModels.TabPages;
+using McMDK2.Views.TabPages;
 
 namespace McMDK2.ViewModels
 {
@@ -41,7 +43,7 @@ namespace McMDK2.ViewModels
             {
                 if (_OKCommand == null)
                 {
-                    _OKCommand = new ViewModelCommand(OK);
+                    _OKCommand = new ViewModelCommand(OK, CanOK);
                 }
                 return _OKCommand;
             }
@@ -49,7 +51,28 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
+            IMod mod = ModManager.GetModFromId(this.SelectedItem.Id);
 
+            var moddingPage = new TabItem
+            {
+                Header = this.ItemName,
+                Content = new ModdingPage { DataContext = new ModdingPageViewModel(mod.View) },
+                Tag = Guid.NewGuid().ToString()
+            };
+            //((ModdingPage)moddingPage.Content).Draw();
+            this.MainWindowViewModel.Tabs.Add(moddingPage);
+            this.MainWindowViewModel.SelectedTabIndex = this.MainWindowViewModel.Tabs.IndexOf(moddingPage);
+
+            this.Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+        }
+
+        public bool CanOK()
+        {
+            if (String.IsNullOrWhiteSpace(this.ItemName) || this.SelectedItem == null)
+            {
+                return false;
+            }
+            return true;
         }
         #endregion
 
@@ -71,7 +94,7 @@ namespace McMDK2.ViewModels
 
         public void Cancel()
         {
-
+            this.Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
         }
         #endregion
 
@@ -163,6 +186,7 @@ namespace McMDK2.ViewModels
                     return;
                 _ItemName = value;
                 RaisePropertyChanged();
+                this.OKCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion

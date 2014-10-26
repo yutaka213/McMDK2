@@ -6,22 +6,37 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:McMDK2.Views"
         xmlns:vm="clr-namespace:McMDK2.ViewModels.TabPages"
-        xmlns:converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
-        Height="350" Width="525">
+        xmlns:converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core">
     
     <UserControl.Resources>
-        <converter:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter" />
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary>
+            <converter:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <i:Interaction.Triggers>
     </i:Interaction.Triggers>
-    
-    <Grid>
+    <Grid Background="{StaticResource WhiteBrush}">
         <TextBlock Text="{Binding ErrorText}" FontSize="25"
                    Visibility="{Binding Loaded, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
         <ContentControl Content="{Binding ModdingContent}"
-                        Visibility="{Binding Loaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Visibility="{Binding Loaded, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="5,5,5,5">
+            <ContentControl.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/McMDK2.Plugin;component/Styles/Default.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                    <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" />
+                    <SolidColorBrush x:Key="LabelTextBrush" Color="{StaticResource BlackColor}" />
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="Black" />
+                    </Style>
+                </ResourceDictionary>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </UserControl>

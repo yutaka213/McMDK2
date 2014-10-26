@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -107,6 +108,7 @@ namespace McMDK2.Core.Plugin
             public List<IMod> mods = new List<IMod>();
             public List<ITemplate> templates = new List<ITemplate>();
 
+            // ReSharper disable PossibleNullReferenceException
             public XmlBasePluginLoader()
             {
                 string[] xmls = FileController.GetLists(Define.PluginDirectory, true);
@@ -302,7 +304,7 @@ namespace McMDK2.Core.Plugin
                             control = new UI.Controls.ContentControl(StringToObjectConverter.StringToComponents(node.Name))
                             {
                                 // ContentControl
-                                Content = element.GetAttribute("Content")
+                                Content = node.Name == "Image" ? Path.Combine(dir, element.GetAttribute("Content")) : element.GetAttribute("Content")
                             };
                             break;
 
