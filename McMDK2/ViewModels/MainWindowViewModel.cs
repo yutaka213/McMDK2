@@ -648,7 +648,8 @@ namespace McMDK2.ViewModels
 
         public void CloseTab()
         {
-            this.Tabs.RemoveAt(this.SelectedTabIndex);
+            if (this.Tabs.Count > this.SelectedTabIndex && this.SelectedTabIndex >= 0)
+                this.Tabs.RemoveAt(this.SelectedTabIndex);
         }
         #endregion
 
@@ -670,6 +671,7 @@ namespace McMDK2.ViewModels
 
         public void CloseProject()
         {
+            this.Tabs.Clear();
             if (this.CurrentProject != null)
             {
                 this.CurrentProject.Save();
