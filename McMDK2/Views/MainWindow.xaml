@@ -102,6 +102,13 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="編集(_E)" TextOptions.TextFormattingMode="Display">
+                <MenuItem Header="切り取り(_T)" TextOptions.TextFormattingMode="Display"
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding CutItemCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/Cut_6523.png" Height="15px" Width="15px" UseLayoutRounding="True"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="コピー(_C)" TextOptions.TextFormattingMode="Display"
                           IsEnabled="{Binding IsLoadedProject}">
                     <MenuItem.Icon>
@@ -236,7 +243,7 @@
                         </TreeView.ItemContainerStyle>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" x:Name="ITEM_LAYER">
                                     <Image x:Name="ITEM_ICON" Source="{Binding FileType, Converter={StaticResource ItemTypeToBitmapConverter}}"
                                            Height="15px" Width="15px"
                                            UseLayoutRounding="True"/>
@@ -250,6 +257,12 @@
                                         </MultiDataTrigger.Conditions>
                                         <Setter TargetName="ITEM_ICON" Property="Source" Value="/Resources/Folder_6221.png" />
                                     </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding IsCut}" Value="True">
+                                        <Setter TargetName="ITEM_LAYER" Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCut}" Value="False">
+                                        <Setter TargetName="ITEM_LAYER" Property="Opacity" Value="1.0"/>
+                                    </DataTrigger>
                                 </HierarchicalDataTemplate.Triggers>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>

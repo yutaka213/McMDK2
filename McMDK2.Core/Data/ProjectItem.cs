@@ -17,12 +17,16 @@ namespace McMDK2.Core.Data
 
         public string Id { set; get; }
 
+        /* cutted this item on project explorer. */
+        public bool IsCut { set; get; }
+
         /* should be used ReadOnlyObservableCollection<ProjectItem> ? */
         public ObservableCollection<ProjectItem> Children { set; get; }
 
         public ProjectItem()
         {
             this.Children = new ObservableCollection<ProjectItem>();
+            this.IsCut = false;
         }
     }
 }

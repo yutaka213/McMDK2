@@ -42,6 +42,7 @@ namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+
         public MainWindowViewModel()
         {
             this.Tabs = new ObservableCollection<TabItem>();
@@ -260,6 +261,7 @@ namespace McMDK2.ViewModels
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
                 bitmap.EndInit();
                 subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+                subMenu.Click += CutItem;
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -327,14 +329,45 @@ namespace McMDK2.ViewModels
 
         }
 
+        private ProjectItem cuttedItem;
+
+        #region Cut a selected item.
+
+        private void CutItem(object sender, RoutedEventArgs e)
+        {
+            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            CutItem(item);
+        }
+
+        private void CutItem(ProjectItem item)
+        {
+            this.cuttedItem = item;
+
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
+            if (i != null)
+            {
+                i.IsCut = true;
+                int index = this.CurrentProject.Items.IndexOf(i);
+                this.CurrentProject.Items.RemoveAt(index);
+                this.CurrentProject.Items.Insert(index, i);
+            }
+        }
+
+        private void RecursiveCutItem(ProjectItem item, ProjectItem targetItem)
+        {
+
+        }
+
+        #endregion
+
         #region Delete a selected item.
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
             var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
-            RemoveItem(item);
+            DeleteItem(item);
         }
 
-        private void RemoveItem(ProjectItem item)
+        private void DeleteItem(ProjectItem item)
         {
             if (FileController.Exists(item.FilePath))
             {
@@ -343,7 +376,7 @@ namespace McMDK2.ViewModels
                     return;
                 }
             }
-            var tab = this.Tabs.SingleOrDefault(w => (string)w.Header == item.Name);
+            var tab = this.Tabs.SingleOrDefault(w => (string)w.Tag == item.Id);
             if (tab != null)
                 this.Tabs.Remove(tab);
 
@@ -359,11 +392,11 @@ namespace McMDK2.ViewModels
 
             foreach (var innerItem in this.CurrentProject.Items)
             {
-                RecursiveRemoveItem(innerItem, item);
+                RecursiveDeleteItem(innerItem, item);
             }
         }
 
-        private void RecursiveRemoveItem(ProjectItem item, ProjectItem targetItem)
+        private void RecursiveDeleteItem(ProjectItem item, ProjectItem targetItem)
         {
             foreach (var innerItem in item.Children)
             {
@@ -386,7 +419,7 @@ namespace McMDK2.ViewModels
                 }
                 else
                 {
-                    RecursiveRemoveItem(innerItem, targetItem);
+                    RecursiveDeleteItem(innerItem, targetItem);
                 }
             }
         }
@@ -732,6 +765,29 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // Edit(_E)
         // ##############################################################
+
+        #region CutItemCommand
+        private ViewModelCommand _CutItemCommand;
+
+        public ViewModelCommand CutItemCommand
+        {
+            get
+            {
+                if (_CutItemCommand == null)
+                {
+                    _CutItemCommand = new ViewModelCommand(CutItem);
+                }
+                return _CutItemCommand;
+            }
+        }
+
+        public void CutItem()
+        {
+
+        }
+        #endregion
+
+
         #region DeleteItemCommand
         private ViewModelCommand _DeleteItemCommand;
 
@@ -753,7 +809,7 @@ namespace McMDK2.ViewModels
             {
                 if (this.SelectedItem is TreeViewItem)
                     this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
-                this.RemoveItem(this.SelectedItem as ProjectItem);
+                this.DeleteItem(this.SelectedItem as ProjectItem);
             }
         }
         #endregion
@@ -851,6 +907,11 @@ namespace McMDK2.ViewModels
         #endregion
 
         //
+
+        private void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem)
+        {
+
+        }
 
         #region CurrentProject変更通知プロパティ
         private Project _CurrentProject;
