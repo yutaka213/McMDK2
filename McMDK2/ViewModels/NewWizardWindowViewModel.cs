@@ -233,6 +233,8 @@ namespace McMDK2.ViewModels
 
         public void OK()
         {
+            this.MainWindowViewModel.CloseProject();
+
             bool Cancel = false;
             var progress = new ProgressDialogViewModel();
             progress.SetIndeterminate(true);
