@@ -392,38 +392,23 @@ namespace McMDK2.ViewModels
 
             foreach (var innerItem in this.CurrentProject.Items)
             {
-                RecursiveDeleteItem(innerItem, item);
-            }
-        }
-
-        private void RecursiveDeleteItem(ProjectItem item, ProjectItem targetItem)
-        {
-            foreach (var innerItem in item.Children)
-            {
-                if (innerItem.Id == targetItem.Id)
+                RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
                 {
-                    if (innerItem.Id == Guids.DirectoryItemGuid)
+                    if (target.Id == Guids.DirectoryItemGuid)
                     {
-                        if (innerItem.FilePath != targetItem.FilePath)
-                            continue;
+                        if (target.FilePath != item.FilePath)
+                            return;
                     }
-                    item.Children.Remove(targetItem);
-                    FileController.Delete(targetItem.FilePath);
-                    if (item.Children.Count == 0)
+                    parent.Children.Remove(item);
+                    FileController.Delete(item.FilePath);
+                    if (parent.Children.Count == 0)
                     {
-                        // Set item type to "DIRECTORY"
-                        item.Id = Guids.DirectoryItemGuid;
+                        parent.Id = Guids.DirectoryItemGuid;
                     }
                     this.SelectedItem = null;
-                    break;
-                }
-                else
-                {
-                    RecursiveDeleteItem(innerItem, targetItem);
-                }
+                });
             }
         }
-
         #endregion
 
         #region Rename a selected item.
@@ -460,33 +445,19 @@ namespace McMDK2.ViewModels
 
             foreach (var innerItem in this.CurrentProject.Items)
             {
-                RecursiveRenameItem(innerItem, item, newName);
+                RecursiveSearchItem(innerItem, item, (_innerItem, _item) =>
+                {
+                    string oldPath = _innerItem.FilePath;
+                    item.Name = newName;
+                    item.FilePath = Path.GetDirectoryName(item.FilePath) + "\\" + newName;
+                    _item.Children.Remove(_innerItem);
+                    _item.Children.Add(item);
+
+                    FileController.Rename(oldPath, item.FilePath);
+
+                });
             }
         }
-
-        private void RecursiveRenameItem(ProjectItem item, ProjectItem targetItem, string newName)
-        {
-            foreach (var innerItem in item.Children)
-            {
-                if (innerItem.FilePath == targetItem.FilePath)
-                {
-                    string oldPath = innerItem.FilePath;
-
-                    targetItem.Name = newName;
-                    targetItem.FilePath = Path.GetDirectoryName(targetItem.FilePath) + "\\" + newName;
-                    item.Children.Remove(innerItem);
-                    item.Children.Add(targetItem);
-
-                    FileController.Rename(oldPath, targetItem.FilePath);
-                    break;
-                }
-                else
-                {
-                    RecursiveRenameItem(innerItem, targetItem, newName);
-                }
-            }
-        }
-
         #endregion
 
         #endregion
@@ -906,11 +877,21 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
-        //
 
-        private void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem)
+        private void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
         {
-
+            foreach (var innerItem in item.Children)
+            {
+                if (innerItem.Id == targetItem.Id)
+                {
+                    if (innerItem.FilePath == targetItem.FilePath)
+                    {
+                        action(innerItem, item);
+                        break;
+                    }
+                }
+                RecursiveSearchItem(innerItem, targetItem, action);
+            }
         }
 
         #region CurrentProject変更通知プロパティ
