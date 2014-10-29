@@ -147,11 +147,11 @@ namespace McMDK2.ViewModels
                 if (_ProjectName == value)
                     return;
                 _ProjectName = value;
-                var projectPath = Define.ProjectsDirectory + "\\" + _ProjectName;
+                var projectPath = Path.Combine(Define.ProjectsDirectory, _ProjectName);
                 int i = 1;
                 while (FileController.Exists(projectPath))
                 {
-                    projectPath = Define.ProjectsDirectory + "\\" + _ProjectName + (i++);
+                    projectPath = Path.Combine(Define.ProjectsDirectory, _ProjectName, "_" + (i++));
                 }
                 this.ProjectPath = projectPath;
                 RaisePropertyChanged();
@@ -282,7 +282,7 @@ namespace McMDK2.ViewModels
                     stream = new FileStream(template.TemplateFile, FileMode.Open, FileAccess.Read);
                     root = Path.GetFileNameWithoutExtension(template.TemplateFile);
                 }
-                var fs = new FileStream(newProject.Path + "//Template.zip", FileMode.Create, FileAccess.Write);
+                var fs = new FileStream(Path.Combine(newProject.Path, "Template.zip"), FileMode.Create, FileAccess.Write);
                 int nbyte;
                 while ((nbyte = stream.ReadByte()) != -1)
                 {
@@ -293,20 +293,19 @@ namespace McMDK2.ViewModels
 
                 progress.SetText("展開しています...");
 
-                ZipFile.ExtractToDirectory(newProject.Path + "//Template.zip", newProject.Path);
-                FileController.Delete(newProject.Path + "//Template.zip");
-                FileController.Rename(newProject.Path + "//" + root + ".mmproj",
-                    newProject.Path + "//" + newProject.Name + ".mmproj");
+                ZipFile.ExtractToDirectory(Path.Combine(newProject.Path, "Template.zip"), newProject.Path);
+                FileController.Delete(Path.Combine(newProject.Path, "Template.zip"));
+                FileController.Rename(Path.Combine(newProject.Path, root + ".mmproj"), Path.Combine(newProject.Path, newProject.Name + ".mmproj"));
 
                 var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
-                using (var sw = new StreamWriter(newProject.Path + "//project.mdk") /* JSON FORMAT */)
+                using (var sw = new StreamWriter(Path.Combine(newProject.Path, "project.mdk")))
                 {
                     sw.WriteLine(json);
                 }
 
                 string rootpath = newProject.Path + "\\";
                 // Loading MINECRAFT MOD PROJECT(*.MMPROJ) file.
-                var element = XElement.Load(newProject.Path + "//" + newProject.Name + ".mmproj");
+                var element = XElement.Load(Path.Combine(newProject.Path, newProject.Name + ".mmproj"));
                 var q = from p in element.Element("Items").Elements()
                         select new
                         {

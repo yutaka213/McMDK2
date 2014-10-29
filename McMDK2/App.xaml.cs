@@ -38,8 +38,8 @@ namespace McMDK2
             #region MINECRAFT ACCOUNT CHECK
             if (!(bool)Define.GetSettings().Settings["IsCheckedAccount"])
             {
-                string mcdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft"; /* %appdata%/.minecraft */
-                if (!FileController.Exists(mcdir + "\\launcher_profiles.json"))
+                string mcdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft"); /* %appdata%/.minecraft */
+                if (!FileController.Exists(Path.Combine(mcdir, "launcher_profiles.json")))
                 {
                     var taskDialog = new TaskDialog();
                     taskDialog.Caption = "Error";
@@ -55,7 +55,7 @@ namespace McMDK2
 
                     Environment.Exit(0);
                 }
-                using (var reader = File.OpenText(mcdir + "\\launcher_profiles.json"))
+                using (var reader = File.OpenText(Path.Combine(mcdir, "launcher_profiles.json")))
                 {
                     var o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
                     if (o["selectedUser"] == null)

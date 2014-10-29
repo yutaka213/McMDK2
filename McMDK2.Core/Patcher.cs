@@ -28,18 +28,18 @@ namespace McMDK2.Core
                 sr.Close();
                 sr.Dispose();
 
-                var sw = new StreamWriter(works + "\\temp.patch");
+                var sw = new StreamWriter(Path.Combine(works, "temp.patch"));
                 sw.WriteLine(diff);
                 sw.Close();
                 sw.Dispose();
 
                 string args = "-p1 -u -i \"{0}\"";
                 Define.GetLogger().Info("Apply patch from " + file);
-                Define.GetLogger().Debug("Arguments - " + String.Format(args, works + "\\temp.patch"));
+                Define.GetLogger().Debug("Arguments - " + String.Format(args, Path.Combine(works, "temp.patch")));
 
                 var process = new Process();
-                process.StartInfo.FileName = works + "\\runtime\\bin\\applydiff.exe";
-                process.StartInfo.Arguments = String.Format(args, works + "\\temp.patch");
+                process.StartInfo.FileName = Path.Combine(works, "runtime", "bin", "applydiff.exe");
+                process.StartInfo.Arguments = String.Format(args, Path.Combine(works, "temp.patch"));
                 process.StartInfo.WorkingDirectory = works;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.UseShellExecute = false;

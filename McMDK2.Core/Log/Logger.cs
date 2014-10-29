@@ -118,11 +118,11 @@ namespace McMDK2.Core.Log
                 StreamWriter sw;
                 if (this.logger != null)
                 {
-                    sw = new StreamWriter(Define.LogDirectory + "\\" + this.logger.GetLoggerFile() + ".log", true);
+                    sw = new StreamWriter(Path.Combine(Define.LogDirectory, this.logger.GetLoggerFile() + ".log"), true);
                 }
                 else
                 {
-                    sw = new StreamWriter(Define.LogDirectory + "\\" + this.file + ".log", true);
+                    sw = new StreamWriter(Path.Combine(Define.LogDirectory, this.file + ".log"), true);
                 }
                 sw.AutoFlush = true;
                 sw.WriteLine(sb.ToString());

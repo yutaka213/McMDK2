@@ -435,7 +435,7 @@ namespace McMDK2.ViewModels
                 string oldPath = i.FilePath;
 
                 item.Name = newName;
-                item.FilePath = Path.GetDirectoryName(item.FilePath) + "\\" + newName;
+                item.FilePath = Path.Combine(Path.GetDirectoryName(item.FilePath), newName);
                 this.CurrentProject.Items.Remove(i);
                 this.CurrentProject.Items.Add(item);
 
@@ -449,7 +449,7 @@ namespace McMDK2.ViewModels
                 {
                     string oldPath = _innerItem.FilePath;
                     item.Name = newName;
-                    item.FilePath = Path.GetDirectoryName(item.FilePath) + "\\" + newName;
+                    item.FilePath = Path.Combine(Path.GetDirectoryName(item.FilePath), newName);
                     _item.Children.Remove(_innerItem);
                     _item.Children.Add(item);
 
@@ -543,7 +543,7 @@ namespace McMDK2.ViewModels
                         string rootpath = obj.Path + "\\";
 
                         // Loading MINECRAFT MOD PROJECT(*.mmproj) file.
-                        var element = XElement.Load(obj.Path + "//" + obj.Name + ".mmproj");
+                        var element = XElement.Load(Path.Combine(obj.Path, obj.Name + ".mmproj"));
                         var q = from p in element.Element("Items").Elements()
                                 select new
                                 {

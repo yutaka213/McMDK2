@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using McMDK2.Core.Log;
 
 namespace McMDK2.Core
 {
@@ -13,7 +16,7 @@ namespace McMDK2.Core
         {
             get
             {
-                return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                return Process.GetCurrentProcess().MainModule.FileName;
             }
         }
 
@@ -25,12 +28,12 @@ namespace McMDK2.Core
             }
         }
 
-        private static Log.Logger _logger;
-        public static Log.Logger GetLogger()
+        private static Logger _logger;
+        public static Logger GetLogger()
         {
             if (_logger == null)
             {
-                _logger = new Log.Logger("McMDK - Main");
+                _logger = new Logger("McMDK - Main");
             }
             return _logger;
         }
@@ -90,35 +93,37 @@ namespace McMDK2.Core
 
         private static readonly long ReleaseNo = 27;
 
-        public static readonly string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
+        public static readonly string CurrentDirectory = Directory.GetCurrentDirectory();
 
         /// <summary>
         /// CurrentDirectory/plugins
         /// </summary>
-        public static readonly string PluginDirectory = CurrentDirectory + "\\plugins";
+        public static readonly string PluginDirectory = Path.Combine(CurrentDirectory, "plugins");
 
         /// <summary>
         /// CurrentDirectory/projects
         /// </summary>
-        public static readonly string ProjectsDirectory = CurrentDirectory + "\\projects";
+        public static readonly string ProjectsDirectory = Path.Combine(CurrentDirectory, "projects");
 
         /// <summary>
         /// CurrentDirectory/logs
         /// </summary>
-        public static readonly string LogDirectory = CurrentDirectory + "\\logs";
+        public static readonly string LogDirectory = Path.Combine(CurrentDirectory, "logs");
 
         /// <summary>
         /// CurrentDirectory/assets
         /// </summary>
-        public static readonly string AssetsDirectory = CurrentDirectory + "\\assets";
+        public static readonly string AssetsDirectory = Path.Combine(CurrentDirectory, "assets");
 
         /// <summary>
         /// CurrentDirectory/cache
         /// </summary>
-        public static readonly string CacheDirectory = CurrentDirectory + "\\cache";
+        public static readonly string CacheDirectory = Path.Combine(CurrentDirectory, "cache");
 
-
-        public static readonly string SettingFile = AssetsDirectory + "\\settings.xml";
+        /// <summary>
+        /// AssetsDirectory/settings.xml
+        /// </summary>
+        public static readonly string SettingFile = Path.Combine(AssetsDirectory, "settings.xml");
 
         private const string ApiEndPoint = "https://api.tuyapin.net/mcmdk/2/";
 

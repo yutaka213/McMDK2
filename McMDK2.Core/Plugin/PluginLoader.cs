@@ -119,14 +119,14 @@ namespace McMDK2.Core.Plugin
                     {
                         continue;
                     }
-                    if (!FileController.Exists(xml + "\\plugin.xml"))
+                    if (!FileController.Exists(Path.Combine(xml, "plugin.xml")))
                     {
                         continue;
                     }
 
 
                     // IPlugin.cs
-                    var a = from b in XElement.Load(xml + "\\plugin.xml").Elements()
+                    var a = from b in XElement.Load(Path.Combine(xml, "plugin.xml")).Elements()
                             select new XmlBasePlugin
                             {
                                 Name = b.Element("Name").Value,
@@ -153,7 +153,7 @@ namespace McMDK2.Core.Plugin
                         SerializeXML(xmlPlugin, xml);
 
                         // mod.xml
-                        var c = from d in XElement.Load(xml + "\\mod.xml").Elements()
+                        var c = from d in XElement.Load(Path.Combine(xml, "mod.xml")).Elements()
                                 select new XmlBaseMod
                                 {
                                     Name = d.Element("Name") == null ? xmlPlugin.Name : d.Element("Name").Value,
@@ -180,7 +180,7 @@ namespace McMDK2.Core.Plugin
                     if (xmlPlugin.Type == "Template")
                     {
                         // template.xml
-                        var c = from d in XElement.Load(xml + "\\template.xml").Elements()
+                        var c = from d in XElement.Load(Path.Combine(xml, "template.xml")).Elements()
                                 select new XmlBaseTemplate
                                 {
                                     Name = d.Element("Name") == null ? xmlPlugin.Name : d.Element("Name").Value,
@@ -204,14 +204,14 @@ namespace McMDK2.Core.Plugin
 
             private void SerializeXML(XmlBasePlugin plugin, string dir)
             {
-                if (!FileController.Exists(dir + "//ui.xml"))
+                if (!FileController.Exists(Path.Combine(dir, "ui.xml")))
                 {
                     return;
                 }
                 try
                 {
                     var document = new XmlDocument();
-                    document.Load(dir + "\\ui.xml");
+                    document.Load(Path.Combine(dir, "ui.xml"));
 
                     XmlNode root = document.DocumentElement;
                     XmlNode node = root.ChildNodes[0];

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -222,9 +223,9 @@ namespace McMDK2.ViewModels.TabPages
 
         public void OpenRecentProject(Project parameter)
         {
-            if (FileController.Exists(parameter.Path + "\\" + parameter.Name + ".mmproj"))
+            if (FileController.Exists(Path.Combine(parameter.Path, parameter.Name + ".mmproj")))
             {
-                this.MainWindowViewModel.OpenProject(parameter.Path + "\\project.mdk");
+                this.MainWindowViewModel.OpenProject(Path.Combine(parameter.Path, "project.mdk"));
                 var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Tag == Guids.StartPageGuid);
                 if (tab != null)
                     this.MainWindowViewModel.Tabs.Remove(tab);
