@@ -151,7 +151,7 @@ namespace McMDK2.ViewModels
                 int i = 1;
                 while (FileController.Exists(projectPath))
                 {
-                    projectPath = Path.Combine(Define.ProjectsDirectory, _ProjectName, "_" + (i++));
+                    projectPath = Path.Combine(Define.ProjectsDirectory, _ProjectName + "_" + (i++));
                 }
                 this.ProjectPath = projectPath;
                 RaisePropertyChanged();

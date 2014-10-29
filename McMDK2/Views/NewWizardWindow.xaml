@@ -90,7 +90,8 @@
             <TextBox Text="{Binding ProjectPath}" FontSize="12"
                      Margin="80,38,200,0" VerticalAlignment="Top"
                      Height="22"
-                     IsReadOnly="True"/>
+                     IsReadOnly="True"
+                     ToolTip="{Binding ProjectPath}"/>
             
             <TextBlock Text="バージョン" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
                        Margin="10,72,0,0" />

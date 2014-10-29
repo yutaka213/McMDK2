@@ -87,6 +87,7 @@
     <Compile Include="Minecaft\ServerStatus.cs" />
     <Compile Include="Minecaft\Session.cs" />
     <Compile Include="Minecaft\UserAuthentication.cs" />
+    <Compile Include="Net\SimpleCache.cs" />
     <Compile Include="Net\SimpleHttp.cs" />
     <Compile Include="Objects\Composition.cs" />
     <Compile Include="Objects\Notification.cs" />

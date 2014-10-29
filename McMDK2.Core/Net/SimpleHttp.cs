@@ -19,13 +19,18 @@ namespace McMDK2.Core.Net
             if (url == null)
                 throw new ArgumentException("url");
 
-            var request = (HttpWebRequest)WebRequest.Create(url + "?" + SimpleHttp.GetParameter(parameters));
+            if (!String.IsNullOrEmpty(SimpleCache.GetCache(url + "?" + GetParameter(parameters))))
+            {
+                return SimpleCache.GetCache(url + "?" + GetParameter(parameters));
+            }
+            var request = (HttpWebRequest)WebRequest.Create(url + "?" + GetParameter(parameters));
             request.Method = "GET";
             request.ContentType = contentType;
 
             var response = (HttpWebResponse)request.GetResponse();
-
-            return (new StreamReader(response.GetResponseStream())).ReadToEnd();
+            var r = (new StreamReader(response.GetResponseStream())).ReadToEnd();
+            SimpleCache.AddCache(url + "?" + GetParameter(parameters), r);
+            return r;
         }
 
         /// <summary>
