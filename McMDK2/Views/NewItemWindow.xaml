@@ -78,7 +78,7 @@
         </Grid>
         <Grid Height="80" VerticalAlignment="Bottom">
             <TextBlock Text="名前" FontSize="14" Foreground="{DynamicResource BlackColorBrush}"
-                       Margin="10,8,0,0" />
+                       Margin="10,10,0,0" />
             <TextBox Text="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}" FontSize="14"
                      Margin="80,8,200,0" VerticalAlignment="Top"
                      Height="22"/>
