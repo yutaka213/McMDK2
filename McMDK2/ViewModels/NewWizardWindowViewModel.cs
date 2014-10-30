@@ -374,7 +374,7 @@ namespace McMDK2.ViewModels
                                 var sb = new StringBuilder();
                                 for (int j = 0; j < i + 1; j++)
                                 {
-                                    sb.Append(path[i]);
+                                    sb.Append(path[j]);
                                     sb.Append("\\");
                                 }
                                 sb.Remove(sb.Length - 1, 1);
