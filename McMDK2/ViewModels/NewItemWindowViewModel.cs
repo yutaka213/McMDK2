@@ -69,7 +69,7 @@ namespace McMDK2.ViewModels
                 Id = id,
                 Name = this.ItemName + ".mod",
                 FileType = "Mod",
-                FilePath = Path.Combine(MainWindowViewModel.CurrentProject.Path, this.ItemName + ".mod")
+                FilePath = this.ItemName + ".mod"
             };
 
             this.MainWindowViewModel.Tabs.Add(moddingPage);
@@ -91,32 +91,49 @@ namespace McMDK2.ViewModels
                 {
                     selectedItem = (ProjectItem)MainWindowViewModel.SelectedItem;
                 }
-                // If this item's filetype is "Directory", add the item to this item's children.
-                if (selectedItem.FileType == "DIRECTORY")
-                    selectedItem.Children.Add(item);
+
+                // root
+                var i = MainWindowViewModel.CurrentProject.Items.SingleOrDefault(w => w.Id == selectedItem.Id && w.FilePath == selectedItem.FilePath);
+                if (i != null)
+                {
+                    // selected:root/dir1
+                    if (i.FileType == "DIRECTORY")
+                    {
+                        item.FilePath = Path.Combine(i.FilePath, item.FilePath);
+                        i.Children.Add(item);
+                    }
+                    // selected:item1.*
+                    else
+                        this.MainWindowViewModel.CurrentProject.Items.Add(item);
+                }
                 else
                 {
-                    // search the parent
-                    var i = MainWindowViewModel.CurrentProject.Items.SingleOrDefault(w => w.Id == selectedItem.Id && w.FilePath == selectedItem.FilePath);
-                    if (i != null)
+                    // need fixed path of item.
+                    foreach (var innerItem in MainWindowViewModel.CurrentProject.Items)
                     {
-                        this.MainWindowViewModel.CurrentProject.Items.Add(item);
-                    }
-                    else
-                    {
-                        // need fixed path of item.
-                        foreach (var innerItem in MainWindowViewModel.CurrentProject.Items)
+                        MainWindowViewModel.RecursiveSearchItem(innerItem, selectedItem, (target, parent) =>
                         {
-                            MainWindowViewModel.RecursiveSearchItem(innerItem, selectedItem, (target, parent) =>
+                            if (target.Id == selectedItem.Id && target.FilePath == selectedItem.FilePath)
                             {
-                                if (target.Id == selectedItem.Id && target.FilePath == selectedItem.FilePath)
+                                string a = "";
+                                if (selectedItem.FileType == "DIRECTORY")
                                 {
+                                    // selected:root/dir1/dir2
+                                    item.FilePath = Path.Combine(target.FilePath, item.FilePath);
+                                    target.Children.Add(item);
+                                }
+                                else
+                                {
+                                    // selected:root/dir1/item.*
+                                    // parent must be directory.
+                                    item.FilePath = Path.Combine(Path.GetDirectoryName(target.FilePath), item.FilePath);
                                     parent.Children.Add(item);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
+
 
             }
 

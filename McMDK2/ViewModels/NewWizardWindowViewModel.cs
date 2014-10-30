@@ -59,11 +59,11 @@ namespace McMDK2.ViewModels
                     {
                         if ((string)jobj["type"] == "release")
                         {
-                            if (Versioning.GetVersionNo((string) jobj["id"]) >= 125)
+                            if (Versioning.GetVersionNo((string)jobj["id"]) >= 125)
                             {
                                 DispatcherHelper.UIDispatcher.Invoke(() =>
                                 {
-                                    this.Versions.Add((string) jobj["id"]);
+                                    this.Versions.Add((string)jobj["id"]);
                                 });
                             }
                         }
@@ -371,17 +371,25 @@ namespace McMDK2.ViewModels
                             // do not FILE
                             if (i != path.Length - 1)
                             {
+                                var sb = new StringBuilder();
+                                for (int j = 0; j < i + 1; j++)
+                                {
+                                    sb.Append(path[i]);
+                                    sb.Append("\\");
+                                }
+                                sb.Remove(sb.Length - 1, 1);
+
                                 // nf directory
-                                if (cur.SingleOrDefault(w => w.Name == path[i]) == null)
+                                if (cur.SingleOrDefault(w => w.FilePath == rootpath + sb.ToString()) == null)
                                 {
                                     cur.Add(new ProjectItem
                                     {
                                         Name = path[i],
                                         FileType = "DIRECTORY",
-                                        FilePath = rootpath + item.Include
+                                        FilePath = rootpath + sb.ToString()
                                     });
                                 }
-                                cur = cur.Single(w => w.Name == path[i]).Children;
+                                cur = cur.Single(w => w.FilePath == rootpath + sb.ToString()).Children;
                             }
                             // FILE
                             else
