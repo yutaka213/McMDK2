@@ -89,6 +89,23 @@ namespace McMDK2.Core
             }
         }
 
+        private static bool? _IsOfflineMode = null;
+
+        public static bool IsOfflineMode
+        {
+            get
+            {
+                if (_IsOfflineMode == null)
+                    return false;
+                return (bool)_IsOfflineMode;
+            }
+            set
+            {
+                if (_IsOfflineMode == null)
+                    _IsOfflineMode = value;
+            }
+        }
+
         private static readonly string VersionNo = "2.0.0";
 
         private static readonly long ReleaseNo = 27;

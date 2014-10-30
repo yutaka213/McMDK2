@@ -109,7 +109,7 @@ namespace McMDK2
             }
             #endregion
 #endif
-            // Checking New Version
+            // Checking New Version and Internet Connection
             try
             {
                 string response = SimpleHttp.Get(Define.ApiUpdate);
@@ -168,13 +168,14 @@ namespace McMDK2
                         }
                     }
                 }
+                Define.IsOfflineMode = false;
             }
             catch (Exception ex)
             {
                 if (ex is WebException)
                 {
                     // cannot resolved domain 'api.tuyapin.net'.
-
+                    Define.IsOfflineMode = true;
                 }
             }
 
