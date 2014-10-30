@@ -55,22 +55,23 @@ namespace McMDK2.ViewModels
         public void OK()
         {
             IMod mod = ModManager.GetModFromId(this.SelectedItem.Id);
+            string id = Guid.NewGuid().ToString();
 
             var moddingPage = new TabItem
             {
                 Header = this.ItemName + ".mod",
                 Content = new ModdingPage { DataContext = new ModdingPageViewModel(mod.View) },
-                Tag = Guid.NewGuid().ToString()
+                Tag = id
             };
 
             var item = new ProjectItem
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = id,
                 Name = this.ItemName + ".mod",
                 FileType = "Mod",
                 FilePath = Path.Combine(MainWindowViewModel.CurrentProject.Path, this.ItemName + ".mod")
             };
-            
+
             this.MainWindowViewModel.Tabs.Add(moddingPage);
             this.MainWindowViewModel.SelectedTabIndex = this.MainWindowViewModel.Tabs.IndexOf(moddingPage);
 
