@@ -160,6 +160,9 @@
         </Menu>
 
         <ToolBar DockPanel.Dock="Top">
+            <ToolBar.Resources>
+                <SolidColorBrush x:Key="GrayBrush7" Color="#3E3E40"/>
+            </ToolBar.Resources>
             <Button ToolTip="保存">
                 <Image Source="/Resources/save_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
             </Button>
