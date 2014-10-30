@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
@@ -11,6 +12,8 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+using McMDK2.Core;
+using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 using McMDK2.Models;
 using McMDK2.Plugin;
@@ -55,13 +58,66 @@ namespace McMDK2.ViewModels
 
             var moddingPage = new TabItem
             {
-                Header = this.ItemName,
+                Header = this.ItemName + ".mod",
                 Content = new ModdingPage { DataContext = new ModdingPageViewModel(mod.View) },
                 Tag = Guid.NewGuid().ToString()
             };
-            //((ModdingPage)moddingPage.Content).Draw();
+
+            var item = new ProjectItem
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = this.ItemName + ".mod",
+                FileType = "Mod",
+                FilePath = Path.Combine(MainWindowViewModel.CurrentProject.Path, this.ItemName + ".mod")
+            };
+            
             this.MainWindowViewModel.Tabs.Add(moddingPage);
             this.MainWindowViewModel.SelectedTabIndex = this.MainWindowViewModel.Tabs.IndexOf(moddingPage);
+
+            if (MainWindowViewModel.SelectedItem == null)
+            {
+                // Add to root.
+                this.MainWindowViewModel.CurrentProject.Items.Add(item);
+            }
+            else
+            {
+                ProjectItem selectedItem;
+                if (MainWindowViewModel.SelectedItem is TreeViewItem)
+                {
+                    selectedItem = ((TreeViewItem)this.SelectedItem).Header as ProjectItem;
+                }
+                else
+                {
+                    selectedItem = (ProjectItem)MainWindowViewModel.SelectedItem;
+                }
+                // If this item's filetype is "Directory", add the item to this item's children.
+                if (selectedItem.FileType == "DIRECTORY")
+                    selectedItem.Children.Add(item);
+                else
+                {
+                    // search the parent
+                    var i = MainWindowViewModel.CurrentProject.Items.SingleOrDefault(w => w.Id == selectedItem.Id && w.FilePath == selectedItem.FilePath);
+                    if (i != null)
+                    {
+                        this.MainWindowViewModel.CurrentProject.Items.Add(item);
+                    }
+                    else
+                    {
+                        // need fixed path of item.
+                        foreach (var innerItem in MainWindowViewModel.CurrentProject.Items)
+                        {
+                            MainWindowViewModel.RecursiveSearchItem(innerItem, selectedItem, (target, parent) =>
+                            {
+                                if (target.Id == selectedItem.Id && target.FilePath == selectedItem.FilePath)
+                                {
+                                    parent.Children.Add(item);
+                                }
+                            });
+                        }
+                    }
+                }
+
+            }
 
             this.Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
         }

@@ -21,7 +21,11 @@ namespace McMDK2.Core.Behaviors
 
         private static void PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            //
+            var item = e.NewValue as TreeViewItem;
+            if (item != null)
+            {
+                item.SetValue(TreeViewItem.IsSelectedProperty, true);
+            }
         }
 
         void AssociatedObject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

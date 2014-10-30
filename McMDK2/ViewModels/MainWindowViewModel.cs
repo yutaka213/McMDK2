@@ -887,7 +887,7 @@ namespace McMDK2.ViewModels
         #endregion
 
 
-        private void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
+        public/* private */ void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
         {
             foreach (var innerItem in item.Children)
             {
