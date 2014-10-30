@@ -18,6 +18,7 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 using McMDK2.Core.Net;
+using McMDK2.Core.Utils;
 using McMDK2.Plugin;
 using McMDK2.Core;
 using McMDK2.Core.Data;
@@ -49,13 +50,35 @@ namespace McMDK2.ViewModels
         {
             Task.Run(() =>
             {
-                var json = JArray.Parse(SimpleHttp.Get(Define.ApiVersionsList));
-                foreach (var jobj in json)
+                if (Define.IsOfflineMode)
                 {
-                    DispatcherHelper.UIDispatcher.Invoke(() =>
+                    string mcdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
+                    string versionsDir = Path.Combine(mcdir, "versions", "versions.json");
+                    var json = JObject.Parse((new StreamReader(versionsDir)).ReadToEnd());
+                    foreach (var jobj in (JArray)json["versions"])
                     {
-                        this.Versions.Add((string)jobj["Version"]);
-                    });
+                        if ((string)jobj["type"] == "release")
+                        {
+                            if (Versioning.GetVersionNo((string) jobj["id"]) >= 125)
+                            {
+                                DispatcherHelper.UIDispatcher.Invoke(() =>
+                                {
+                                    this.Versions.Add((string) jobj["id"]);
+                                });
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    var json = JArray.Parse(SimpleHttp.Get(Define.ApiVersionsList));
+                    foreach (var jobj in json)
+                    {
+                        DispatcherHelper.UIDispatcher.Invoke(() =>
+                        {
+                            this.Versions.Add((string)jobj["Version"]);
+                        });
+                    }
                 }
             });
         }
