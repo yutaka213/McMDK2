@@ -333,12 +333,14 @@ namespace McMDK2.ViewModels
             }
         }
 
+        #region Add a item.
         private void AddItem(object sender, RoutedEventArgs e)
         {
             this.SelectedItem = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
             Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
 
         }
+        #endregion
 
         #region Cut a selected item.
 
@@ -696,6 +698,7 @@ namespace McMDK2.ViewModels
         public void CloseProject()
         {
             this.Tabs.Clear();
+            this.IsLoadedProject = false;
             if (this.CurrentProject != null)
             {
                 this.CurrentProject.Save();
