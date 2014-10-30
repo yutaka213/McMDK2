@@ -115,7 +115,6 @@ namespace McMDK2.ViewModels
                         {
                             if (target.Id == selectedItem.Id && target.FilePath == selectedItem.FilePath)
                             {
-                                string a = "";
                                 if (selectedItem.FileType == "DIRECTORY")
                                 {
                                     // selected:root/dir1/dir2
