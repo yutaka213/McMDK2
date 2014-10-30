@@ -17,7 +17,16 @@
 
     <i:Interaction.Triggers>
     </i:Interaction.Triggers>
-    <Grid Background="{StaticResource WhiteBrush}">
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Loaded}" Value="True">
+                        <Setter Property="Background" Value="White" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
         <TextBlock Text="{Binding ErrorText}" FontSize="25"
                    Visibility="{Binding Loaded, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
