@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -249,6 +250,7 @@ namespace McMDK2.ViewModels
 
                 var addMenu = new MenuItem();
                 addMenu.Header = "追加";
+                addMenu.Click += AddItem;
                 contextMenu.Items.Add(addMenu);
 
                 var sep = new Separator();
@@ -299,6 +301,13 @@ namespace McMDK2.ViewModels
 
                 if (selectedItem.FileType == "DIRECTORY")
                 {
+                    sep = new Separator();
+                    contextMenu.Items.Add(sep);
+
+                    subMenu = new MenuItem();
+                    subMenu.Header = "フォルダーを開く";
+                    subMenu.Click += (a, b) => Process.Start(((ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)b.Source).Parent).PlacementTarget).Header).FilePath);
+                    contextMenu.Items.Add(subMenu);
                 }
                 // Generate ContextMenu
                 ((TreeViewItem)sender).ContextMenu = contextMenu;
@@ -326,6 +335,8 @@ namespace McMDK2.ViewModels
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
+            this.SelectedItem = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
 
         }
 
