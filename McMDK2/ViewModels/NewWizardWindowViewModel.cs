@@ -117,6 +117,7 @@ namespace McMDK2.ViewModels
                 this.SelectedItemName = _SelectedItem.Name;
                 this.SelectedItemDescription = _SelectedItem.Description;
                 RaisePropertyChanged();
+                this.OKCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
