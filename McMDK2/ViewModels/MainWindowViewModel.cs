@@ -329,9 +329,9 @@ namespace McMDK2.ViewModels
 
         }
 
-        private ProjectItem cuttedItem;
-
         #region Cut a selected item.
+
+        private ProjectItem cuttedItem;
 
         private void CutItem(object sender, RoutedEventArgs e)
         {
@@ -350,11 +350,20 @@ namespace McMDK2.ViewModels
                 int index = this.CurrentProject.Items.IndexOf(i);
                 this.CurrentProject.Items.RemoveAt(index);
                 this.CurrentProject.Items.Insert(index, i);
+                return;
             }
-        }
 
-        private void RecursiveCutItem(ProjectItem item, ProjectItem targetItem)
-        {
+            foreach (var innerItem in this.CurrentProject.Items)
+            {
+                RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
+                {
+                    target.IsCut = true;
+                    int index = parent.Children.IndexOf(target);
+                    parent.Children.RemoveAt(index);
+                    parent.Children.Insert(index, target);
+                });
+
+            }
 
         }
 
