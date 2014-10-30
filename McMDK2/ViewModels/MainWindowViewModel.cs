@@ -537,11 +537,13 @@ namespace McMDK2.ViewModels
                 var ofd = new OpenFileDialog
                 {
                     FileName = "",
-                    Filter = "McMDK Main Project File (*.mdk)|*.mdk"
+                    Filter = "McMDK Main Project File (*.mdk)|*.mdk",
+                    InitialDirectory = String.IsNullOrEmpty(Define.GetInternalSettings().LastOpenedDirectory) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : Define.GetInternalSettings().LastOpenedDirectory,
                 };
                 if (ofd.ShowDialog() == true)
                 {
                     openPath = ofd.FileName;
+                    Define.GetInternalSettings().LastOpenedDirectory = Path.GetDirectoryName(openPath);
                 }
             }
             if (!String.IsNullOrEmpty(openPath))

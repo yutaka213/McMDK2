@@ -35,11 +35,24 @@ namespace McMDK2.Core
         {
             get
             {
-                return (bool)this["ischecked"];
+                return (bool)this["ischeckedaccount"];
             }
             set
             {
-                this["ischecked"] = value;
+                this["ischeckedaccount"] = value;
+            }
+        }
+
+        [UserScopedSetting]
+        public string LastOpenedDirectory
+        {
+            get
+            {
+                return (string)this["lastopeneddirectory"];
+            }
+            set
+            {
+                this["lastopeneddirectory"] = value;
             }
         }
     }
