@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Xml;
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
@@ -19,6 +21,7 @@ using McMDK2.Models;
 using McMDK2.Plugin;
 using McMDK2.ViewModels.TabPages;
 using McMDK2.Views.TabPages;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace McMDK2.ViewModels
 {
@@ -134,6 +137,38 @@ namespace McMDK2.ViewModels
                 }
 
 
+            }
+            try
+            {
+                var data = new ItemData();
+                data.Id = Guid.NewGuid().ToString();
+                data.Name = item.Name;
+                data.PluginId = this.SelectedItem.Id;
+                data.PluginVersion = this.SelectedItem.Version;
+
+                var serializer = new DataContractSerializer(typeof(ItemData));
+                var writer = XmlWriter.Create(item.FilePath);
+                serializer.WriteObject(writer, data);
+                writer.Close();
+                writer.Dispose();
+            }
+            catch (Exception e)
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "Error";
+                taskDialog.InstructionText = "アイテム追加時にエラーが発生しました。";
+                taskDialog.Text = "アイテムを追加する際に、内部エラーが発生したため、処理をキャンセルしました。";
+                taskDialog.DetailsCollapsedLabel = "詳細情報を表示する";
+                taskDialog.DetailsExpandedText = e.Message;
+                taskDialog.DetailsExpandedLabel = "詳細情報を非表示にする";
+                taskDialog.Icon = TaskDialogStandardIcon.Error;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.Opened += (_sender, _e) =>
+                {
+                    ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                };
+                taskDialog.Show();
+                this.MainWindowViewModel.DeleteItem(item);
             }
 
             this.Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));

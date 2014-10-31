@@ -389,7 +389,7 @@ namespace McMDK2.ViewModels
             DeleteItem(item);
         }
 
-        private void DeleteItem(ProjectItem item)
+        public void DeleteItem(ProjectItem item)
         {
             if (FileController.Exists(item.FilePath))
             {
