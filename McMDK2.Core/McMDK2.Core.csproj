@@ -71,6 +71,7 @@
     <Compile Include="Converter\ReverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\StringToBitmapConverter.cs" />
     <Compile Include="Converter\StringToObjectConverter.cs" />
+    <Compile Include="Data\ContextMenuItem.cs" />
     <Compile Include="Data\ItemData.cs" />
     <Compile Include="Data\ModInfo.cs" />
     <Compile Include="Data\NewsFeeds.cs" />

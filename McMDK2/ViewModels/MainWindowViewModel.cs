@@ -48,7 +48,7 @@ namespace McMDK2.ViewModels
         {
             this.Tabs = new ObservableCollection<TabItem>();
             this.RecentProjects = new ObservableCollection<Project>();
-            this.ContextMenuItems = new ObservableCollection<string>();
+            this.ProjectContextMenuItems = new ObservableCollection<ContextMenuItem>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
             this.Title = "Minecraft Mod Development Kit";
@@ -761,7 +761,6 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // Edit(_E)
         // ##############################################################
-
         #region CutItemCommand
         private ViewModelCommand _CutItemCommand;
 
@@ -919,6 +918,7 @@ namespace McMDK2.ViewModels
             }
         }
 
+
         #region CurrentProject変更通知プロパティ
         private Project _CurrentProject;
 
@@ -1009,18 +1009,18 @@ namespace McMDK2.ViewModels
         #endregion
 
 
-        #region ContextMenuItems変更通知プロパティ
-        private ObservableCollection<string> _ContextMenuItems;
+        #region ProjectContextMenuItems変更通知プロパティ
+        private ObservableCollection<ContextMenuItem> _ProjectContextMenuItems;
 
-        public ObservableCollection<string> ContextMenuItems
+        public ObservableCollection<ContextMenuItem> ProjectContextMenuItems
         {
             get
-            { return _ContextMenuItems; }
+            { return _ProjectContextMenuItems; }
             set
             {
-                if (_ContextMenuItems == value)
+                if (_ProjectContextMenuItems == value)
                     return;
-                _ContextMenuItems = value;
+                _ProjectContextMenuItems = value;
                 RaisePropertyChanged();
             }
         }
