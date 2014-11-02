@@ -424,6 +424,31 @@ namespace McMDK2.ViewModels
 
         private void CutItem(ProjectItem item)
         {
+            if (this.cuttedOrCopiedItem != null)
+            {
+                var j = this.CurrentProject.Items.SingleOrDefault(w => w.Id == this.cuttedOrCopiedItem.Id && w.FilePath == this.cuttedOrCopiedItem.FilePath);
+                if (j != null)
+                {
+                    j.IsCut = false;
+                    int index = this.CurrentProject.Items.IndexOf(j);
+                    this.CurrentProject.Items.RemoveAt(index);
+                    this.CurrentProject.Items.Insert(index, j);
+                }
+                else
+                {
+                    foreach (var innerItem in this.CurrentProject.Items)
+                    {
+                        RecursiveSearchItem(innerItem, this.cuttedOrCopiedItem, (target/* innerItem */, parent/* item */) =>
+                        {
+                            target.IsCut = false;
+                            int index = parent.Children.IndexOf(target);
+                            parent.Children.RemoveAt(index);
+                            parent.Children.Insert(index, target);
+                        });
+
+                    }
+                }
+            }
             this.cuttedOrCopiedItem = item;
 
             var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
@@ -490,7 +515,7 @@ namespace McMDK2.ViewModels
                 {
                     foreach (var innerItem in this.CurrentProject.Items)
                     {
-                        RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
+                        RecursiveSearchItem(innerItem, this.cuttedOrCopiedItem, (target/* innerItem */, parent/* item */) =>
                         {
                             target.IsCut = false;
                             int index = parent.Children.IndexOf(target);
