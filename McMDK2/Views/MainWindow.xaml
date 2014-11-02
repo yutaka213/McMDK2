@@ -240,12 +240,20 @@
                                         <Setter Property="ContextMenu">
                                             <Setter.Value>
                                                 <ContextMenu ItemsSource="{Binding ProjectContextMenuItems}">
-                                                    <ContextMenu.ItemContainerStyle>
-                                                        <Style TargetType="MenuItem">
-                                                            <Setter Property="Header" Value="{Binding Header}"/>
-                                                            <Setter Property="Command" Value="{Binding Command}"/>
+                                                    <ContextMenu.Resources>
+                                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
+                                                            <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+                                                            <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
+                                                            <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+                                                            <Setter Property="FontSize" Value="12" />
                                                         </Style>
-                                                    </ContextMenu.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource MetroContextMenu}">
+                                                            <Style.Resources>
+                                                                <SolidColorBrush x:Key="MenuItemSelectionFill" Color="#54545C" />
+                                                            </Style.Resources>
+                                                            <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+                                                        </Style>
+                                                    </ContextMenu.Resources>
                                                 </ContextMenu>
                                             </Setter.Value>
                                         </Setter>

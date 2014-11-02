@@ -48,7 +48,7 @@ namespace McMDK2.ViewModels
         {
             this.Tabs = new ObservableCollection<TabItem>();
             this.RecentProjects = new ObservableCollection<Project>();
-            this.ProjectContextMenuItems = new ObservableCollection<ContextMenuItem>();
+            this.ProjectContextMenuItems = new ObservableCollection<object>();
             this.IsLoadedProject = false;
             this.TaskText = "準備完了";
             this.Title = "Minecraft Mod Development Kit";
@@ -62,6 +62,8 @@ namespace McMDK2.ViewModels
                         this.RecentProjects.Add(item);
                 }
             }
+
+            this.InitializeContextMenu();
         }
 
         public void Initialize()
@@ -74,6 +76,58 @@ namespace McMDK2.ViewModels
             };
             this.Tabs.Add(startPage);
             this.SelectedTabIndex = 0;
+        }
+
+        private void InitializeContextMenu()
+        {
+            var item = new MenuItem();
+            item.Header = "追加";
+            item.Click += AddItem;
+            this.ProjectContextMenuItems.Add(item);
+
+            this.ProjectContextMenuItems.Add(new Separator());
+
+            item = new MenuItem();
+            item.Header = "切り取り";
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
+            bitmap.EndInit();
+            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Click += CutItem;
+            this.ProjectContextMenuItems.Add(item);
+
+            item = new MenuItem();
+            item.Header = "コピー";
+            bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
+            bitmap.EndInit();
+            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            this.ProjectContextMenuItems.Add(item);
+
+            item = new MenuItem();
+            item.Header = "貼り付け";
+            bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
+            bitmap.EndInit();
+            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            this.ProjectContextMenuItems.Add(item);
+
+            item = new MenuItem();
+            item.Header = "削除";
+            bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
+            bitmap.EndInit();
+            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            this.ProjectContextMenuItems.Add(item);
+
+            item = new MenuItem();
+            item.Header = "名前を変更";
+            item.Click += RenameItem;
+            this.ProjectContextMenuItems.Add(item);
         }
 
         #region Uninitialize
@@ -348,8 +402,22 @@ namespace McMDK2.ViewModels
 
         private void CutItem(object sender, RoutedEventArgs e)
         {
-            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
-            CutItem(item);
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            if (item != null)
+                CutItem(item);
         }
 
         private void CutItem(ProjectItem item)
@@ -383,10 +451,25 @@ namespace McMDK2.ViewModels
         #endregion
 
         #region Delete a selected item.
+
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
-            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
-            DeleteItem(item);
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            if (item != null)
+                DeleteItem(item);
         }
 
         public void DeleteItem(ProjectItem item)
@@ -436,12 +519,29 @@ namespace McMDK2.ViewModels
         #region Rename a selected item.
         private void RenameItem(object sender, RoutedEventArgs e)
         {
-            var item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
-            var vm = new RenameDialogViewModel();
-            vm.ToName = item.Name;
-            // Input New Name
-            Messenger.Raise(new TransitionMessage(typeof(RenameDialog), vm, TransitionMode.Modal, "Transition"));
-            this.RenameItem(item, vm.ToName);
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+
+            if (item != null)
+            {
+                var vm = new RenameDialogViewModel();
+                vm.ToName = item.Name;
+                // Input New Name
+                Messenger.Raise(new TransitionMessage(typeof(RenameDialog), vm, TransitionMode.Modal, "Transition"));
+                this.RenameItem(item, vm.ToName);
+            }
         }
 
         public void RenameItem(ProjectItem item, string newName)
@@ -1010,9 +1110,9 @@ namespace McMDK2.ViewModels
 
 
         #region ProjectContextMenuItems変更通知プロパティ
-        private ObservableCollection<ContextMenuItem> _ProjectContextMenuItems;
+        private ObservableCollection<object> _ProjectContextMenuItems;
 
-        public ObservableCollection<ContextMenuItem> ProjectContextMenuItems
+        public ObservableCollection<object> ProjectContextMenuItems
         {
             get
             { return _ProjectContextMenuItems; }
