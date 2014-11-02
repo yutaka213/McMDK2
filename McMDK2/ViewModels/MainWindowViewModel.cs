@@ -104,6 +104,7 @@ namespace McMDK2.ViewModels
             bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
             bitmap.EndInit();
             item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Click += CopyItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
@@ -327,6 +328,7 @@ namespace McMDK2.ViewModels
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
                 bitmap.EndInit();
                 subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+                subMenu.Click += CopyItem;
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -398,7 +400,7 @@ namespace McMDK2.ViewModels
 
         #region Cut a selected item.
 
-        private ProjectItem cuttedItem;
+        private ProjectItem cuttedOrCopiedItem;
 
         private void CutItem(object sender, RoutedEventArgs e)
         {
@@ -422,7 +424,7 @@ namespace McMDK2.ViewModels
 
         private void CutItem(ProjectItem item)
         {
-            this.cuttedItem = item;
+            this.cuttedOrCopiedItem = item;
 
             var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
             if (i != null)
@@ -448,6 +450,59 @@ namespace McMDK2.ViewModels
 
         }
 
+        #endregion
+
+        #region Copy a selected item.
+        private void CopyItem(object sender, RoutedEventArgs e)
+        {
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            if (item != null)
+                CopyItem(item);
+        }
+
+        private void CopyItem(ProjectItem item)
+        {
+            // コピー or 切り取り状態のアイテムを、元の状態に戻す。
+            if (this.cuttedOrCopiedItem != null)
+            {
+                var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == this.cuttedOrCopiedItem.Id && w.FilePath == this.cuttedOrCopiedItem.FilePath);
+                if (i != null)
+                {
+                    i.IsCut = false;
+                    int index = this.CurrentProject.Items.IndexOf(i);
+                    this.CurrentProject.Items.RemoveAt(index);
+                    this.CurrentProject.Items.Insert(index, i);
+                }
+                else
+                {
+                    foreach (var innerItem in this.CurrentProject.Items)
+                    {
+                        RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
+                        {
+                            target.IsCut = false;
+                            int index = parent.Children.IndexOf(target);
+                            parent.Children.RemoveAt(index);
+                            parent.Children.Insert(index, target);
+                        });
+                    }
+
+                }
+            }
+            this.cuttedOrCopiedItem = item;
+        }
         #endregion
 
         #region Delete a selected item.
