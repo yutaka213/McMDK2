@@ -114,6 +114,7 @@ namespace McMDK2.ViewModels
             bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
             bitmap.EndInit();
             item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Click += PasteItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
@@ -123,6 +124,7 @@ namespace McMDK2.ViewModels
             bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
             bitmap.EndInit();
             item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Click += DeleteItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
@@ -237,7 +239,7 @@ namespace McMDK2.ViewModels
         {
             var item = parameter as ProjectItem;
             this.SelectedItem = item;
-            if (item.FileType == "DIRECTORY")
+            if (item.FileType == Define.IdentifierDirectory)
                 return;
 
             if (this.Tabs.SingleOrDefault(w => (string)w.Tag == item.Id) != null)
@@ -338,6 +340,7 @@ namespace McMDK2.ViewModels
                 bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
                 bitmap.EndInit();
                 subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+                subMenu.Click += PasteItem;
                 contextMenu.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
@@ -355,7 +358,7 @@ namespace McMDK2.ViewModels
                 subMenu.Click += RenameItem;
                 contextMenu.Items.Add(subMenu);
 
-                if (selectedItem.FileType == "DIRECTORY")
+                if (selectedItem.FileType == Define.IdentifierDirectory)
                 {
                     sep = new Separator();
                     contextMenu.Items.Add(sep);
@@ -392,9 +395,22 @@ namespace McMDK2.ViewModels
         #region Add a item.
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            this.SelectedItem = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            this.SelectedItem = item;
             Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
-
         }
         #endregion
 
@@ -528,6 +544,49 @@ namespace McMDK2.ViewModels
             }
             this.cuttedOrCopiedItem = item;
         }
+        #endregion
+
+        #region Paste a selected item.
+
+        private void PasteItem(object sender, RoutedEventArgs e)
+        {
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            if (item != null)
+                PasteItem(item);
+        }
+
+        /// <summary>
+        /// コピーもしくは切り取ったアイテムを貼り付けます。<para />
+        /// 親アイテムにディレクトリが設定された場合はその子要素に、<para />
+        /// 親アイテムにそれ以外が設定された場合はその親の子要素に追加されます。
+        /// </summary>
+        /// <param name="item">親となるアイテム</param>
+        public void PasteItem(ProjectItem item)
+        {
+            if (this.cuttedOrCopiedItem == null)
+                return;
+
+            // root直下
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
+            if (i != null)
+            {
+
+            }
+        }
+
         #endregion
 
         #region Delete a selected item.
@@ -767,7 +826,7 @@ namespace McMDK2.ViewModels
                                     obj.Items.Add(new ProjectItem
                                     {
                                         Name = path[0],
-                                        FileType = item.Id == Guids.DirectoryItemGuid ? "DIRECTORY" : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
+                                        FileType = item.Id == Guids.DirectoryItemGuid ? Define.IdentifierDirectory : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[0])),
                                         FilePath = rootpath + path[0],
                                         Id = item.Id
                                     });
@@ -791,7 +850,7 @@ namespace McMDK2.ViewModels
                                             cur.Add(new ProjectItem
                                             {
                                                 Name = path[i],
-                                                FileType = "DIRECTORY",
+                                                FileType = Define.IdentifierDirectory,
                                                 FilePath = rootpath + sb.ToString()
                                             });
                                         }
@@ -804,7 +863,7 @@ namespace McMDK2.ViewModels
                                         {
                                             Name = path[i],
                                             FileType =
-                                                item.Id == Guids.DirectoryItemGuid ? "DIRECTORY" : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
+                                                item.Id == Guids.DirectoryItemGuid ? Define.IdentifierDirectory : ItemManager.GetIdentifierFromExtension(Path.GetExtension(path[i])),
                                             FilePath = rootpath + item.Include,
                                             Id = item.Id
                                         });
@@ -1081,8 +1140,25 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// 対象のアイテムを検索し、アイテムが存在した場合、actionを実行します。
+        /// </summary>
+        /// <param name="targetItem">検索するアイテム</param>
+        /// <param name="action">存在時、実行する動作(対象のアイテム, 親アイテム)</param>
+        public void SearchItem(ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
+        {
+            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == targetItem.Id && w.FilePath == targetItem.FilePath);
+            if (i != null)
+            {
+                action(i, null);
+            }
+            foreach (var innerItem in this.CurrentProject.Items)
+            {
+                RecursiveSearchItem(innerItem, targetItem, action);
+            }
+        }
 
-        public/* private */ void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
+        private void RecursiveSearchItem(ProjectItem item, ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
         {
             foreach (var innerItem in item.Children)
             {

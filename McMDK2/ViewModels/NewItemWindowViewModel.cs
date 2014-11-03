@@ -95,48 +95,34 @@ namespace McMDK2.ViewModels
                     selectedItem = (ProjectItem)MainWindowViewModel.SelectedItem;
                 }
 
-                // root
-                var i = MainWindowViewModel.CurrentProject.Items.SingleOrDefault(w => w.Id == selectedItem.Id && w.FilePath == selectedItem.FilePath);
-                if (i != null)
+                MainWindowViewModel.SearchItem(selectedItem, (target, parent) =>
                 {
-                    // selected:root/dir1
-                    if (i.FileType == "DIRECTORY")
+                    if (parent == null)
                     {
-                        item.FilePath = Path.Combine(i.FilePath, item.FilePath);
-                        i.Children.Add(item);
-                    }
-                    // selected:item1.*
-                    else
-                        this.MainWindowViewModel.CurrentProject.Items.Add(item);
-                }
-                else
-                {
-                    // need fixed path of item.
-                    foreach (var innerItem in MainWindowViewModel.CurrentProject.Items)
-                    {
-                        MainWindowViewModel.RecursiveSearchItem(innerItem, selectedItem, (target, parent) =>
+                        if (target.FileType == Define.IdentifierDirectory)
                         {
-                            if (target.Id == selectedItem.Id && target.FilePath == selectedItem.FilePath)
-                            {
-                                if (selectedItem.FileType == "DIRECTORY")
-                                {
-                                    // selected:root/dir1/dir2
-                                    item.FilePath = Path.Combine(target.FilePath, item.FilePath);
-                                    target.Children.Add(item);
-                                }
-                                else
-                                {
-                                    // selected:root/dir1/item.*
-                                    // parent must be directory.
-                                    item.FilePath = Path.Combine(Path.GetDirectoryName(target.FilePath), item.FilePath);
-                                    parent.Children.Add(item);
-                                }
-                            }
-                        });
+                            item.FilePath = Path.Combine(target.FilePath, item.FilePath);
+                            target.Children.Add(item);
+                        }
+                        else
+                        {
+                            this.MainWindowViewModel.CurrentProject.Items.Add(item);
+                        }
                     }
-                }
-
-
+                    else
+                    {
+                        if (target.FileType == Define.IdentifierDirectory)
+                        {
+                            item.FilePath = Path.Combine(target.FilePath, item.FilePath);
+                            target.Children.Add(item);
+                        }
+                        else
+                        {
+                            item.FilePath = Path.Combine(Path.GetDirectoryName(target.FilePath), item.FilePath);
+                            parent.Children.Add(item);
+                        }
+                    }
+                });
             }
             try
             {

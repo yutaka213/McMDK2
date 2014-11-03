@@ -164,5 +164,7 @@ namespace McMDK2.Core
         public static readonly string UpdateUrl = "http://tuyapin.net/mcmdk/update.xml";
 
         public static readonly string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
+
+        public static readonly string IdentifierDirectory = "DIRECTORY";
     }
 }

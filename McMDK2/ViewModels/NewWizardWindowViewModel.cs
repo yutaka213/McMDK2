@@ -386,7 +386,7 @@ namespace McMDK2.ViewModels
                                     cur.Add(new ProjectItem
                                     {
                                         Name = path[i],
-                                        FileType = "DIRECTORY",
+                                        FileType = Define.IdentifierDirectory,
                                         FilePath = rootpath + sb.ToString()
                                     });
                                 }
