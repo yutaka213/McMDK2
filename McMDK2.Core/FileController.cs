@@ -93,20 +93,25 @@ namespace McMDK2.Core
             }
             if (Directory.Exists(source))
             {
-                if (!Directory.Exists(dest))
-                {
-                    Directory.CreateDirectory(dest);
-                }
-                dest += "\\";
-                string[] files = Directory.GetFiles(source, "*.*", SearchOption.AllDirectories);
-                foreach (var file in files)
-                {
-                    if (!Directory.Exists(dirname))
-                    {
-                        Directory.CreateDirectory(dirname);
-                    }
-                    File.Copy(file, dest + file, true);
-                }
+                CopyDirectory(source, dest);
+            }
+        }
+
+        private static void CopyDirectory(string source, string dest)
+        {
+            if (!Directory.Exists(dest))
+            {
+                Directory.CreateDirectory(dest);
+            }
+
+            foreach (string file in Directory.GetFiles(source))
+            {
+                File.Copy(file, Path.Combine(dest, Path.GetFileName(file)), true);
+            }
+
+            foreach (string dir in Directory.GetDirectories(source))
+            {
+                CopyDirectory(dir, Path.Combine(dest, Path.GetFileName(dir)));
             }
         }
 

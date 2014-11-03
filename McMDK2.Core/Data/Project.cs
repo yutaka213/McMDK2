@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using McMDK2.Core.Extensions;
 using Newtonsoft.Json;
 
 namespace McMDK2.Core.Data
 {
-    public class Project
+    public class Project : ICloneable
     {
         public Project()
         {
@@ -85,6 +86,19 @@ namespace McMDK2.Core.Data
             {
                 RecursiveWrite(innerItem, xw);
             }
+        }
+
+        public object Clone()
+        {
+            var project = new Project();
+            project.Id = this.Id;
+            project.Items = this.Items.Clone();
+            project.Name = this.Name;
+            project.Path = this.Path;
+            project.ProjectSettings = new Dictionary<string, object>(this.ProjectSettings);
+            project.UserProperties = new Dictionary<string, object>(this.UserProperties);
+            project.Version = this.Version;
+            return project;
         }
 
     }

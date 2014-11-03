@@ -39,6 +39,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+// ReSharper disable AssignNullToNotNullAttribute
 namespace McMDK2.ViewModels
 {
     public class MainWindowViewModel : ViewModel
@@ -563,12 +564,70 @@ namespace McMDK2.ViewModels
             if (this.cuttedOrCopiedItem == null)
                 return;
 
-            // root直下
-            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
-            if (i != null)
+            this.SearchItem(item, (target, parent) =>
             {
+                // root
+                if (parent == null)
+                {
+                    // 単純なファイルの場合
+                    if (this.cuttedOrCopiedItem.FileType != Define.IdentifierDirectory)
+                    {
+                        string srcPath = this.cuttedOrCopiedItem.FilePath;
+                        string destPath = Path.Combine(this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
+                        if (srcPath == destPath)
+                        {
+                            MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
 
-            }
+                        var copiedItem = (ProjectItem)this.cuttedOrCopiedItem.Clone();
+                        copiedItem.FilePath = destPath;
+                        copiedItem.Id = Guid.NewGuid().ToString();
+
+                        FileController.Copy(srcPath, destPath);
+
+                        if (copiedItem.IsCut)
+                        {
+                            copiedItem.IsCut = false;
+                            this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
+                        }
+                        this.CurrentProject.Items.Add(copiedItem);
+                    }
+                    // Define.IdentifierDirectory
+                    else
+                    {
+                        string srcPath = this.cuttedOrCopiedItem.FilePath;
+                        string destPath = Path.Combine(this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
+                        if (srcPath == destPath)
+                        {
+                            MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var copiedItem = (ProjectItem)this.cuttedOrCopiedItem.Clone();
+                        this.ActionItem(copiedItem, (target2, parent2) =>
+                        {
+                            target2.FilePath = target2.FilePath.Replace(this.cuttedOrCopiedItem.FilePath, destPath);
+                            if (target2.FileType != Guids.DirectoryItemGuid)
+                                target2.Id = Guid.NewGuid().ToString();
+                        });
+                        Define.GetLogger().Debug(srcPath);
+                        Define.GetLogger().Debug(this.CurrentProject.Path);
+                        FileController.Copy(srcPath, Path.Combine(this.CurrentProject.Path, copiedItem.Name));
+
+                        if (copiedItem.IsCut)
+                        {
+                            copiedItem.IsCut = false;
+                            this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
+                        }
+                        this.CurrentProject.Items.Add(copiedItem);
+                    }
+                }
+                else
+                {
+
+                }
+            });
         }
 
         #endregion
@@ -595,11 +654,11 @@ namespace McMDK2.ViewModels
                 DeleteItem(item);
         }
 
-        public void DeleteItem(ProjectItem item)
+        public void DeleteItem(ProjectItem item, bool openDialog = true)
         {
             if (FileController.Exists(item.FilePath))
             {
-                if (MessageBox.Show("ファイルを削除しますか？", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (openDialog && MessageBox.Show("ファイルを削除しますか？", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
                     return;
                 }
@@ -1142,6 +1201,19 @@ namespace McMDK2.ViewModels
                     }
                 }
                 RecursiveSearchItem(innerItem, targetItem, action);
+            }
+        }
+
+        /// <summary>
+        /// 対象アイテムの子を含む全ての要素に対して、actionを実行します。
+        /// </summary>
+        /// <param name="action">実行する動作(対象のアイテム,親アイテム)</param>
+        public void ActionItem(ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
+        {
+            action(targetItem, null);
+            foreach (var item in targetItem.Children)
+            {
+                ActionItem(item, action);
             }
         }
 
