@@ -83,7 +83,18 @@ namespace McMDK2.ViewModels
         {
             var item = new MenuItem();
             item.Header = "追加";
-            item.Click += AddItem;
+            //item.Click += AddItem;
+            {
+                var subMenu = new MenuItem();
+                subMenu.Header = "新しい項目を追加";
+                subMenu.Click += AddItem;
+                item.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "新しいフォルダーを追加";
+                subMenu.Click += AddDirectory;
+                item.Items.Add(subMenu);
+            }
             this.ProjectContextMenuItems.Add(item);
 
             this.ProjectContextMenuItems.Add(new Separator());
@@ -447,6 +458,17 @@ namespace McMDK2.ViewModels
 
             var vm = new NewDirectoryDialogViewModel();
             Messenger.Raise(new TransitionMessage(typeof(NewDirectoryDialog), vm, TransitionMode.Modal, "Transition"));
+            if (item == null)
+            {
+                this.CurrentProject.Items.Add(new ProjectItem
+                {
+                    FilePath = Path.Combine(Define.ProjectsDirectory, vm.Name),
+                    FileType = Define.IdentifierDirectory,
+                    Id = Guids.DirectoryItemGuid,
+                    Name = vm.Name
+                });
+                return;
+            }
             this.SearchItem(item, (target, parent) =>
             {
                 if (parent == null)
