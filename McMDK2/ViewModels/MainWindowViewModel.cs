@@ -442,53 +442,42 @@ namespace McMDK2.ViewModels
         {
             if (this.cuttedOrCopiedItem != null)
             {
-                var j = this.CurrentProject.Items.SingleOrDefault(w => w.Id == this.cuttedOrCopiedItem.Id && w.FilePath == this.cuttedOrCopiedItem.FilePath);
-                if (j != null)
+                this.SearchItem(this.cuttedOrCopiedItem, (target, parent) =>
                 {
-                    j.IsCut = false;
-                    int index = this.CurrentProject.Items.IndexOf(j);
-                    this.CurrentProject.Items.RemoveAt(index);
-                    this.CurrentProject.Items.Insert(index, j);
-                }
-                else
-                {
-                    foreach (var innerItem in this.CurrentProject.Items)
+                    if (parent == null)
                     {
-                        RecursiveSearchItem(innerItem, this.cuttedOrCopiedItem, (target/* innerItem */, parent/* item */) =>
-                        {
-                            target.IsCut = false;
-                            int index = parent.Children.IndexOf(target);
-                            parent.Children.RemoveAt(index);
-                            parent.Children.Insert(index, target);
-                        });
-
+                        target.IsCut = false;
+                        int index = this.CurrentProject.Items.IndexOf(target);
+                        this.CurrentProject.Items.RemoveAt(index);
+                        this.CurrentProject.Items.Insert(index, target);
                     }
-                }
+                    else
+                    {
+                        target.IsCut = false;
+                        int index = parent.Children.IndexOf(target);
+                        parent.Children.RemoveAt(index);
+                        parent.Children.Insert(index, target);
+                    }
+                });
             }
             this.cuttedOrCopiedItem = item;
-
-            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
-            if (i != null)
+            this.SearchItem(this.cuttedOrCopiedItem, (target, parent) =>
             {
-                i.IsCut = true;
-                int index = this.CurrentProject.Items.IndexOf(i);
-                this.CurrentProject.Items.RemoveAt(index);
-                this.CurrentProject.Items.Insert(index, i);
-                return;
-            }
-
-            foreach (var innerItem in this.CurrentProject.Items)
-            {
-                RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
+                if (parent == null)
+                {
+                    target.IsCut = true;
+                    int index = this.CurrentProject.Items.IndexOf(target);
+                    this.CurrentProject.Items.RemoveAt(index);
+                    this.CurrentProject.Items.Insert(index, target);
+                }
+                else
                 {
                     target.IsCut = true;
                     int index = parent.Children.IndexOf(target);
                     parent.Children.RemoveAt(index);
                     parent.Children.Insert(index, target);
-                });
-
-            }
-
+                }
+            });
         }
 
         #endregion
@@ -519,28 +508,23 @@ namespace McMDK2.ViewModels
             // コピー or 切り取り状態のアイテムを、元の状態に戻す。
             if (this.cuttedOrCopiedItem != null)
             {
-                var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == this.cuttedOrCopiedItem.Id && w.FilePath == this.cuttedOrCopiedItem.FilePath);
-                if (i != null)
+                this.SearchItem(this.cuttedOrCopiedItem, (target, parent) =>
                 {
-                    i.IsCut = false;
-                    int index = this.CurrentProject.Items.IndexOf(i);
-                    this.CurrentProject.Items.RemoveAt(index);
-                    this.CurrentProject.Items.Insert(index, i);
-                }
-                else
-                {
-                    foreach (var innerItem in this.CurrentProject.Items)
+                    if (parent == null)
                     {
-                        RecursiveSearchItem(innerItem, this.cuttedOrCopiedItem, (target/* innerItem */, parent/* item */) =>
-                        {
-                            target.IsCut = false;
-                            int index = parent.Children.IndexOf(target);
-                            parent.Children.RemoveAt(index);
-                            parent.Children.Insert(index, target);
-                        });
+                        target.IsCut = false;
+                        int index = this.CurrentProject.Items.IndexOf(target);
+                        this.CurrentProject.Items.RemoveAt(index);
+                        this.CurrentProject.Items.Insert(index, target);
                     }
-
-                }
+                    else
+                    {
+                        target.IsCut = false;
+                        int index = parent.Children.IndexOf(target);
+                        parent.Children.RemoveAt(index);
+                        parent.Children.Insert(index, target);
+                    }
+                });
             }
             this.cuttedOrCopiedItem = item;
         }
@@ -624,25 +608,16 @@ namespace McMDK2.ViewModels
             if (tab != null)
                 this.Tabs.Remove(tab);
 
-
-            var i = this.CurrentProject.Items.SingleOrDefault(w => w.Id == item.Id && w.FilePath == item.FilePath);
-            if (i != null)
+            this.SearchItem(item, (target, parent) =>
             {
-                this.CurrentProject.Items.Remove(i);
-                FileController.Delete(i.FilePath);
-                this.SelectedItem = null;
-                return;
-            }
-
-            foreach (var innerItem in this.CurrentProject.Items)
-            {
-                RecursiveSearchItem(innerItem, item, (target/* innerItem */, parent/* item */) =>
+                if (parent == null)
                 {
-                    if (target.Id == Guids.DirectoryItemGuid)
-                    {
-                        if (target.FilePath != item.FilePath)
-                            return;
-                    }
+                    this.CurrentProject.Items.Remove(target);
+                    FileController.Delete(target.FilePath);
+                    this.SelectedItem = null;
+                }
+                else
+                {
                     parent.Children.Remove(item);
                     FileController.Delete(item.FilePath);
                     if (parent.Children.Count == 0)
@@ -650,8 +625,8 @@ namespace McMDK2.ViewModels
                         parent.Id = Guids.DirectoryItemGuid;
                     }
                     this.SelectedItem = null;
-                });
-            }
+                }
+            });
         }
         #endregion
 
@@ -690,34 +665,30 @@ namespace McMDK2.ViewModels
                 return;
             }
 
-            var i = this.CurrentProject.Items.SingleOrDefault(w => w.FilePath == item.FilePath);
-            if (i != null)
+            this.SearchItem(item, (target, parent) =>
             {
-                string oldPath = i.FilePath;
-
-                item.Name = newName;
-                item.FilePath = Path.Combine(Path.GetDirectoryName(item.FilePath), newName);
-                this.CurrentProject.Items.Remove(i);
-                this.CurrentProject.Items.Add(item);
-
-                FileController.Rename(oldPath, item.FilePath);
-                return;
-            }
-
-            foreach (var innerItem in this.CurrentProject.Items)
-            {
-                RecursiveSearchItem(innerItem, item, (_innerItem, _item) =>
+                if (parent == null)
                 {
-                    string oldPath = _innerItem.FilePath;
+                    string oldPath = target.FilePath;
+
                     item.Name = newName;
                     item.FilePath = Path.Combine(Path.GetDirectoryName(item.FilePath), newName);
-                    _item.Children.Remove(_innerItem);
-                    _item.Children.Add(item);
+                    this.CurrentProject.Items.Remove(target);
+                    this.CurrentProject.Items.Add(item);
 
                     FileController.Rename(oldPath, item.FilePath);
+                }
+                else
+                {
+                    string oldPath = target.FilePath;
+                    item.Name = newName;
+                    item.FilePath = Path.Combine(Path.GetDirectoryName(item.FilePath), newName);
+                    parent.Children.Remove(target);
+                    parent.Children.Add(item);
 
-                });
-            }
+                    FileController.Rename(oldPath, item.FilePath);
+                }
+            });
         }
         #endregion
 
