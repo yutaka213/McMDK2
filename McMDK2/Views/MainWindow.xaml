@@ -110,13 +110,15 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="コピー(_C)" TextOptions.TextFormattingMode="Display"
-                          IsEnabled="{Binding IsLoadedProject}">
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding CopyItemCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Copy_6524.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="貼り付け(_P)" TextOptions.TextFormattingMode="Display"
-                          IsEnabled="{Binding IsLoadedProject}">
+                          IsEnabled="{Binding IsLoadedProject}"
+                          Command="{Binding PasteItemCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/Paste_6520.png" Height="15px" Width="15px" UseLayoutRounding="True" />
                     </MenuItem.Icon>

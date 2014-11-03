@@ -1112,7 +1112,66 @@ namespace McMDK2.ViewModels
 
         public void CutItem()
         {
+            if (this.SelectedItem != null)
+            {
+                if (this.SelectedItem is TreeViewItem)
+                    this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                this.CutItem(this.SelectedItem as ProjectItem);
+            }
+        }
+        #endregion
 
+
+        #region CopyItemCommand
+        private ViewModelCommand _CopyItemCommand;
+
+        public ViewModelCommand CopyItemCommand
+        {
+            get
+            {
+                if (_CopyItemCommand == null)
+                {
+                    _CopyItemCommand = new ViewModelCommand(CopyItem);
+                }
+                return _CopyItemCommand;
+            }
+        }
+
+        public void CopyItem()
+        {
+            if (this.SelectedItem != null)
+            {
+                if (this.SelectedItem is TreeViewItem)
+                    this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                this.CopyItem(this.SelectedItem as ProjectItem);
+            }
+        }
+        #endregion
+
+
+        #region PasteItemCommand
+        private ViewModelCommand _PasteItemCommand;
+
+        public ViewModelCommand PasteItemCommand
+        {
+            get
+            {
+                if (_PasteItemCommand == null)
+                {
+                    _PasteItemCommand = new ViewModelCommand(PasteItem);
+                }
+                return _PasteItemCommand;
+            }
+        }
+
+        public void PasteItem()
+        {
+            if (this.SelectedItem != null)
+            {
+                if (this.SelectedItem is TreeViewItem)
+                    this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                this.PasteItem(this.SelectedItem as ProjectItem);
+            }
         }
         #endregion
 
