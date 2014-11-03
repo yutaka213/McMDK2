@@ -573,7 +573,7 @@ namespace McMDK2.ViewModels
                     if (this.cuttedOrCopiedItem.FileType != Define.IdentifierDirectory)
                     {
                         string srcPath = this.cuttedOrCopiedItem.FilePath;
-                        string destPath = Path.Combine(this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
+                        string destPath = Path.Combine(target.FileType == Define.IdentifierDirectory ? target.FilePath : this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
                         if (srcPath == destPath)
                         {
                             MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -591,13 +591,21 @@ namespace McMDK2.ViewModels
                             copiedItem.IsCut = false;
                             this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
                         }
-                        this.CurrentProject.Items.Add(copiedItem);
+
+                        if (target.FileType == Define.IdentifierDirectory)
+                        {
+                            target.Children.Add(copiedItem);
+                        }
+                        else
+                        {
+                            this.CurrentProject.Items.Add(copiedItem);
+                        }
                     }
                     // Define.IdentifierDirectory
                     else
                     {
                         string srcPath = this.cuttedOrCopiedItem.FilePath;
-                        string destPath = Path.Combine(this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
+                        string destPath = Path.Combine(target.FileType == Define.IdentifierDirectory ? target.FilePath : this.CurrentProject.Path, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
                         if (srcPath == destPath)
                         {
                             MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -611,21 +619,78 @@ namespace McMDK2.ViewModels
                             if (target2.FileType != Guids.DirectoryItemGuid)
                                 target2.Id = Guid.NewGuid().ToString();
                         });
-                        Define.GetLogger().Debug(srcPath);
-                        Define.GetLogger().Debug(this.CurrentProject.Path);
-                        FileController.Copy(srcPath, Path.Combine(this.CurrentProject.Path, copiedItem.Name));
+                        FileController.Copy(srcPath, Path.Combine(target.FileType == Define.IdentifierDirectory ? target.FilePath : this.CurrentProject.Path, copiedItem.Name));
 
                         if (copiedItem.IsCut)
                         {
                             copiedItem.IsCut = false;
                             this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
                         }
-                        this.CurrentProject.Items.Add(copiedItem);
+
+                        if (target.FileType == Define.IdentifierDirectory)
+                        {
+                            target.Children.Add(copiedItem);
+                        }
+                        else
+                        {
+                            this.CurrentProject.Items.Add(copiedItem);
+                        }
                     }
                 }
                 else
                 {
+                    // 単純なファイルの場合
+                    if (this.cuttedOrCopiedItem.FileType != Define.IdentifierDirectory)
+                    {
+                        string srcPath = this.cuttedOrCopiedItem.FilePath;
+                        string destPath = Path.Combine(parent.FilePath, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
 
+                        if (srcPath == destPath)
+                        {
+                            MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var copiedItem = (ProjectItem)this.cuttedOrCopiedItem.Clone();
+                        copiedItem.FilePath = destPath;
+                        copiedItem.Id = Guid.NewGuid().ToString();
+
+                        FileController.Copy(srcPath, destPath);
+
+                        if (copiedItem.IsCut)
+                        {
+                            copiedItem.IsCut = false;
+                            this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
+                        }
+                        parent.Children.Add(copiedItem);
+                    }
+                    // Define.IdentifierDirectory
+                    else
+                    {
+                        string srcPath = this.cuttedOrCopiedItem.FilePath;
+                        string destPath = Path.Combine(parent.FilePath, Path.GetFileName(this.cuttedOrCopiedItem.FilePath));
+                        if (srcPath == destPath)
+                        {
+                            MessageBox.Show("同じ場所にファイルを貼り付けることはできません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var copiedItem = (ProjectItem)this.cuttedOrCopiedItem.Clone();
+                        this.ActionItem(copiedItem, (target2, parent2) =>
+                        {
+                            target2.FilePath = target2.FilePath.Replace(this.cuttedOrCopiedItem.FilePath, destPath);
+                            if (target2.FileType != Guids.DirectoryItemGuid)
+                                target2.Id = Guid.NewGuid().ToString();
+                        });
+                        FileController.Copy(srcPath, destPath);
+
+                        if (copiedItem.IsCut)
+                        {
+                            copiedItem.IsCut = false;
+                            this.SearchItem(this.cuttedOrCopiedItem, (target2, parent2) => this.DeleteItem(target2, false));
+                        }
+                        parent.Children.Add(copiedItem);
+                    }
                 }
             });
         }
