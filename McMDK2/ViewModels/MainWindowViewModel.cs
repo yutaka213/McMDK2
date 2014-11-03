@@ -308,13 +308,24 @@ namespace McMDK2.ViewModels
 
                 var addMenu = new MenuItem();
                 addMenu.Header = "追加";
-                addMenu.Click += AddItem;
+                //addMenu.Click += AddItem;
+
+                var subMenu = new MenuItem();
+                subMenu.Header = "新しい項目を追加";
+                subMenu.Click += AddItem;
+                addMenu.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "新しいフォルダー";
+                subMenu.Click += AddDirectory;
+                addMenu.Items.Add(subMenu);
+
                 contextMenu.Items.Add(addMenu);
 
                 var sep = new Separator();
                 contextMenu.Items.Add(sep);
 
-                var subMenu = new MenuItem();
+                subMenu = new MenuItem();
                 subMenu.Header = "切り取り";
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();
@@ -413,6 +424,82 @@ namespace McMDK2.ViewModels
             this.SelectedItem = item;
             Messenger.Raise(new TransitionMessage(typeof(NewItemWindow), new NewItemWindowViewModel(this), TransitionMode.Modal, "Transition"));
         }
+        #endregion
+
+        #region Add new directory
+        private void AddDirectory(object sender, RoutedEventArgs e)
+        {
+            ProjectItem item = null;
+            if (sender is TreeViewItem)
+            {
+                item = (ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)e.Source).Parent).PlacementTarget).Header;
+            }
+            else
+            {
+                if (this.SelectedItem != null)
+                {
+                    if (this.SelectedItem is TreeViewItem)
+                        this.SelectedItem = ((TreeViewItem)this.SelectedItem).Header;
+                    item = this.SelectedItem as ProjectItem;
+                }
+            }
+            this.SelectedItem = item;
+
+            var vm = new NewDirectoryDialogViewModel();
+            Messenger.Raise(new TransitionMessage(typeof(NewDirectoryDialog), vm, TransitionMode.Modal, "Transition"));
+            this.SearchItem(item, (target, parent) =>
+            {
+                if (parent == null)
+                {
+                    if (target.FileType == Define.IdentifierDirectory)
+                    {
+                        target.Children.Add(new ProjectItem
+                        {
+                            FilePath = Path.Combine(target.FilePath, vm.Name),
+                            FileType = Define.IdentifierDirectory,
+                            Id = Guids.DirectoryItemGuid,
+                            Name = vm.Name
+                        });
+                    }
+                    else
+                    {
+                        this.CurrentProject.Items.Add(new ProjectItem
+                        {
+                            FilePath = Path.Combine(Path.GetDirectoryName(target.FilePath), vm.Name),
+                            FileType = Define.IdentifierDirectory,
+                            Id = Guids.DirectoryItemGuid,
+                            Name = vm.Name
+                        });
+                    }
+                    FileController.CreateDirectory(Path.Combine(target.FileType == Define.IdentifierDirectory ? target.FilePath : Path.GetDirectoryName(target.FilePath), vm.Name));
+                }
+                else
+                {
+                    if (target.FileType == Define.IdentifierDirectory)
+                    {
+                        target.Children.Add(new ProjectItem
+                        {
+                            FilePath = Path.Combine(target.FilePath, vm.Name),
+                            FileType = Define.IdentifierDirectory,
+                            Id = Guids.DirectoryItemGuid,
+                            Name = vm.Name
+                        });
+                    }
+                    else
+                    {
+                        parent.Children.Add(new ProjectItem
+                        {
+                            FilePath = Path.Combine(parent.FilePath, vm.Name),
+                            FileType = Define.IdentifierDirectory,
+                            Id = Guids.DirectoryItemGuid,
+                            Name = vm.Name
+                        });
+                    }
+                    FileController.CreateDirectory(Path.Combine(target.FileType == Define.IdentifierDirectory ? target.FilePath : parent.FilePath, vm.Name));
+                }
+            });
+        }
+
         #endregion
 
         #region Cut a selected item.
