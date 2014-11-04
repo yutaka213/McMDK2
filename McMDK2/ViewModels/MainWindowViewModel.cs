@@ -388,7 +388,12 @@ namespace McMDK2.ViewModels
 
                     subMenu = new MenuItem();
                     subMenu.Header = "フォルダーを開く";
-                    subMenu.Click += (a, b) => Process.Start(((ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)b.Source).Parent).PlacementTarget).Header).FilePath);
+                    subMenu.Click += (a, b) =>
+                    {
+                        string path = ((ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)b.Source).Parent).PlacementTarget).Header).FilePath;
+                        if (FileController.Exists(path))
+                            Process.Start(path);
+                    };
                     contextMenu.Items.Add(subMenu);
                 }
                 // Generate ContextMenu
@@ -458,6 +463,10 @@ namespace McMDK2.ViewModels
 
             var vm = new NewDirectoryDialogViewModel();
             Messenger.Raise(new TransitionMessage(typeof(NewDirectoryDialog), vm, TransitionMode.Modal, "Transition"));
+            if (String.IsNullOrWhiteSpace(vm.Name))
+            {
+                return;
+            }
             if (item == null)
             {
                 this.CurrentProject.Items.Add(new ProjectItem
