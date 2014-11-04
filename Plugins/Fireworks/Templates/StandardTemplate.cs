@@ -56,7 +56,7 @@ namespace Fireworks.Templates
         }
 
         #region PreInitialization
-        public async void PreInitialization(PreInitializationArgs args)
+        public void PreInitialization(PreInitializationArgs args)
         {
             // If Minecraft version is older than 1.3.2, Return process to New Project Wizard.
             if (Versioning.GetVersionNo(args.MinecraftVersion) < 132)

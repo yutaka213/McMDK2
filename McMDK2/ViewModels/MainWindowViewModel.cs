@@ -1055,7 +1055,7 @@ namespace McMDK2.ViewModels
                                             {
                                                 Name = path[i],
                                                 FileType = Define.IdentifierDirectory,
-                                                FilePath = rootpath + sb.ToString()
+                                                FilePath = rootpath + sb
                                             });
                                         }
                                         cur = cur.Single(w => w.FilePath == rootpath + sb.ToString()).Children;
@@ -1440,6 +1440,7 @@ namespace McMDK2.ViewModels
         /// <summary>
         /// 対象アイテムの子を含む全ての要素に対して、actionを実行します。
         /// </summary>
+        /// <param name="targetItem">検索するアイテム</param>
         /// <param name="action">実行する動作(対象のアイテム,親アイテム)</param>
         public void ActionItem(ProjectItem targetItem, Action<ProjectItem, ProjectItem> action)
         {

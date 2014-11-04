@@ -32,6 +32,16 @@ namespace McMDK2
             DispatcherHelper.UIDispatcher = Dispatcher;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+            // Test
+            try
+            {
+                SimpleHttp.Get("http://google.com");
+                Define.IsOfflineMode = false;
+            }
+            catch
+            {
+                Define.IsOfflineMode = true;
+            }
 #if !DEBUG
             // Checking Account Information
             // あくまで簡易的なもの
@@ -110,72 +120,70 @@ namespace McMDK2
             #endregion
 #endif
             // Checking New Version and Internet Connection
-            try
+            if (!Define.IsOfflineMode)
             {
-                string response = SimpleHttp.Get(Define.ApiUpdate);
-                var json = JObject.Parse(response);
-                if (int.Parse(Define.Version.Replace(".", "")) < int.Parse(((string)json["McMDK2"]["version"]).Replace(".", "")))
+                try
                 {
-                    // New version found
-                    bool force = bool.Parse((string)json["McMDK2"]["force_update"]);
-                    Define.FoundNewVersion = true;
-                    if (force)
+                    string response = SimpleHttp.Get(Define.ApiUpdate);
+                    var json = JObject.Parse(response);
+                    if (int.Parse(Define.Version.Replace(".", "")) < int.Parse(((string)json["McMDK2"]["version"]).Replace(".", "")))
                     {
-                        var taskDialog = new TaskDialog();
-                        taskDialog.Caption = "Update";
-                        taskDialog.InstructionText = "McMDKの更新があります。";
-                        taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。";
-                        taskDialog.DetailsExpandedText = String.Format(
-                            "現在使用中のバージョン　　：{0}" + Environment.NewLine +
-                            "現在使用可能なバージョン ：{1}",
-                            Define.Version,
-                            (string)json["McMDK2"]["version"]);
-                        taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
-                        taskDialog.DetailsExpanded = false;
-                        taskDialog.Icon = TaskDialogStandardIcon.Information;
-                        taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
-                        taskDialog.Opened += (_sender, _e) =>
+                        // New version found
+                        bool force = bool.Parse((string)json["McMDK2"]["force_update"]);
+                        Define.FoundNewVersion = true;
+                        if (force)
                         {
-                            ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
-                        };
-                        taskDialog.Show();
+                            var taskDialog = new TaskDialog();
+                            taskDialog.Caption = "McMDKの更新";
+                            taskDialog.InstructionText = "McMDKの更新があります。";
+                            taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。";
+                            taskDialog.DetailsExpandedText = String.Format(
+                                "現在使用中のバージョン　　：{0}" + Environment.NewLine +
+                                "現在使用可能なバージョン ：{1}",
+                                Define.Version,
+                                (string)json["McMDK2"]["version"]);
+                            taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
+                            taskDialog.DetailsExpanded = false;
+                            taskDialog.Icon = TaskDialogStandardIcon.Information;
+                            taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                            taskDialog.Opened += (_sender, _e) =>
+                            {
+                                ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                            };
+                            taskDialog.Show();
 
-                        //以下更新
-                    }
-                    else
-                    {
-                        var taskDialog = new TaskDialog();
-                        taskDialog.Caption = "Update";
-                        taskDialog.InstructionText = "McMDKの更新があります。";
-                        taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
-                                          "最新版へと更新を行いますか？";
-                        taskDialog.DetailsExpandedText = String.Format(
-                            "現在使用中のバージョン　　：{0}" + Environment.NewLine +
-                            "現在使用可能なバージョン ：{1}",
-                            Define.Version,
-                            (string)json["McMDK2"]["version"]);
-                        taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
-                        taskDialog.DetailsExpanded = false;
-                        taskDialog.Icon = TaskDialogStandardIcon.Information;
-                        taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
-                        taskDialog.Opened += (_sender, _e) =>
-                        {
-                            ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
-                        };
-                        if (taskDialog.Show() == TaskDialogResult.Yes)
-                        {
                             //以下更新
+                        }
+                        else
+                        {
+                            var taskDialog = new TaskDialog();
+                            taskDialog.Caption = "McMDKの更新";
+                            taskDialog.InstructionText = "McMDKの更新があります。";
+                            taskDialog.Text = "現在ご利用しているバージョンよりも、新しいバージョンが公開されています。" + Environment.NewLine +
+                                              "最新版へと更新を行いますか？";
+                            taskDialog.DetailsExpandedText = String.Format(
+                                "現在使用中のバージョン　　：{0}" + Environment.NewLine +
+                                "現在使用可能なバージョン ：{1}",
+                                Define.Version,
+                                (string)json["McMDK2"]["version"]);
+                            taskDialog.ExpansionMode = TaskDialogExpandedDetailsLocation.ExpandContent;
+                            taskDialog.DetailsExpanded = false;
+                            taskDialog.Icon = TaskDialogStandardIcon.Information;
+                            taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                            taskDialog.Opened += (_sender, _e) =>
+                            {
+                                ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
+                            };
+                            if (taskDialog.Show() == TaskDialogResult.Yes)
+                            {
+                                //以下更新
+                            }
                         }
                     }
                 }
-                Define.IsOfflineMode = false;
-            }
-            catch (Exception ex)
-            {
-                if (ex is WebException)
+                catch (Exception ex)
                 {
-                    // cannot resolved domain 'api.tuyapin.net'.
-                    Define.IsOfflineMode = true;
+
                 }
             }
 
