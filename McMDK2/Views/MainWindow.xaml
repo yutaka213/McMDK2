@@ -50,6 +50,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Converter:ItemTypeToBitmapConverter x:Key="ItemTypeToBitmapConverter" />
+            <Converter:FilePathToBooleanConverter x:Key="FilePathToBooleanConverter" />
             <FontFamily x:Key="HeaderFontFamily">Meiryo UI</FontFamily>
             <system:Double x:Key="WindowTitleFontSize">15</system:Double>
         </ResourceDictionary>
@@ -275,9 +276,15 @@
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">
                                 <StackPanel Orientation="Horizontal" x:Name="ITEM_LAYER">
-                                    <Image x:Name="ITEM_ICON" Source="{Binding FileType, Converter={StaticResource ItemTypeToBitmapConverter}}"
-                                           Height="15px" Width="15px"
-                                           UseLayoutRounding="True"/>
+                                    <Grid>
+                                        <Image x:Name="ITEM_ICON" Source="{Binding FileType, Converter={StaticResource ItemTypeToBitmapConverter}}"
+                                               Height="15" Width="15"
+                                               UseLayoutRounding="True"/>
+                                        <Image x:Name="ITEM_ANNOTATION_ICON"
+                                               Height="15" Width="15"
+                                               UseLayoutRounding="True"
+                                               Visibility="Collapsed"/>
+                                    </Grid>
                                     <TextBlock Padding="5,0,0,0" Text="{Binding Name}" />
                                 </StackPanel>
                                 <HierarchicalDataTemplate.Triggers>
@@ -293,6 +300,10 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsCut}" Value="False">
                                         <Setter TargetName="ITEM_LAYER" Property="Opacity" Value="1.0"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding FilePath, Converter={StaticResource FilePathToBooleanConverter}}" Value="False">
+                                        <Setter TargetName="ITEM_ANNOTATION_ICON" Property="Source" Value="/Resources/Notondisk_7245.png" />
+                                        <Setter TargetName="ITEM_ANNOTATION_ICON" Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </HierarchicalDataTemplate.Triggers>
                             </HierarchicalDataTemplate>
