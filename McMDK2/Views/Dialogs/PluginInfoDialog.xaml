@@ -71,9 +71,9 @@
             </ListBox>
         </Grid>
         <Grid Height="200" VerticalAlignment="Bottom">
-            <Border BorderBrush="{StaticResource BorderBrushHighlighted}" BorderThickness="2"
+            <Border BorderBrush="{StaticResource BorderBrushHighlighted}" BorderThickness="1"
                     Margin="10,10,10,40">
-                <Grid Margin="0,0,0,0">
+                <Grid Margin="5,5,5,5">
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetroTextBlock}">
                             <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
@@ -83,7 +83,6 @@
                         <ColumnDefinition Width="45" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
                     <Image Grid.Column="0"
                        Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                        Source="{Binding SelectedItem.IconPath, Converter={StaticResource StringToBitmapConverter}}"
