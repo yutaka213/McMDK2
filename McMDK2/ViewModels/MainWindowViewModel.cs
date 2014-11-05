@@ -467,15 +467,17 @@ namespace McMDK2.ViewModels
             {
                 return;
             }
-            if (item == null)
+            if (this.SelectedItem == null)
             {
                 this.CurrentProject.Items.Add(new ProjectItem
                 {
-                    FilePath = Path.Combine(Define.ProjectsDirectory, vm.Name),
+                    FilePath = Path.Combine(this.CurrentProject.Path, vm.Name),
                     FileType = Define.IdentifierDirectory,
                     Id = Guids.DirectoryItemGuid,
                     Name = vm.Name
                 });
+                FileController.CreateDirectory(Path.Combine(this.CurrentProject.Path, vm.Name));
+
                 return;
             }
             this.SearchItem(item, (target, parent) =>
