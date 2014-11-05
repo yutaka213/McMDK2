@@ -12,6 +12,7 @@ using Livet.EventListeners;
 using Livet.Messaging.Windows;
 using McMDK2.Core;
 using McMDK2.Models;
+using McMDK2.Views.Dialogs;
 
 namespace McMDK2.ViewModels.Dialogs
 {
@@ -37,30 +38,26 @@ namespace McMDK2.ViewModels.Dialogs
         }
 
 
+        #region ShowPluginInfoCommand
+        private ViewModelCommand _ShowPluginInfoCommand;
 
-        #region RequestNavigateCommand
-        private ListenerCommand<object> _RequestNavigateCommand;
-
-        public ListenerCommand<object> RequestNavigateCommand
+        public ViewModelCommand ShowPluginInfoCommand
         {
             get
             {
-                if (_RequestNavigateCommand == null)
+                if (_ShowPluginInfoCommand == null)
                 {
-                    _RequestNavigateCommand = new ListenerCommand<object>(RequestNavigate);
+                    _ShowPluginInfoCommand = new ViewModelCommand(ShowPluginInfo);
                 }
-                return _RequestNavigateCommand;
+                return _ShowPluginInfoCommand;
             }
         }
 
-        public void RequestNavigate(object parameter)
+        public void ShowPluginInfo()
         {
-            object sender = ((object[]) parameter)[0];
-            /* parameter[0] is sender, parameter[1] is EventArgs */
-            Define.GetLogger().Debug(sender);
+            Messenger.Raise(new TransitionMessage(typeof(PluginInfoDialog), new PluginInfoDialogViewModel(), TransitionMode.Modal, "Transition"));
         }
         #endregion
-
 
 
 

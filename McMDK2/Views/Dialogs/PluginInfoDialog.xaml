@@ -1,0 +1,140 @@
+﻿<Window x:Class="McMDK2.Views.Dialogs.PluginInfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:McMDK2.Views.Dialogs"
+        xmlns:vm="clr-namespace:McMDK2.ViewModels.Dialogs"
+        xmlns:converter="clr-namespace:McMDK2.Core.Converter;assembly=McMDK2.Core"
+        xmlns:Plugin="clr-namespace:McMDK2.Plugin;assembly=McMDK2.Plugin"
+        Title="プラグインマネージャー" 
+        Height="580" Width="825"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    
+    <Window.DataContext>
+        <vm:PluginInfoDialogViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:StringToBitmapConverter x:Key="StringToBitmapConverter" />
+            <DataTemplate x:Key="ListBoxItemView" DataType="{x:Type Plugin:IPlugin}">
+                <Grid Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45px" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding IconPath, Converter={StaticResource StringToBitmapConverter}}" 
+                           Height="32px" Width="32px"
+                           UseLayoutRounding="True" />
+
+                    <TextBlock Grid.Column="1" 
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Text="{Binding Name}" FontSize="13"
+                               TextWrapping="Wrap"/>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction/>
+        </l:InteractionMessageTrigger>
+        <l:InteractionMessageTrigger MessageKey="Transition" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction />
+        </l:InteractionMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid Margin="0,0,0,200">
+            <ListBox Margin="10" 
+                     ItemsSource="{Binding Items}"
+                     ItemTemplate="{StaticResource ListBoxItemView}"
+                     SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedIndex="-1"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            </ListBox>
+        </Grid>
+        <Grid Height="200" VerticalAlignment="Bottom">
+            <Border BorderBrush="{StaticResource BorderBrushHighlighted}" BorderThickness="2"
+                    Margin="10,10,10,40">
+                <Grid Margin="0,0,0,0">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetroTextBlock}">
+                            <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0"
+                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Source="{Binding SelectedItem.IconPath, Converter={StaticResource StringToBitmapConverter}}"
+                       Height="32px" Width="32px"
+                       UseLayoutRounding="True" />
+                    <TextBlock Grid.Column="1"
+                               Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               FontSize="15">
+                        <TextBlock Text="{Binding SelectedItem.Name}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedItem.Version}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding SelectedItem.Id, StringFormat=({0})}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                    </TextBlock>
+                    <!--
+                    <Button Grid.Column="1"
+                            Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Content="無効化する" 
+                            Foreground="{StaticResource WhiteColorBrush}"
+                            Height="25" Width="80">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem.Name}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>                                
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    -->
+                    <Grid Grid.Column="1"
+                          Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" 
+                               Text="{Binding SelectedItem.Author, StringFormat=Author: {0}}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" 
+                               FontSize="13" />
+                        <TextBlock Grid.Row="1"
+                               Text="{Binding SelectedItem.Description}" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis"
+                               FontSize="13"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Button Content="閉じる" FontSize="12"
+                    Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Height="22" Width="80" 
+                    Style="{x:Null}"
+                    Foreground="{StaticResource WhiteColorBrush}"
+                    Command="{Binding CloseCommand}"/>
+        </Grid>
+    </Grid>
+</Window>

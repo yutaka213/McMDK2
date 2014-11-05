@@ -16,9 +16,9 @@ using McMDK2.Core.Win32;
 
 namespace McMDK2.Views.Dialogs
 {
-    public partial class NewDirectoryDialog : Window
+    public partial class PluginInfoDialog : Window
     {
-        public NewDirectoryDialog()
+        public PluginInfoDialog()
         {
             InitializeComponent();
         }

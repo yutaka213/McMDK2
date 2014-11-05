@@ -22,19 +22,17 @@ namespace McMDK2.Core.Converter
             var image = new BitmapImage();
             image.BeginInit();
 
-            System.Diagnostics.Debug.WriteLine(imagepath);
-
-            if (imagepath.Split(';').Length == 2)
+            if (String.IsNullOrWhiteSpace(imagepath))
             {
-                string[] path = imagepath.Split(';');
-                var item = IdStore.GetTypeFromId(path[0]);
-                image.StreamSource = Assembly.GetAssembly(item).GetManifestResourceStream(path[1]);
+                image.UriSource = new Uri("pack://application:,,,/Resources/minecraft.png");
             }
             else
             {
-                if (String.IsNullOrWhiteSpace(imagepath))
+                if (imagepath.Split(';').Length == 2)
                 {
-                    image.UriSource = new Uri("pack://application:,,,/Resources/minecraft.png");
+                    string[] path = imagepath.Split(';');
+                    var item = IdStore.GetTypeFromId(path[0]);
+                    image.StreamSource = Assembly.GetAssembly(item).GetManifestResourceStream(path[1]);
                 }
                 else
                 {

@@ -36,6 +36,9 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="Transition" Messenger="{Binding Messenger}">
+            <l:TransitionInteractionMessageAction />
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
     
     <Grid>
@@ -130,6 +133,7 @@
         
         <Button Content="プラグイン情報" 
                 Height="25" Width="120"
-                Margin="10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                Margin="10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Command="{Binding ShowPluginInfoCommand}"/>
     </Grid>
 </Window>

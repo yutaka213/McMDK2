@@ -88,6 +88,7 @@
     <Compile Include="Models\Guids.cs" />
     <Compile Include="ViewModels\Dialogs\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\NewDirectoryDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PluginInfoDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RenameDialogViewModel.cs" />
     <Compile Include="ViewModels\Internal\IndirectlyMessenger.cs" />
@@ -103,6 +104,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\NewDirectoryDialog.xaml.cs">
       <DependentUpon>NewDirectoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PluginInfoDialog.xaml.cs">
+      <DependentUpon>PluginInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
@@ -136,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\NewDirectoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\PluginInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
