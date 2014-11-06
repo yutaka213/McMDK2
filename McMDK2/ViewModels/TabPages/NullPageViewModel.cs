@@ -17,7 +17,7 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class NullPageViewModel : ViewModel
     {
-        public void Initialize()
+        public NullPageViewModel()
         {
             this.Message = "この項目ではプレビュー及び編集機能は使用できません。";
         }

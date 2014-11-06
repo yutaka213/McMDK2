@@ -34,11 +34,6 @@ namespace McMDK2.ViewModels.TabPages
             this.Loaded = true;
         }
 
-        public void Initialize()
-        {
-
-        }
-
         // Load from *.mod file.
         public void Initialize(string path)
         {
