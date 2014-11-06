@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.ComponentModel;
-
+using System.Xml;
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Models;
 
@@ -18,8 +20,23 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class ProjectSettingPageViewModel : ViewModel
     {
-        public void Initialize()
+        private readonly MainWindowViewModel MainWindowViewModel;
+
+        public ProjectSettingPageViewModel(MainWindowViewModel main)
         {
+            this.MainWindowViewModel = main;
+            this.Mods = new ObservableCollection<ItemData>();
+
+            var items = this.MainWindowViewModel.SearchItem(w => w.FileType == Define.IdentifierMods);
+            foreach (var item in items)
+            {
+                var serializer = new DataContractSerializer(typeof(ItemData));
+                using (var reader = XmlReader.Create(item.FilePath))
+                {
+                    this.Mods.Add((ItemData)serializer.ReadObject(reader));
+                }
+            }
+
         }
 
 

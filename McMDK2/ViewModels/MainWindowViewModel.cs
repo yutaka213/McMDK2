@@ -1381,7 +1381,7 @@ namespace McMDK2.ViewModels
             var projectInfoPage = new TabItem
             {
                 Header = "プロジェクト設定",
-                Content = new ProjectSettingPage { DataContext = new ProjectSettingPageViewModel() },
+                Content = new ProjectSettingPage { DataContext = new ProjectSettingPageViewModel(this) },
                 Tag = Guids.ProjectInfoPageGuid
             };
             this.Tabs.Add(projectInfoPage);

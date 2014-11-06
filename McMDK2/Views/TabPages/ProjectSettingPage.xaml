@@ -7,8 +7,9 @@
         xmlns:v="clr-namespace:McMDK2.Views.TabPages"
         xmlns:vm="clr-namespace:McMDK2.ViewModels.TabPages"
         xmlns:behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
-    
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:data="clr-namespace:McMDK2.Core.Data;assembly=McMDK2.Core">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,7 +34,7 @@
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <Grid Background="{StaticResource WhiteColorBrush}">
         <TabControl Margin="10,0,0,0" 
                     TabStripPlacement="Left">
@@ -44,20 +45,20 @@
                     <TextBox Text="{Binding ProjecName}" FontSize="14"
                              Margin="110,8,10,0" VerticalAlignment="Top"
                              Height="24" />
-                    
+
                     <TextBlock Text="バージョン" FontSize="15"
                                Margin="10,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <ComboBox ItemsSource="{Binding McVersions}" FontSize="14"
                               SelectedItem="{Binding McVersion}"
                               Margin="110,33,10,0" VerticalAlignment="Top"
                               Height="24" MinHeight="24" />
-                    
+
                     <TextBlock Text="出力名" FontSize="15"
                                Margin="10,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <TextBox Text="{Binding OutputName}" FontSize="14"
                              Margin="110,58,10,0" VerticalAlignment="Top"
                              Height="24" />
-                    
+
                     <TextBlock Text="出力先" FontSize="15"
                                Margin="10,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <TextBox Text="{Binding OutputLoc}" FontSize="14"
@@ -115,22 +116,42 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="コンパイル順">
-                <ScrollViewer>
-                    <Grid>
-                        <StackPanel>
-                            <TextBlock FontSize="15" Text="コンパイル順は、ModのアイテムのMinecraftへの登録順を示しています。" />
-                            <TextBlock FontSize="15" Text="例えば、アイテムA、Bを用いてCを作成するレシピを追加するModの場合は、A, B, C, レシピ　という順にコンパイル順を指定してください。" />
-                        </StackPanel>
-                        <ListBox ItemsSource="{Binding Mods}">
-                            <i:Interaction.Behaviors>
-                                <behaviors:DragAndDropItemMoveBehavior TargetCollection="{Binding Mods}" />
-                            </i:Interaction.Behaviors>
-                        </ListBox> 
-                    </Grid>
-                </ScrollViewer>                
+                <Grid>
+                    <TextBlock Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               FontSize="15" Text="コンパイル順は、ModのアイテムのMinecraftへの登録順を示しています。" />
+                    <TextBlock Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               FontSize="15" Text="例えば、アイテムA、Bを用いてCを作成するレシピを追加するModの場合は、A, B, C, レシピ　という順にコンパイル順を指定してください。" />
+                    <ListBox Margin="10,60,10,10"
+                                 ItemsSource="{Binding Mods}"
+                                 BorderThickness="1" BorderBrush="{StaticResource BlackColorBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type data:ItemData}">
+                                <Grid Height="25">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20px" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0"
+                                           Source="/Resources/ASCube_16xLG.png"
+                                           Height="16px" Width="16px"
+                                           UseLayoutRounding="True" />
+
+                                    <TextBlock Grid.Column="1" 
+                                               Margin="5,-2,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                               Text="{Binding Name}" FontSize="13"
+                                               TextWrapping="NoWrap"
+                                               TextTrimming="CharacterEllipsis"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <i:Interaction.Behaviors>
+                            <behaviors:DragAndDropItemMoveBehavior TargetCollection="{Binding Mods}" />
+                        </i:Interaction.Behaviors>
+                    </ListBox>
+                </Grid>
             </TabItem>
             <TabItem Header="依存関係">
-                
+
             </TabItem>
         </TabControl>
     </Grid>

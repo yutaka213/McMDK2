@@ -14,12 +14,16 @@ namespace McMDK2.Core.Behaviors
 {
     /// <summary>
     /// http://nine-works.blog.ocn.ne.jp/blog/2012/10/listbox_408f.html
+    /// 上記ソースのままだと、単純なクリック処理でもドラッグアンドドロップが発生しうるので、
+    /// 単純なクリック処理では発生しないように改変。
     /// </summary>
     public class DragAndDropItemMoveBehavior : Behavior<ListBox>
     {
         private int MoveItemIndex { set; get; }
 
         private int InsertItemIndex { set; get; }
+
+        private Point StartPoint { set; get; }
 
         public IList TargetCollection
         {
@@ -40,6 +44,7 @@ namespace McMDK2.Core.Behaviors
             base.OnAttached();
 
             this.AssociatedObject.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+            this.AssociatedObject.MouseMove += OnMouseMove;
             this.AssociatedObject.Drop += OnDrop;
         }
 
@@ -48,16 +53,27 @@ namespace McMDK2.Core.Behaviors
             base.OnDetaching();
 
             this.AssociatedObject.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
+            this.AssociatedObject.MouseMove -= OnMouseMove;
             this.AssociatedObject.Drop -= OnDrop;
         }
 
         private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.MoveItemIndex = this.GetItemIndex(e.GetPosition(this.AssociatedObject));
-            if (this.MoveItemIndex != -1)
+            this.StartPoint = e.GetPosition(this.AssociatedObject);
+        }
+
+        private void OnMouseMove(object sener, MouseEventArgs e)
+        {
+            Point movePos = e.GetPosition(this.AssociatedObject);
+            Vector vector = this.StartPoint - movePos;
+            if (e.LeftButton == MouseButtonState.Pressed && (Math.Abs(vector.X) > SystemParameters.MinimumHorizontalDragDistance || Math.Abs(vector.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
-                this.AssociatedObject.AllowDrop = true;
-                DragDrop.DoDragDrop(this.AssociatedObject, this.MoveItemIndex, DragDropEffects.Move);
+                this.MoveItemIndex = this.GetItemIndex(e.GetPosition(this.AssociatedObject));
+                if (this.MoveItemIndex != -1)
+                {
+                    this.AssociatedObject.AllowDrop = true;
+                    DragDrop.DoDragDrop(this.AssociatedObject, this.MoveItemIndex, DragDropEffects.Move);
+                }
             }
         }
 
@@ -79,7 +95,7 @@ namespace McMDK2.Core.Behaviors
             if (result != null)
             {
                 var item = result.VisualHit;
-                while (true)
+                while (item != null)
                 {
                     if (item is ListBoxItem)
                         break;
@@ -89,7 +105,7 @@ namespace McMDK2.Core.Behaviors
 
                 if (item != null)
                 {
-                    return this.AssociatedObject.Items.IndexOf((ListBoxItem)item);
+                    return this.AssociatedObject.Items.IndexOf(((ListBoxItem)item).Content);
                 }
 
             }
