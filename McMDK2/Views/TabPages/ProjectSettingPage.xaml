@@ -6,6 +6,7 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:McMDK2.Views.TabPages"
         xmlns:vm="clr-namespace:McMDK2.ViewModels.TabPages"
+        xmlns:behaviors="clr-namespace:McMDK2.Core.Behaviors;assembly=McMDK2.Core"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     
     <UserControl.Resources>
@@ -93,7 +94,7 @@
 
                         <TextBlock Text="更新用Url" FontSize="15"
                                Margin="10,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox Text="https://api.tuyapin.net/mcmdk/2/mods/update.json" FontSize="14"
+                        <TextBox Text="{Binding McModInfo.UpdateUrl}" FontSize="14"
                              Margin="110,108,10,0" VerticalAlignment="Top"
                              Height="24"
                              IsEnabled="False"/>
@@ -114,7 +115,19 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="コンパイル順">
-                
+                <ScrollViewer>
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock FontSize="15" Text="コンパイル順は、ModのアイテムのMinecraftへの登録順を示しています。" />
+                            <TextBlock FontSize="15" Text="例えば、アイテムA、Bを用いてCを作成するレシピを追加するModの場合は、A, B, C, レシピ　という順にコンパイル順を指定してください。" />
+                        </StackPanel>
+                        <ListBox ItemsSource="{Binding Mods}">
+                            <i:Interaction.Behaviors>
+                                <behaviors:DragAndDropItemMoveBehavior TargetCollection="{Binding Mods}" />
+                            </i:Interaction.Behaviors>
+                        </ListBox> 
+                    </Grid>
+                </ScrollViewer>                
             </TabItem>
             <TabItem Header="依存関係">
                 
