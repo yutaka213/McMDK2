@@ -1099,7 +1099,14 @@ namespace McMDK2.ViewModels
                             this.RecentProjects.Add(obj);
                             this.IsLoadedProject = true;
                         });
+#if TEST
+                        var a = this.SearchItem(x => x.FileType == Define.IdentifierMods);
+                        foreach (var item in a)
+                        {
+                            Define.GetLogger().Debug(item.FilePath);
+                        }
 
+#endif
                     };
                     Messenger.Raise(new TransitionMessage(typeof(ProgressDialog), progress, TransitionMode.Modal, "Transition"));
 
@@ -1444,6 +1451,33 @@ namespace McMDK2.ViewModels
                     }
                 }
                 RecursiveSearchItem(innerItem, targetItem, action);
+            }
+        }
+
+        /// <summary>
+        /// プロジェクト内のアイテムから、predの条件を満たすIEnumerableを返します。
+        /// </summary>
+        /// <param name="pred">条件式</param>
+        /// <returns>条件式を満たすアイテム</returns>
+        public IEnumerable<ProjectItem> SearchItem(Predicate<ProjectItem> pred)
+        {
+            var items = new List<ProjectItem>();
+            foreach (var item in this.CurrentProject.Items)
+            {
+                if (pred(item))
+                    items.Add(item);
+                RecursiveSearchItem(item, items, pred);
+            }
+            return items;
+        }
+
+        private void RecursiveSearchItem(ProjectItem searchItem, IList<ProjectItem> items, Predicate<ProjectItem> pred)
+        {
+            foreach (var innerItem in searchItem.Children)
+            {
+                if (pred(innerItem))
+                    items.Add(innerItem);
+                RecursiveSearchItem(innerItem, items, pred);
             }
         }
 

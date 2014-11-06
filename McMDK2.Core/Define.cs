@@ -166,5 +166,7 @@ namespace McMDK2.Core
         public const string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
 
         public const string IdentifierDirectory = "DIRECTORY";
+
+        public const string IdentifierMods = "Mod";
     }
 }
