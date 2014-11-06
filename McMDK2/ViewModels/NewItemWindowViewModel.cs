@@ -81,6 +81,7 @@ namespace McMDK2.ViewModels
             if (MainWindowViewModel.SelectedItem == null)
             {
                 // Add to root.
+                item.FilePath = Path.Combine(this.MainWindowViewModel.CurrentProject.Path, item.FilePath);
                 this.MainWindowViewModel.CurrentProject.Items.Add(item);
             }
             else
@@ -106,6 +107,7 @@ namespace McMDK2.ViewModels
                         }
                         else
                         {
+                            item.FilePath = Path.Combine(Path.GetDirectoryName(target.FilePath), item.FilePath);
                             this.MainWindowViewModel.CurrentProject.Items.Add(item);
                         }
                     }
