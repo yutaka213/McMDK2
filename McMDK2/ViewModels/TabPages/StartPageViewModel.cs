@@ -27,7 +27,7 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class StartPageViewModel : ViewModel
     {
-        private MainWindowViewModel MainWindowViewModel;
+        private readonly MainWindowViewModel MainWindowViewModel;
 
         public StartPageViewModel(MainWindowViewModel main)
         {

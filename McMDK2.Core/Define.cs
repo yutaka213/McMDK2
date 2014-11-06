@@ -106,11 +106,11 @@ namespace McMDK2.Core
             }
         }
 
-        private static readonly string VersionNo = "2.0.0";
+        private const string VersionNo = "2.0.0";
 
-        private static readonly long ReleaseNo = 27;
+        private const long ReleaseNo = 27;
 
-        public static readonly string CurrentDirectory = Directory.GetCurrentDirectory();
+        private static readonly string CurrentDirectory = Directory.GetCurrentDirectory();
 
         /// <summary>
         /// CurrentDirectory/plugins
@@ -147,7 +147,7 @@ namespace McMDK2.Core
         /// <summary>
         /// https://api.tuyapin.net/mcmdk/2/client/update.json
         /// </summary>
-        public static readonly string ApiUpdate = ApiEndPoint + "client/update.json";
+        public const string ApiUpdate = ApiEndPoint + "client/update.json";
 
         [Obsolete]
         public static readonly string ApiCreateClientToken = ApiEndPoint + "client/token/create/{0}.json";
@@ -158,13 +158,13 @@ namespace McMDK2.Core
         /// <summary>
         /// https://api.tuyapin.net/mcmdk/2/minecraft/version.json
         /// </summary>
-        public static readonly string ApiVersionsList = ApiEndPoint + "minecraft/version.json";
+        public const string ApiVersionsList = ApiEndPoint + "minecraft/version.json";
 
-
+        [Obsolete]
         public static readonly string UpdateUrl = "http://tuyapin.net/mcmdk/update.xml";
 
-        public static readonly string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
+        public const string NewsFeedUrl = "http://blog.tuyapin.net/feed/?cat=10";
 
-        public static readonly string IdentifierDirectory = "DIRECTORY";
+        public const string IdentifierDirectory = "DIRECTORY";
     }
 }

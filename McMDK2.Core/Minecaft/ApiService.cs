@@ -10,9 +10,9 @@ namespace McMDK2.Core.Minecaft
 {
     public class ApiService
     {
-        public string Url { set; get; }
+        protected string Url { set; get; }
 
-        public Stream HttpGet(IEnumerable<KeyValuePair<string, string>> param)
+        protected Stream HttpGet(IEnumerable<KeyValuePair<string, string>> param)
         {
             string url = this.Url;
             if (param != null)
@@ -27,13 +27,13 @@ namespace McMDK2.Core.Minecaft
             return response.GetResponseStream();
         }
 
-        public Stream HttpPost(IEnumerable<KeyValuePair<string, string>> param, string content = "application/x-www-form-urlencoded")
+        protected Stream HttpPost(IEnumerable<KeyValuePair<string, string>> param, string content = "application/x-www-form-urlencoded")
         {
             string prms = String.Join("&", from p in param select p.Key + "=" + p.Value);
             return HttpPost(prms, content);
         }
 
-        public Stream HttpPost(string obj, string content = "application/x-www-form-urlencoded")
+        protected Stream HttpPost(string obj, string content = "application/x-www-form-urlencoded")
         {
             var request = (HttpWebRequest)WebRequest.Create(this.Url);
             request.Method = "POST";

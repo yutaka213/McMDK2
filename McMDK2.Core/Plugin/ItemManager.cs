@@ -13,16 +13,16 @@ namespace McMDK2.Core.Plugin
     /// Text File, Sound File, Java Source Fileなど、Projectに含まれるアイテムの管理を行うクラスです。<para />
     /// 拡張子ごとに判定を行います。
     /// </summary>
-    public class ItemManager
+    public static class ItemManager
     {
         // exts(Extension(Including dot '.'.), Identifier);
-        private static Dictionary<string, string> exts = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> exts = new Dictionary<string, string>();
 
         // icons(Identifier, Icon Path(Abs));
-        private static Dictionary<string, string> icons = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> icons = new Dictionary<string, string>();
 
         // viewers(Extension(Including dot '.'), View)
-        private static Dictionary<string, UserControl> viewers = new Dictionary<string, UserControl>();
+        private static readonly Dictionary<string, UserControl> viewers = new Dictionary<string, UserControl>();
 
         public static string GetIdentifierFromExtension(string extension)
         {

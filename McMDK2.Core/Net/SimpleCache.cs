@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core.Net
 {
-    public class SimpleCache
+    public static class SimpleCache
     {
-        private static List<Cache> Caches = new List<Cache>();
+        private static readonly List<Cache> Caches = new List<Cache>();
 
         // 12 hour
-        private static TimeSpan Expires = new TimeSpan(12, 0, 0);
+        private static readonly TimeSpan Expires = new TimeSpan(12, 0, 0);
 
         public static void AddCache(string url, string content)
         {

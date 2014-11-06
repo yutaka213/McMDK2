@@ -18,7 +18,7 @@ namespace McMDK2.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
         {
-            string imagepath = (string)value;
+            var imagepath = (string)value;
             var image = new BitmapImage();
             image.BeginInit();
 

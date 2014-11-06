@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core.Utils
 {
-    public class Versioning
+    public static class Versioning
     {
         public static int GetVersionNo(string p1)
         {

@@ -15,8 +15,8 @@ namespace McMDK2.Core.Plugin.Internal
 {
     internal class XmlBaseModView : ModView
     {
-        private List<UIControl> controls;
-        private List<FrameworkElement> requiredControls;
+        private readonly List<UIControl> controls;
+        private readonly List<FrameworkElement> requiredControls;
 
         public XmlBaseModView(List<UIControl> controls)
         {

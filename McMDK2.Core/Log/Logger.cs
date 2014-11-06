@@ -11,8 +11,8 @@ namespace McMDK2.Core.Log
 {
     public class Logger
     {
-        private string name;
-        private string file;
+        private readonly string name;
+        private readonly string file;
         private Logger logger;
 
         public Logger(string name)

@@ -30,7 +30,7 @@ namespace McMDK2
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherHelper.UIDispatcher = Dispatcher;
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             // Test
             try
@@ -183,7 +183,8 @@ namespace McMDK2
                 }
                 catch (Exception ex)
                 {
-
+                    Define.GetLogger().Error("Update failed.");
+                    Define.GetLogger().Error("See this logs.", ex);
                 }
             }
 

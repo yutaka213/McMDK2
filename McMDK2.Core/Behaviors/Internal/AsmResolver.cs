@@ -11,9 +11,9 @@ namespace McMDK2.Core.Behaviors.Internal
     /// 遅いけども、全てのロード済みアセンブリから動的にイベントを呼び出すのには
     /// コレしか思いつかなかった。
     /// </summary>
-    internal class AsmResolver
+    internal static class AsmResolver
     {
-        public static Dictionary<string, Type> Cache = new Dictionary<string, Type>();
+        private static readonly Dictionary<string, Type> Cache = new Dictionary<string, Type>();
 
         public static Type GetTypeFromString(string name)
         {

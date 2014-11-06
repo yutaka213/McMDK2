@@ -220,7 +220,7 @@ namespace McMDK2.ViewModels
                 {
                     view.Closing();
                 }
-                else if (((UserControl)content).DataContext != null && ((UserControl)content).DataContext is ItemViewEx)
+                else if (((UserControl)content).DataContext is ItemViewEx)
                 {
                     ((ItemViewEx)((UserControl)content).DataContext).Closing();
                     ((ViewModel)((UserControl)content).DataContext).Dispose();
@@ -1410,7 +1410,6 @@ namespace McMDK2.ViewModels
         public void ShowAboutDialog()
         {
             Messenger.Raise(new TransitionMessage(typeof(AboutDialog), new AboutDialogViewModel(), TransitionMode.Modal, "Transition"));
-
         }
         #endregion
 

@@ -12,9 +12,9 @@ namespace McMDK2.Core.Plugin
     /// Mod を管理するクラスです。 <para />
     /// IMod もしくは XML BASE PLUGIN の PluginType = Mod(Default) の場合、このクラスで管理されます。
     /// </summary>
-    public class ModManager
+    public static class ModManager
     {
-        private static List<IMod> mods = new List<IMod>();
+        private static readonly List<IMod> mods = new List<IMod>();
 
         public static IEnumerable<IMod> Mods
         {

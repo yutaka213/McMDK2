@@ -12,9 +12,9 @@ namespace McMDK2.Core.Plugin
     /// プラグイン全般を管理するクラスです.
     /// IPlugin もしくは XML BASE PLUGIN の エントリーポイントクラス は、全てこのクラスで管理されます。
     /// </summary>
-    public class PluginManager
+    public static class PluginManager
     {
-        private static List<IPlugin> plugins = new List<IPlugin>();
+        private static readonly List<IPlugin> plugins = new List<IPlugin>();
 
         public static IEnumerable<IPlugin> Plugins
         {

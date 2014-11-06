@@ -12,9 +12,9 @@ namespace McMDK2.Core.Plugin
     /// テンプレートを管理するクラスです。<para />
     /// ITemplate もしくは XML BASE PLUGIN の PluginType = Template の場合、このクラスで管理されます。
     /// </summary>
-    public class TemplateManager
+    public static class TemplateManager
     {
-        private static List<ITemplate> templates = new List<ITemplate>();
+        private static readonly List<ITemplate> templates = new List<ITemplate>();
 
         public static IEnumerable<ITemplate> Templates
         {

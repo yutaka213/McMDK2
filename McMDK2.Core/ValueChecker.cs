@@ -135,6 +135,7 @@ namespace McMDK2.Core
         /// </summary>
         public static bool Between(int value, int max = int.MaxValue, int min = int.MinValue)
         {
+            // ReSharper disable ReplaceWithSingleAssignment.True
             bool flag = true;
             if (max <= value)
             {

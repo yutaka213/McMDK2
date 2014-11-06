@@ -10,9 +10,9 @@ namespace McMDK2.Core.Minecaft
 {
     public class UserAuthentication : ApiService
     {
-        private string uuid = "D0050BD3-1302-4DCC-97B0-D8AF20298010";
-        private string request1 = "\"agent\":\"Minecraft\", \"username\":\"{0}\", \"password\":\"{1}\", \"clientToken\":\"{2}\", \"requestUser\":true";
-        private string request2 = "\"clientToken\":\"{0}\", \"accessToken\":\"{1}\"";
+        private const string uuid = "D0050BD3-1302-4DCC-97B0-D8AF20298010";
+        private const string request1 = "\"agent\":\"Minecraft\", \"username\":\"{0}\", \"password\":\"{1}\", \"clientToken\":\"{2}\", \"requestUser\":true";
+        private const string request2 = "\"clientToken\":\"{0}\", \"accessToken\":\"{1}\"";
 
         public UserAuthentication()
         {

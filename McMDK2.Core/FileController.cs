@@ -128,7 +128,7 @@ namespace McMDK2.Core
             }
         }
 
-        public static string[] GetLists(string path, bool isDirectory = false, bool isSearchAllDirectories = false)
+        public static IEnumerable<string> GetLists(string path, bool isDirectory = false, bool isSearchAllDirectories = false)
         {
             if (Directory.Exists(path))
             {

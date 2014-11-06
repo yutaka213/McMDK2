@@ -20,7 +20,7 @@ using McMDK2.Core.Plugin.Internal;
 
 namespace McMDK2.Core.Plugin
 {
-    public class PluginLoader
+    public static class PluginLoader
     {
         public static void Load()
         {
@@ -75,6 +75,7 @@ namespace McMDK2.Core.Plugin
         // Reference : https://github.com/fin-alice/Mystique/blob/master/Inscribe/Plugin/PluginLoader.cs
         private class AssemblyPluginLoader
         {
+            // ReSharper disable FieldCanBeMadeReadOnly.Local
             [ImportMany]
             public List<IPlugin> plugins = null;
 
@@ -83,6 +84,7 @@ namespace McMDK2.Core.Plugin
 
             [ImportMany]
             public List<IMod> mods = null;
+            // ReSharper enable FieldCanBeMadeReadOnly.Local
 
             public AssemblyPluginLoader()
             {
@@ -104,14 +106,14 @@ namespace McMDK2.Core.Plugin
         #region Xml Base Plugin
         private class XmlBasePluginLoader
         {
-            public List<IPlugin> plugins = new List<IPlugin>();
-            public List<IMod> mods = new List<IMod>();
-            public List<ITemplate> templates = new List<ITemplate>();
+            public readonly List<IPlugin> plugins = new List<IPlugin>();
+            public readonly List<IMod> mods = new List<IMod>();
+            public readonly List<ITemplate> templates = new List<ITemplate>();
 
             // ReSharper disable PossibleNullReferenceException
             public XmlBasePluginLoader()
             {
-                string[] xmls = FileController.GetLists(Define.PluginDirectory, true);
+                IEnumerable<string> xmls = FileController.GetLists(Define.PluginDirectory, true);
                 foreach (var xml in xmls)
                 {
                     // McMDK Basic Template Folder.
@@ -170,7 +172,7 @@ namespace McMDK2.Core.Plugin
                             xmlMod = item;
                         }
 
-                        XmlBaseModView view = new XmlBaseModView(xmlPlugin.Controls);
+                        var view = new XmlBaseModView(xmlPlugin.Controls);
                         xmlMod.View = view;
                         mods.Add(xmlMod);
                     }
@@ -328,17 +330,18 @@ namespace McMDK2.Core.Plugin
                     }
 
                     // If control has McMDK2.UI.Controls.UIControlEx(Based on System.Windows.Controls.Control), Parse these properties.
-                    if (control is UIControlEx)
+                    var ex = control as UIControlEx;
+                    if (ex != null)
                     {
-                        ((UIControlEx)control).Background = StringToObjectConverter.StringToBrush(element.GetAttribute("Background"));
-                        ((UIControlEx)control).BorderBrush = StringToObjectConverter.StringToBrush(element.GetAttribute("BorderBrush"));
-                        ((UIControlEx)control).BorderThickess = ParseMargin(element.GetAttribute("BorderThickness"));
+                        ex.Background = StringToObjectConverter.StringToBrush(element.GetAttribute("Background"));
+                        ex.BorderBrush = StringToObjectConverter.StringToBrush(element.GetAttribute("BorderBrush"));
+                        ex.BorderThickess = ParseMargin(element.GetAttribute("BorderThickness"));
                         /* FontFamily */
-                        ((UIControlEx)control).FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"), -1.0);
-                        ((UIControlEx)control).FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches));
-                        ((UIControlEx)control).FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights));
-                        ((UIControlEx)control).Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground"));
-                        ((UIControlEx)control).Padding = ParseMargin(element.GetAttribute("Padding"));
+                        ex.FontSize = StringToObjectConverter.StringTo<double>(element.GetAttribute("FontSize"), -1.0);
+                        ex.FontStretch = StringToObjectConverter.StringToProperty(element.GetAttribute("FontStretch"), typeof(FontStretches));
+                        ex.FontWeight = StringToObjectConverter.StringToProperty(element.GetAttribute("FontWeight"), typeof(FontWeights));
+                        ex.Foreground = StringToObjectConverter.StringToBrush(element.GetAttribute("Foreground"));
+                        ex.Padding = ParseMargin(element.GetAttribute("Padding"));
                     }
 
                     // All controls has this properties.

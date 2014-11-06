@@ -9,7 +9,7 @@ using System.Web;
 
 namespace McMDK2.Core.Net
 {
-    public class SimpleHttp
+    public static class SimpleHttp
     {
         /// <summary>
         /// HTTP GETを行います。

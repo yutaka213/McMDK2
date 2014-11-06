@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core
 {
-    public class RegExp
+    public static class RegExp
     {
         /// <summary>
         /// 正規表現パターンにマッチしたもののうち、Group Nameが設定されているもののみを返します。

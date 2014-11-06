@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core.Plugin
 {
-    public class ContextMenuManager
+    public static class ContextMenuManager
     {
         private static Dictionary<string, Delegate> menus = new Dictionary<string, Delegate>();
 
