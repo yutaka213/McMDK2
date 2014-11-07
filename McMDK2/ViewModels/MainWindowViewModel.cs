@@ -1390,6 +1390,12 @@ namespace McMDK2.ViewModels
 
         public void ProjectInfo()
         {
+            if (this.Tabs.SingleOrDefault(w => (string)w.Tag == Guids.ProjectInfoPageGuid) != null)
+            {
+                this.SelectedTabIndex = this.Tabs.IndexOf(this.Tabs.Single(w => (string)w.Tag == Guids.ProjectInfoPageGuid));
+                return;
+            }
+
             var projectInfoPage = new TabItem
             {
                 Header = "プロジェクト設定",
