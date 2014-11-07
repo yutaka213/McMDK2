@@ -1346,7 +1346,41 @@ namespace McMDK2.ViewModels
         // View(_V)
         // ##############################################################
 
-        // TODO: Implementation
+        #region OpenStartPageCommand
+        private ViewModelCommand _OpenStartPageCommand;
+
+        public ViewModelCommand OpenStartPageCommand
+        {
+            get
+            {
+                if (_OpenStartPageCommand == null)
+                {
+                    _OpenStartPageCommand = new ViewModelCommand(OpenStartPage);
+                }
+                return _OpenStartPageCommand;
+            }
+        }
+
+        public void OpenStartPage()
+        {
+            if (this.Tabs.SingleOrDefault(w => (string)w.Tag == Guids.StartPageGuid) != null)
+            {
+                this.SelectedTabIndex = this.Tabs.IndexOf(this.Tabs.Single(w => (string)w.Tag == Guids.StartPageGuid));
+                return;
+            }
+
+            var startPage = new TabItem
+            {
+                Header = "Start",
+                Content = new StartPage { DataContext = new StartPageViewModel(this) },
+                Tag = Guids.StartPageGuid
+            };
+            this.Tabs.Add(startPage);
+            this.SelectedTabIndex = this.Tabs.IndexOf(startPage);
+        }
+        #endregion
+
+
 
         // ##############################################################
         // Project(_P)

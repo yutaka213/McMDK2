@@ -141,6 +141,9 @@
                           IsEnabled="{Binding IsLoadedProject}"/>
                 <MenuItem Header="MDFファイル(_M)" TextOptions.TextFormattingMode="Display"
                           IsEnabled="{Binding IsLoadedProject}"/>
+                <Separator />
+                <MenuItem Header="スタートページ" TextOptions.TextFormattingMode="Display" 
+                          Command="{Binding OpenStartPageCommand}"/>
             </MenuItem>
             <MenuItem Header="プロジェクト(_P)" TextOptions.TextFormattingMode="Display">
                 <MenuItem Header="新しいアイテムを追加(_N)" TextOptions.TextFormattingMode="Display"
