@@ -173,7 +173,8 @@
                 </Style>
             </ToolBar.Resources>
             <Button ToolTip="Modを追加"
-                    IsEnabled="{Binding IsLoadedProject}">
+                    IsEnabled="{Binding IsLoadedProject}"
+                    Command="{Binding AddNewItemCommand}">
                 <Grid>
                     <Image Source="/Resources/ASCube_16xLG.png" Height="16px" Width="16px" />
                     <Image Source="/Resources/action_create_16xSM.png" Height="16px" Width="16px" />
@@ -189,7 +190,8 @@
             </Button>
             <Separator />
             <Button ToolTip="プロジェクト設定"
-                    IsEnabled="{Binding IsLoadedProject}">
+                    IsEnabled="{Binding IsLoadedProject}"
+                    Command="{Binding ProjectInfoCommand}">
                 <Image Source="/Resources/gear_16xLG.png" Height="16px" Width="16px" />
             </Button>
             <Separator />
