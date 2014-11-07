@@ -25,6 +25,7 @@ using Livet.Messaging.Windows;
 using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
+using McMDK2.Core.Utils;
 using McMDK2.Models;
 using McMDK2.Plugin;
 using McMDK2.ViewModels.Dialogs;
@@ -83,15 +84,36 @@ namespace McMDK2.ViewModels
         {
             var item = new MenuItem();
             item.Header = "追加";
-            //item.Click += AddItem;
             {
                 var subMenu = new MenuItem();
-                subMenu.Header = "新しい項目を追加";
+                subMenu.Header = "新しいModを追加";
                 subMenu.Click += AddItem;
+                subMenu.Icon = ImageGenerator.Generate(
+                    16,
+                    16,
+                    "pack://application:,,,/Resources/ASCube_16xLG.png",
+                    "pack://application:,,,/Resources/action_create_16xSM.png"
+                );
+                item.Items.Add(subMenu);
+
+                subMenu = new MenuItem();
+                subMenu.Header = "新しいアイテムを追加";
+                subMenu.Icon = ImageGenerator.Generate(
+                    16,
+                    16,
+                    "pack://application:,,,/Resources/Content_6017.png",
+                    "pack://application:,,,/Resources/action_create_16xSM.png"
+                );
                 item.Items.Add(subMenu);
 
                 subMenu = new MenuItem();
                 subMenu.Header = "新しいフォルダーを追加";
+                subMenu.Icon = ImageGenerator.Generate(
+                    16,
+                    16,
+                    "pack://application:,,,/Resources/Folder_6222.png",
+                    "pack://application:,,,/Resources/action_create_16xSM.png"
+                );
                 subMenu.Click += AddDirectory;
                 item.Items.Add(subMenu);
             }
@@ -101,41 +123,25 @@ namespace McMDK2.ViewModels
 
             item = new MenuItem();
             item.Header = "切り取り";
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
-            bitmap.EndInit();
-            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Cut_6523.png");
             item.Click += CutItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
             item.Header = "コピー";
-            bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
-            bitmap.EndInit();
-            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Copy_6524.png");
             item.Click += CopyItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
             item.Header = "貼り付け";
-            bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
-            bitmap.EndInit();
-            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Paste_6520.png");
             item.Click += PasteItem;
             this.ProjectContextMenuItems.Add(item);
 
             item = new MenuItem();
             item.Header = "削除";
-            bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
-            bitmap.EndInit();
-            item.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
+            item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/action_Cancel_16xLG.png");
             item.Click += DeleteItem;
             this.ProjectContextMenuItems.Add(item);
 
@@ -317,84 +323,90 @@ namespace McMDK2.ViewModels
                 #region ContextMenu
                 var contextMenu = new ContextMenu();
 
-                var addMenu = new MenuItem();
-                addMenu.Header = "追加";
-                //addMenu.Click += AddItem;
+                var item = new MenuItem();
+                item.Header = "追加";
+                {
+                    var subMenu = new MenuItem();
+                    subMenu.Header = "新しいModを追加";
+                    subMenu.Click += AddItem;
+                    subMenu.Icon = ImageGenerator.Generate(
+                        16,
+                        16,
+                        "pack://application:,,,/Resources/ASCube_16xLG.png",
+                        "pack://application:,,,/Resources/action_create_16xSM.png"
+                    );
+                    item.Items.Add(subMenu);
 
-                var subMenu = new MenuItem();
-                subMenu.Header = "新しい項目を追加";
-                subMenu.Click += AddItem;
-                addMenu.Items.Add(subMenu);
+                    subMenu = new MenuItem();
+                    subMenu.Header = "新しいアイテムを追加";
+                    subMenu.Icon = ImageGenerator.Generate(
+                        16,
+                        16,
+                        "pack://application:,,,/Resources/Content_6017.png",
+                        "pack://application:,,,/Resources/action_create_16xSM.png"
+                    );
+                    item.Items.Add(subMenu);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "新しいフォルダー";
-                subMenu.Click += AddDirectory;
-                addMenu.Items.Add(subMenu);
+                    subMenu = new MenuItem();
+                    subMenu.Header = "新しいフォルダーを追加";
+                    subMenu.Icon = ImageGenerator.Generate(
+                        16,
+                        16,
+                        "pack://application:,,,/Resources/Folder_6222.png",
+                        "pack://application:,,,/Resources/action_create_16xSM.png"
+                    );
+                    subMenu.Click += AddDirectory;
+                    item.Items.Add(subMenu);
+                }
 
-                contextMenu.Items.Add(addMenu);
+                contextMenu.Items.Add(item);
 
                 var sep = new Separator();
                 contextMenu.Items.Add(sep);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "切り取り";
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Cut_6523.png");
-                bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
-                subMenu.Click += CutItem;
-                contextMenu.Items.Add(subMenu);
+                item = new MenuItem();
+                item.Header = "切り取り";
+                item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Cut_6523.png");
+                item.Click += CutItem;
+                contextMenu.Items.Add(item);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "コピー";
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Copy_6524.png");
-                bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
-                subMenu.Click += CopyItem;
-                contextMenu.Items.Add(subMenu);
+                item = new MenuItem();
+                item.Header = "コピー";
+                item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Copy_6524.png");
+                item.Click += CopyItem;
+                contextMenu.Items.Add(item);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "貼り付け";
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri("pack://application:,,,/Resources/Paste_6520.png");
-                bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
-                subMenu.Click += PasteItem;
-                contextMenu.Items.Add(subMenu);
+                item = new MenuItem();
+                item.Header = "貼り付け";
+                item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/Paste_6520.png");
+                item.Click += PasteItem;
+                contextMenu.Items.Add(item);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "削除";
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri("pack://application:,,,/Resources/action_Cancel_16xLG.png");
-                bitmap.EndInit();
-                subMenu.Icon = new Image { Source = bitmap, Height = 15, Width = 15, UseLayoutRounding = true };
-                subMenu.Click += DeleteItem;
-                contextMenu.Items.Add(subMenu);
+                item = new MenuItem();
+                item.Header = "削除";
+                item.Icon = ImageGenerator.Generate(16, 16, "pack://application:,,,/Resources/action_Cancel_16xLG.png");
+                item.Click += DeleteItem;
+                contextMenu.Items.Add(item);
 
-                subMenu = new MenuItem();
-                subMenu.Header = "名前を変更";
-                subMenu.Click += RenameItem;
-                contextMenu.Items.Add(subMenu);
+                item = new MenuItem();
+                item.Header = "名前を変更";
+                item.Click += RenameItem;
+                contextMenu.Items.Add(item);
 
                 if (selectedItem.FileType == Define.IdentifierDirectory)
                 {
                     sep = new Separator();
                     contextMenu.Items.Add(sep);
 
-                    subMenu = new MenuItem();
-                    subMenu.Header = "フォルダーを開く";
-                    subMenu.Click += (a, b) =>
+                    item = new MenuItem();
+                    item.Header = "フォルダーを開く";
+                    item.Click += (a, b) =>
                     {
                         string path = ((ProjectItem)((TreeViewItem)((ContextMenu)((MenuItem)b.Source).Parent).PlacementTarget).Header).FilePath;
                         if (FileController.Exists(path))
                             Process.Start(path);
                     };
-                    contextMenu.Items.Add(subMenu);
+                    contextMenu.Items.Add(item);
                 }
                 // Generate ContextMenu
                 ((TreeViewItem)sender).ContextMenu = contextMenu;
@@ -1420,6 +1432,8 @@ namespace McMDK2.ViewModels
         }
         #endregion
 
+
+        #region アイテム検索関連
         /// <summary>
         /// 対象のアイテムを検索し、アイテムが存在した場合、actionを実行します。
         /// </summary>
@@ -1494,6 +1508,7 @@ namespace McMDK2.ViewModels
                 ActionItem(item, action);
             }
         }
+        #endregion
 
 
         #region CurrentProject変更通知プロパティ

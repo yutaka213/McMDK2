@@ -53,6 +53,9 @@
             <Converter:FilePathToBooleanConverter x:Key="FilePathToBooleanConverter" />
             <FontFamily x:Key="HeaderFontFamily">Meiryo UI</FontFamily>
             <system:Double x:Key="WindowTitleFontSize">15</system:Double>
+            <Style TargetType="{x:Type Image}">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     
@@ -165,29 +168,16 @@
         <ToolBar DockPanel.Dock="Top">
             <ToolBar.Resources>
                 <SolidColorBrush x:Key="GrayBrush7" Color="#3E3E40"/>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                </Style>
             </ToolBar.Resources>
             <Button ToolTip="保存">
-                <Image Source="/Resources/save_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
+                <Image Source="/Resources/save_16xLG.png" Height="16px" Width="16px" UseLayoutRounding="True" />
             </Button>
             <Button ToolTip="全てを保存">
-                <Image Source="/Resources/Saveall_6518.png" Height="15px" Width="15px" UseLayoutRounding="True" />
+                <Image Source="/Resources/Saveall_6518.png" Height="16px" Width="16px" UseLayoutRounding="True" />
             </Button>
-            <Separator />
-            <Button ToolTip="実行">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/arrow_run_16xLG.png" Height="15px" Width="15px" UseLayoutRounding="True" />
-                    <TextBlock Text="実行" TextOptions.TextFormattingMode="Display"
-                               Margin="2,0,0,0" />
-                </StackPanel>
-            </Button>
-            <ComboBox ToolTip="実行構成"
-                      Margin="5,0,0,0" Width="100"
-                      BorderBrush="{StaticResource BackgroundNormal}"
-                      Foreground="{StaticResource BlackColorBrush}">
-                <ComboBoxItem IsSelected="True">クライアント</ComboBoxItem>
-                <ComboBoxItem>サーバー</ComboBoxItem>
-                <ComboBoxItem>構成設定...</ComboBoxItem>
-            </ComboBox>
         </ToolBar>
 
         <StatusBar DockPanel.Dock="Bottom" 
@@ -271,17 +261,22 @@
                                 <Setter Property="Behaviors:MouseDoubleClickBehavior.CommandParameter" Value="{Binding}" />
                                 <Setter Property="Behaviors:EventHandleBehavior.Command" Value="{Binding DataContext.PreviewMouseRightButtonDownCommand, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}" />
                                 <Setter Property="Behaviors:EventHandleBehavior.EventName" Value="PreviewMouseRightButtonDown" />
-                             </Style>
+                            </Style>
                         </TreeView.ItemContainerStyle>
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType="Data:ProjectItem" ItemsSource="{Binding Children}">
                                 <StackPanel Orientation="Horizontal" x:Name="ITEM_LAYER">
                                     <Grid>
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                                            </Style>
+                                        </Grid.Resources>
                                         <Image x:Name="ITEM_ICON" Source="{Binding FileType, Converter={StaticResource ItemTypeToBitmapConverter}}"
-                                               Height="15" Width="15"
+                                               Height="16px" Width="16px"
                                                UseLayoutRounding="True"/>
                                         <Image x:Name="ITEM_ANNOTATION_ICON"
-                                               Height="15" Width="15"
+                                               Height="16px" Width="16px"
                                                UseLayoutRounding="True"
                                                Visibility="Collapsed"/>
                                     </Grid>
