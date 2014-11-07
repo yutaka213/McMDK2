@@ -62,7 +62,6 @@
     <!-- Keyborad Bindings -->
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewWizardCommand}"/>
-        <KeyBinding Key="T" Modifiers="Control" />
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenProjectCommand}"/>
     </Window.InputBindings>
 
@@ -170,13 +169,59 @@
                 <SolidColorBrush x:Key="GrayBrush7" Color="#3E3E40"/>
                 <Style TargetType="{x:Type Image}">
                     <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                    <Setter Property="UseLayoutRounding" Value="True" />
                 </Style>
             </ToolBar.Resources>
-            <Button ToolTip="保存">
-                <Image Source="/Resources/save_16xLG.png" Height="16px" Width="16px" UseLayoutRounding="True" />
+            <Button ToolTip="Modを追加"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Grid>
+                    <Image Source="/Resources/ASCube_16xLG.png" Height="16px" Width="16px" />
+                    <Image Source="/Resources/action_create_16xSM.png" Height="16px" Width="16px" />
+                </Grid>
             </Button>
-            <Button ToolTip="全てを保存">
-                <Image Source="/Resources/Saveall_6518.png" Height="16px" Width="16px" UseLayoutRounding="True" />
+            <Button ToolTip="保存"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/save_16xLG.png" Height="16px" Width="16px" />
+            </Button>
+            <Button ToolTip="全てを保存"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/Saveall_6518.png" Height="16px" Width="16px" />
+            </Button>
+            <Separator />
+            <Button ToolTip="プロジェクト設定"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/gear_16xLG.png" Height="16px" Width="16px" />
+            </Button>
+            <Separator />
+            <Button ToolTip="Modを適用して実行"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"
+                           Source="/Resources/arrow_run_16xLG.png" Height="16px" Width="16px" />
+                    <TextBlock Grid.Column="1" Text="実行"/>
+                </Grid>
+            </Button>
+            <Separator />
+            <Button ToolTip="ビルド"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/build_Selection_16xLG.png" Height="16px" Width="16px" />
+            </Button>
+            <Button ToolTip="配布ファイル生成"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/package_16xLG.png" Height="16px" Width="16px" />
+            </Button>
+            <Button ToolTip="共有"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/Cloud_16xLG.png" Height="16px" Width="16px" />
+            </Button>
+            <Separator />
+            <Button ToolTip="検索"
+                    IsEnabled="{Binding IsLoadedProject}">
+                <Image Source="/Resources/FindInFiles_6299.png" Height="16px" Width="16px" />
             </Button>
         </ToolBar>
 
@@ -197,7 +242,8 @@
             <Grid Grid.Column="0">
                 <TabControl Margin="0,10,0,0" 
                             ItemsSource="{Binding Tabs}"
-                            SelectedIndex="{Binding SelectedTabIndex}"/>
+                            SelectedIndex="{Binding SelectedTabIndex}">
+                </TabControl>
             </Grid>
 
             <GridSplitter Grid.Column="1" Width="4"

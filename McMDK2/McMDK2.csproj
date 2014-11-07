@@ -232,6 +232,10 @@
     </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
+    <Resource Include="Resources\FindinFiles_6299.png" />
+    <Resource Include="Resources\Cloud_16xLG.png" />
+    <Resource Include="Resources\package_16xLG.png" />
+    <Resource Include="Resources\build_Selection_16xLG.png" />
     <Resource Include="Resources\action_create_16xSM.png" />
     <Resource Include="Resources\Notondisk_7245.png" />
     <Resource Include="Resources\StatusAnnotations_Complete_and_ok_16xLG_color.png" />

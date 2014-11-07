@@ -119,6 +119,7 @@
     <Content Include="Items\Readme.txt" />
     <Content Include="ItemViewers\Readme.txt" />
     <Content Include="Readme.txt" />
+    <Content Include="Resources\build_Selection_16xLG.png" />
     <EmbeddedResource Include="Resources\Stone.png" />
     <EmbeddedResource Include="Resources\application_32xLG.png" />
     <EmbeddedResource Include="Resources\ASCube_16xLG.png" />
