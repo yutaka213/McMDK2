@@ -225,10 +225,11 @@ namespace McMDK2.ViewModels.TabPages
         {
             if (FileController.Exists(Path.Combine(parameter.Path, parameter.Name + ".mmproj")))
             {
+                if (this.MainWindowViewModel.CurrentProject != null)
+                    this.MainWindowViewModel.CurrentProject.Save();
+
                 this.MainWindowViewModel.OpenProject(Path.Combine(parameter.Path, "project.mdk"));
-                var tab = this.MainWindowViewModel.Tabs.SingleOrDefault(w => (string)w.Tag == Guids.StartPageGuid);
-                if (tab != null)
-                    this.MainWindowViewModel.Tabs.Remove(tab);
+                this.MainWindowViewModel.Tabs.Clear();
 
             }
             else
