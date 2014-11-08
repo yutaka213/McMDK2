@@ -189,7 +189,6 @@ namespace McMDK2.ViewModels
             int k = items.Count >= 5 ? 5 : items.Count;
             for (int j = 0; j < k; j++)
             {
-                // Items の中身をなくす
                 saveItems.Add(items[j]);
             }
 
@@ -1148,7 +1147,9 @@ namespace McMDK2.ViewModels
         public void CloseTab()
         {
             if (this.Tabs.Count > this.SelectedTabIndex && this.SelectedTabIndex >= 0)
-                this.Tabs.RemoveAt(this.SelectedTabIndex);
+            {
+                this.Close(this.Tabs[this.SelectedTabIndex]);
+            }
         }
         #endregion
 
