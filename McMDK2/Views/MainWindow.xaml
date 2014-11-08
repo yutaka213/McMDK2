@@ -61,7 +61,7 @@
     
     <!-- Keyborad Bindings -->
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewWizardCommand}"/>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewProjectCommand}"/>
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenProjectCommand}"/>
     </Window.InputBindings>
 
@@ -72,7 +72,7 @@
                 <MenuItem Header="新規作成(_N)" TextOptions.TextFormattingMode="Display">
                     <MenuItem Header="新規作成ウィザード(_N)" TextOptions.TextFormattingMode="Display"
                               InputGestureText="Ctrl+N"
-                              Command="{Binding NewWizardCommand}"/>
+                              Command="{Binding NewProjectCommand}"/>
                 </MenuItem>
                 <MenuItem Header="開く(_O)" TextOptions.TextFormattingMode="Display"
                           InputGestureText="Ctrl+O"

@@ -952,24 +952,24 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // File(_F)
         // ##############################################################
-        #region NewWizardCommand
-        private ViewModelCommand _NewWizardCommand;
+        #region NewProjectCommand
+        private ViewModelCommand _NewProjectCommand;
 
-        public ViewModelCommand NewWizardCommand
+        public ViewModelCommand NewProjectCommand
         {
             get
             {
-                if (_NewWizardCommand == null)
+                if (_NewProjectCommand == null)
                 {
-                    _NewWizardCommand = new ViewModelCommand(NewWizard);
+                    _NewProjectCommand = new ViewModelCommand(NewProject);
                 }
-                return _NewWizardCommand;
+                return _NewProjectCommand;
             }
         }
 
-        public void NewWizard()
+        public void NewProject()
         {
-            Messenger.Raise(new TransitionMessage(typeof(NewWizardWindow), new NewWizardWindowViewModel(this), TransitionMode.Modal, "Transition"));
+            Messenger.Raise(new TransitionMessage(typeof(NewProjectWindow), new NewProjectWindowViewModel(this), TransitionMode.Modal, "Transition"));
         }
         #endregion
 

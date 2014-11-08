@@ -34,11 +34,11 @@ using Newtonsoft.Json.Linq;
 
 namespace McMDK2.ViewModels
 {
-    public class NewWizardWindowViewModel : ViewModel
+    public class NewProjectWindowViewModel : ViewModel
     {
         private readonly MainWindowViewModel MainWindowViewModel;
 
-        public NewWizardWindowViewModel(MainWindowViewModel main)
+        public NewProjectWindowViewModel(MainWindowViewModel main)
         {
             this.MainWindowViewModel = main;
             this.Templates = new ObservableCollection<ITemplate>(TemplateManager.Templates);

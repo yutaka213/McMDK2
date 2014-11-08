@@ -18,9 +18,9 @@ using McMDK2.Core.Win32;
 namespace McMDK2.Views
 {
 
-    public partial class NewWizardWindow : Window
+    public partial class NewProjectWindow : Window
     {
-        public NewWizardWindow()
+        public NewProjectWindow()
         {
             InitializeComponent();
         }

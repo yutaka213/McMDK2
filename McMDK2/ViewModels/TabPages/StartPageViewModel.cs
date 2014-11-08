@@ -290,7 +290,7 @@ namespace McMDK2.ViewModels.TabPages
 
         public void NewProject()
         {
-            this.MainWindowViewModel.NewWizard();
+            this.MainWindowViewModel.NewProject();
         }
         #endregion
 
