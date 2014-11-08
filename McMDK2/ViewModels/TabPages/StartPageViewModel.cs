@@ -85,7 +85,7 @@ namespace McMDK2.ViewModels.TabPages
                         {
                             this.BlogFeeds.Add(item);
                         }));
-                    if (++i >= 5)
+                    if (++i >= Define.GetSettings().ShowBlogPostsCount)
                     {
                         break;
                     }

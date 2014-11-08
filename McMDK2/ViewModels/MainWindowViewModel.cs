@@ -186,7 +186,7 @@ namespace McMDK2.ViewModels
             }
 
             var saveItems = new List<Project>();
-            int k = items.Count >= 5 ? 5 : items.Count;
+            int k = items.Count >= Define.GetSettings().RecentProjectsCount ? Define.GetSettings().RecentProjectsCount : items.Count;
             for (int j = 0; j < k; j++)
             {
                 saveItems.Add(items[j]);
@@ -194,6 +194,7 @@ namespace McMDK2.ViewModels
 
             Define.GetInternalSettings().RecentProjects = saveItems.ToArray();
             Define.GetInternalSettings().Save();
+            Define.GetSettings().Save();
         }
         #endregion
 

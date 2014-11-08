@@ -44,6 +44,7 @@ namespace McMDK2.Core
             if (_internalSettings == null)
             {
                 _internalSettings = new ApplicationInternalSettings();
+                _internalSettings.Upgrade();
                 _internalSettings.Reload();
             }
             return _internalSettings;
@@ -55,6 +56,7 @@ namespace McMDK2.Core
             if (_settings == null)
             {
                 _settings = new ApplicationSettings();
+                _settings.Upgrade();
                 _settings.Reload();
             }
             return _settings;

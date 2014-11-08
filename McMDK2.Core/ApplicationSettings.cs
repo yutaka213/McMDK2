@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -9,54 +10,39 @@ using System.Xml.Serialization;
 
 namespace McMDK2.Core
 {
-    public class ApplicationSettings
+    public class ApplicationSettings : ApplicationSettingsBase
     {
-        public _ApplicationSettings Settings { set; get; }
-
-        public void Reload()
+        public ApplicationSettings()
+            : base("McMDK.Settings")
         {
-            if (Settings == null)
-            {
-                Settings = new _ApplicationSettings();
-            }
-            Settings.Reload();
+
         }
 
-        public void Save()
+        [UserScopedSetting]
+        [DefaultSettingValue("5")]
+        public int RecentProjectsCount
         {
-            if (Settings == null)
+            get
             {
-                Settings = new _ApplicationSettings();
+                return (int)this["recentprojectscount"];
             }
-            Settings.Save();
+            set
+            {
+                this["recentprojectscount"] = value;
+            }
         }
 
-        [DataContract]
-        public class _ApplicationSettings
+        [UserScopedSetting]
+        [DefaultSettingValue("10")]
+        public int ShowBlogPostsCount
         {
-            [DataMember]
-            public Dictionary<string, object> _values = new Dictionary<string, object>();
-
-            public object this[string key]
+            get
             {
-                set { this._values[key] = value; }
-                get { return this._values[key]; }
+                return (int)this["showblogpostscount"];
             }
-
-            public void Save()
+            set
             {
-                var serializer = new DataContractSerializer(this.GetType());
-                var writer = XmlWriter.Create(Define.SettingFile);
-                serializer.WriteObject(writer, this);
-                writer.Close();
-            }
-
-            public void Reload()
-            {
-                var serializer = new DataContractSerializer(this.GetType());
-                var reader = XmlReader.Create(Define.SettingFile);
-                this._values = (Dictionary<string, object>)serializer.ReadObject(reader);
-                reader.Close();
+                this["showblogpostscount"] = value;
             }
         }
     }
