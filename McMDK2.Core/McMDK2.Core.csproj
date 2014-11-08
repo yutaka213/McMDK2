@@ -80,6 +80,7 @@
     <Compile Include="Data\Project.cs" />
     <Compile Include="Data\ProjectItem.cs" />
     <Compile Include="Define.cs" />
+    <Compile Include="Extensions\ListExt.cs" />
     <Compile Include="Extensions\ObservableCollectionExt.cs" />
     <Compile Include="FileController.cs" />
     <Compile Include="Log\Logger.cs" />

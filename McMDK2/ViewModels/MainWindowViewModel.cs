@@ -190,8 +190,6 @@ namespace McMDK2.ViewModels
             for (int j = 0; j < k; j++)
             {
                 // Items の中身をなくす
-                items[j].Items.Clear();
-                items[j].UserProperties = null;
                 saveItems.Add(items[j]);
             }
 
@@ -1345,7 +1343,6 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // View(_V)
         // ##############################################################
-
         #region OpenStartPageCommand
         private ViewModelCommand _OpenStartPageCommand;
 
@@ -1379,7 +1376,6 @@ namespace McMDK2.ViewModels
             this.SelectedTabIndex = this.Tabs.IndexOf(startPage);
         }
         #endregion
-
 
 
         // ##############################################################

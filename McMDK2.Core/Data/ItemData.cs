@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace McMDK2.Core.Data
 {
     [DataContract]
-    public class ItemData
+    public class ItemData : ICloneable
     {
         [DataMember]
         public string Name { set; get; }
@@ -26,5 +26,16 @@ namespace McMDK2.Core.Data
 
         [DataMember]
         public Dictionary<string, object> Properties { set; get; }
+
+        public object Clone()
+        {
+            var obj = new ItemData();
+            obj.Name = this.Name;
+            obj.Id = this.Id;
+            obj.PluginId = this.PluginId;
+            obj.PluginVersion = this.PluginVersion;
+            obj.Properties = new Dictionary<string, object>(this.Properties);
+            return obj;
+        }
     }
 }

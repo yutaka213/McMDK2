@@ -19,6 +19,7 @@ namespace McMDK2.Core.Data
             this.UserProperties = new Dictionary<string, object>();
             this.ProjectSettings = new Dictionary<string, object>();
             this.Items = new ObservableCollection<ProjectItem>();
+            this.Version = "1.0.0";
         }
 
         public string Name { set; get; }
@@ -33,10 +34,10 @@ namespace McMDK2.Core.Data
         public string Version { set; get; }
 
         [XmlIgnore]
-        public Dictionary<string, object> UserProperties { set; get; }
+        public Dictionary<string, object> UserProperties { private set; get; }
 
         [XmlIgnore]
-        public Dictionary<string, object> ProjectSettings { set; get; }
+        public Dictionary<string, object> ProjectSettings { private set; get; }
 
         [XmlIgnore]
         [JsonIgnore]

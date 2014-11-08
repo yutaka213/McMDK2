@@ -269,10 +269,8 @@ namespace McMDK2.ViewModels
             {
                 var newProject = new Project
                 {
-                    Version = "1.0.0",
                     Path = this.ProjectPath,
                     Name = this.ProjectName,
-                    Items = new ObservableCollection<ProjectItem>(),
                     Id = Guid.NewGuid().ToString()
                 };
 

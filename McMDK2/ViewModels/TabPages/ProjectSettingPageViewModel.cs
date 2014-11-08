@@ -15,6 +15,7 @@ using Livet.Messaging.Windows;
 using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Models;
+using McMDK2.Plugin;
 
 namespace McMDK2.ViewModels.TabPages
 {
