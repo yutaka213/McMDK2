@@ -1225,7 +1225,7 @@ namespace McMDK2.ViewModels
 
         public void CloseApp()
         {
-            Environment.Exit(0);
+            Application.Current.Shutdown();
         }
         #endregion
 
