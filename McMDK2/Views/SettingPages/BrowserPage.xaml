@@ -15,6 +15,13 @@
     </i:Interaction.Triggers>
     
     <Grid>
+        <TextBlock Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="ブラウザパス" FontSize="14" />
+        <TextBox Margin="130,8,10,0" VerticalAlignment="Top" 
+                 Height="20"
+                 Text="{Binding BrowserPath}"/>
         
+        <TextBlock Margin="10,40,0,0"
+                   Text="空白にした場合、規定のブラウザでURLを開きます。" FontSize="14" />
     </Grid>
 </UserControl>

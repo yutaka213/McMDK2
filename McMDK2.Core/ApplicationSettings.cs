@@ -74,7 +74,18 @@ namespace McMDK2.Core
         }
 
         // ===============================================
-        // Java setting
+        // Browser setting
+        // -----------------------------------------------
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string BrowserFilePath
+        {
+            get { return (string)this["browserfilepath"]; }
+            set { this["browserfilepath"] = value; }
+        }
+
+        // ===============================================
+        // Java settings
         // -----------------------------------------------
         [UserScopedSetting]
         [DefaultSettingValue("")]
