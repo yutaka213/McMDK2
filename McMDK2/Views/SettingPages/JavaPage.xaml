@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="McMDK2.Views.SettingPages.JavaPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:McMDK2.Views.SettingPages"
+        xmlns:vm="clr-namespace:McMDK2.ViewModels.SettingPages">
+    
+    <UserControl.DataContext>
+        <vm:JavaPageViewModel/>
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <i:Interaction.Triggers>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <TextBlock Margin="5,5,0,0" Text="Java の設定" FontSize="15" />
+        <TextBlock Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="javaw.exe Path" FontSize="14" />
+        <TextBox Margin="130,28,10,0" VerticalAlignment="Top" 
+                 Height="20"
+                 Text="{Binding JavawFilePath}"/>
+        
+        <TextBlock Margin="10,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Text="JVM Arguments" FontSize="14" />
+        <TextBox Margin="130,58,10,0" VerticalAlignment="Top"
+                 Height="20"
+                 Text="{Binding JvmArguments}"/>
+        
+        <TextBlock Margin="10,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="各項目は空白にした場合、規定の設定が使用されます。&#10;javawは、規定の場合、Java 7以前の最新版を使用します。" FontSize="14"
+                   TextWrapping="Wrap"/>
+    </Grid>
+</UserControl>

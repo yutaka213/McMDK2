@@ -72,5 +72,24 @@ namespace McMDK2.Core
             get { return (bool)this["autoupdate"]; }
             set { this["autoupdate"] = value; }
         }
+
+        // ===============================================
+        // Java setting
+        // -----------------------------------------------
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string JavawFilePath
+        {
+            get { return (string)this["javawfilepath"]; }
+            set { this["javawfilepath"] = value; }
+        }
+
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string JVMArguments
+        {
+            get { return (string)this["jvmarguments"]; }
+            set { this["jvmarguments"] = value; }
+        }
     }
 }

@@ -12,20 +12,19 @@
         Width="725"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
-    
+
     <Window.DataContext>
         <vm:SettingWindowViewModel/>
     </Window.DataContext>
-    
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
@@ -34,33 +33,17 @@
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
-    <Grid>
+
+    <Grid Background="{StaticResource WhiteColorBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TreeView Grid.Column="0" Margin="5"
-                  Style="{x:Null}"
-                  Background="{StaticResource BlackColorBrush}">
+                  Style="{x:Null}">
             <i:Interaction.Behaviors>
                 <behaviors:SelectedItemBindBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
-            <TreeView.Resources>
-                <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource WhiteColor}" />
-                <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource BlackColor}" />
-                <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="{StaticResource WhiteColor}" />
-                <SolidColorBrush x:Key="BlackColorBrush" Color="{StaticResource WhiteColor}" />
-                <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource WhiteColor}" />
-                <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" />
-            </TreeView.Resources>
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MetroTreeViewItem}">
-                    <Setter Property="Foreground" Value="{StaticResource WhiteColorBrush}" />
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="FontWeight" Value="Normal"/>
-                </Style>
-            </TreeView.ItemContainerStyle>
             <TreeViewItem Header="一般" Tag="General">
                 <TreeViewItem Header="全般" Tag="General" />
             </TreeViewItem>
@@ -70,9 +53,9 @@
                 <TreeViewItem Header="Java" Tag="Java" />
             </TreeViewItem>
             <TreeViewItem Header="プラグイン" ItemsSource="{Binding PluginViews}">
-                
+
             </TreeViewItem>
         </TreeView>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentSettingView}"/>
+        <ContentControl Grid.Column="1" Content="{Binding CurrentSettingView}" />
     </Grid>
 </Window>

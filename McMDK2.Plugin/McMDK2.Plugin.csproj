@@ -44,6 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IConfiguration.cs" />
     <Compile Include="IItem.cs" />
     <Compile Include="IMod.cs" />
     <Compile Include="Process\InitializationArgs.cs" />

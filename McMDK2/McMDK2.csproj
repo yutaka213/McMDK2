@@ -94,6 +94,10 @@
     <Compile Include="ViewModels\Internal\IndirectlyMessenger.cs" />
     <Compile Include="ViewModels\NewItemWindowViewModel.cs" />
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingPages\BrowserPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingPages\EnvironmentPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingPages\GeneralPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingPages\JavaPageViewModel.cs" />
     <Compile Include="ViewModels\SettingWindowViewModel.cs" />
     <Compile Include="ViewModels\TabPages\ModdingPageViewModel.cs" />
     <Compile Include="ViewModels\TabPages\NullPageViewModel.cs" />
@@ -119,6 +123,18 @@
     </Compile>
     <Compile Include="Views\NewProjectWindow.xaml.cs">
       <DependentUpon>NewProjectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingPages\BrowserPage.xaml.cs">
+      <DependentUpon>BrowserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingPages\EnvironmentPage.xaml.cs">
+      <DependentUpon>EnvironmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingPages\GeneralPage.xaml.cs">
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingPages\JavaPage.xaml.cs">
+      <DependentUpon>JavaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -174,6 +190,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewProjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingPages\BrowserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingPages\EnvironmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingPages\GeneralPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingPages\JavaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -283,10 +315,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\SettingPages\" />
-    <Folder Include="Views\SettingPages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

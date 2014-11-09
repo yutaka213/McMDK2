@@ -13,9 +13,9 @@ using Livet.Messaging.Windows;
 
 using McMDK2.Models;
 
-namespace McMDK2.ViewModels
+namespace McMDK2.ViewModels.SettingPages
 {
-    public class OptionWindowViewModel : ViewModel
+    public class EnvironmentPageViewModel : ViewModel
     {
         public void Initialize()
         {
