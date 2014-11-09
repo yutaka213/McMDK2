@@ -1444,7 +1444,27 @@ namespace McMDK2.ViewModels
         // Tool(_T)
         // ##############################################################
 
-        // TODO: Implementation
+        #region OpenSettingWindowCommand
+        private ViewModelCommand _OpenSettingWindowCommand;
+
+        public ViewModelCommand OpenSettingWindowCommand
+        {
+            get
+            {
+                if (_OpenSettingWindowCommand == null)
+                {
+                    _OpenSettingWindowCommand = new ViewModelCommand(OpenSettingWindow);
+                }
+                return _OpenSettingWindowCommand;
+            }
+        }
+
+        public void OpenSettingWindow()
+        {
+            Messenger.Raise(new TransitionMessage(typeof(SettingWindow), new SettingWindowViewModel(), TransitionMode.Modal, "Transition"));
+        }
+        #endregion
+
 
         // ##############################################################
         // Help(_H)

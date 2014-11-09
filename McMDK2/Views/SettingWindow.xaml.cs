@@ -16,10 +16,9 @@ using McMDK2.Core.Win32;
 
 namespace McMDK2.Views
 {
-
-    public partial class OptionWindow : Window
+    public partial class SettingWindow : Window
     {
-        public OptionWindow()
+        public SettingWindow()
         {
             InitializeComponent();
         }

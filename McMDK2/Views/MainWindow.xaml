@@ -155,7 +155,8 @@
                           Command="{Binding ProjectInfoCommand}"/>
             </MenuItem>
             <MenuItem Header="ツール(_T)" TextOptions.TextFormattingMode="Display">
-                <MenuItem Header="オプション" TextOptions.TextFormattingMode="Display"/>
+                <MenuItem Header="オプション" TextOptions.TextFormattingMode="Display"
+                          Command="{Binding OpenSettingWindowCommand}"/>
                 <Separator />
                 <MenuItem Header="Minecraft" />
                 <MenuItem Header="Minecraft Server" />
