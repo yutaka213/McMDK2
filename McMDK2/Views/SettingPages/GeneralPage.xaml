@@ -15,6 +15,23 @@
     </i:Interaction.Triggers>
     
     <Grid>
+        <TextBlock Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="ニュースフィード表示数" FontSize="14" />
+        <TextBox Margin="200,8,10,0" VerticalAlignment="Top" 
+                 Height="20"
+                 Text="{Binding JavawFilePath}"/>
         
+        <TextBlock Margin="10,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text="最近開いたプロジェクトの保存数" FontSize="14" />
+        <TextBox Margin="200,38,10,0" VerticalAlignment="Top"
+                 Height="20"
+                 Text="{Binding Recent}" />
+
+        <CheckBox Margin="15,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Content="通信時にキャッシュを使用する" FontSize="14" />
+
+
+        <CheckBox Margin="15,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Content="ファイルキャッシュを使用する" FontSize="14" />
     </Grid>
 </UserControl>

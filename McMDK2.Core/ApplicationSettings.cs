@@ -18,20 +18,9 @@ namespace McMDK2.Core
 
         }
 
-        /// <summary>
-        /// 最近開いたプロジェクトの表示数
-        /// </summary>
-        [UserScopedSetting]
-        [DefaultSettingValue("5")]
-        public int RecentProjectsCount
-        {
-            get { return (int)this["recentprojectscount"]; }
-            set { this["recentprojectscount"] = value; }
-        }
-
-        /// <summary>
-        /// スタートページに表示される「ニュースフィード」の表示数
-        /// </summary>
+        // ======================================================
+        // General settings
+        // ------------------------------------------------------
         [UserScopedSetting]
         [DefaultSettingValue("10")]
         public int ShowBlogPostsCount
@@ -40,9 +29,14 @@ namespace McMDK2.Core
             set { this["showblogpostscount"] = value; }
         }
 
-        /// <summary>
-        /// HTTP通信時にキャッシュを利用するか
-        /// </summary>
+        [UserScopedSetting]
+        [DefaultSettingValue("5")]
+        public int RecentProjectsCount
+        {
+            get { return (int)this["recentprojectscount"]; }
+            set { this["recentprojectscount"] = value; }
+        }
+
         [UserScopedSetting]
         [DefaultSettingValue("true")]
         public bool IsUseInternetCache
@@ -51,9 +45,6 @@ namespace McMDK2.Core
             set { this["isuseinternetcache"] = value; }
         }
 
-        /// <summary>
-        /// GradleやForgeなどでキャッシュを利用するか
-        /// </summary>
         [UserScopedSetting]
         [DefaultSettingValue("true")]
         public bool IsUseFileCache
@@ -62,9 +53,6 @@ namespace McMDK2.Core
             set { this["isusefilecache"] = value; }
         }
 
-        /// <summary>
-        /// 自動アップデートを行うかどうか
-        /// </summary>
         [UserScopedSetting]
         [DefaultSettingValue("true")]
         public bool AutoUpdate
@@ -73,9 +61,9 @@ namespace McMDK2.Core
             set { this["autoupdate"] = value; }
         }
 
-        // ===============================================
+        // ======================================================
         // Browser setting
-        // -----------------------------------------------
+        // ------------------------------------------------------
         [UserScopedSetting]
         [DefaultSettingValue("")]
         public string BrowserFilePath
@@ -84,9 +72,9 @@ namespace McMDK2.Core
             set { this["browserfilepath"] = value; }
         }
 
-        // ===============================================
+        // ======================================================
         // Java settings
-        // -----------------------------------------------
+        // ------------------------------------------------------
         [UserScopedSetting]
         [DefaultSettingValue("")]
         public string JavawFilePath
