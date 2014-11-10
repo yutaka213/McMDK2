@@ -61,15 +61,17 @@ namespace McMDK2.ViewModels.TabPages
 
         private async void UpdateNewsFeeds()
         {
-            try
+            if (!Define.IsOfflineMode)
             {
-                var client = new WebClient
+                try
                 {
-                    Encoding = Encoding.UTF8
-                };
-                string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
+                    var client = new WebClient
+                    {
+                        Encoding = Encoding.UTF8
+                    };
+                    string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
 
-                var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
+                    var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
                         select new NewsFeeds
                         {
                             Title = p.Element("title").Value,
@@ -77,25 +79,31 @@ namespace McMDK2.ViewModels.TabPages
                             PublishDate = DateToString(p.Element("pubDate").Value),
                             Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
                         };
-                int i = 0;
-                this.IsLoading = false;
-                foreach (var item in q)
-                {
-                    DispatcherHelper.UIDispatcher.Invoke(new Action(() =>
+                    int i = 0;
+                    this.IsLoading = false;
+                    foreach (var item in q)
+                    {
+                        DispatcherHelper.UIDispatcher.Invoke(new Action(() =>
                         {
                             this.BlogFeeds.Add(item);
                         }));
-                    if (++i >= Define.GetSettings().ShowBlogPostsCount)
-                    {
-                        break;
+                        if (++i >= Define.GetSettings().ShowBlogPostsCount)
+                        {
+                            break;
+                        }
                     }
                 }
+                catch
+                {
+                    this.IsLoading = true;
+                    this.StatusMessage = "ニュースフィードを読み込むことができませんでした。";
+                    Define.GetLogger().Error("Cannot connect to blog RSS feeds.");
+                }
             }
-            catch
+            else
             {
                 this.IsLoading = true;
-                this.StatusMessage = "ニュースフィードを読み込むことができませんでした。";
-                Define.GetLogger().Error("Cannot connect to blog RSS feeds.");
+                this.StatusMessage = "オフラインモードのため、フィードを読み込みませんでした。";
             }
         }
 
