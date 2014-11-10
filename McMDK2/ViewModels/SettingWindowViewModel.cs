@@ -37,7 +37,7 @@ namespace McMDK2.ViewModels
         {
             foreach (var item in this.views)
             {
-                var configuration = item.Value as IConfiguration;
+                var configuration = item.Value.DataContext as IConfiguration;
                 if (configuration != null)
                 {
                     ((IConfiguration)item.Value.DataContext).Load();

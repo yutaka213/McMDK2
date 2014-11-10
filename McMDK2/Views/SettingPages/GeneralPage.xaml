@@ -19,19 +19,25 @@
                    Text="ニュースフィード表示数" FontSize="14" />
         <TextBox Margin="200,8,10,0" VerticalAlignment="Top" 
                  Height="20"
-                 Text="{Binding JavawFilePath}"/>
+                 Text="{Binding FeedsCount}"/>
         
         <TextBlock Margin="10,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Text="最近開いたプロジェクトの保存数" FontSize="14" />
         <TextBox Margin="200,38,10,0" VerticalAlignment="Top"
                  Height="20"
-                 Text="{Binding Recent}" />
+                 Text="{Binding RecentProjectsCount}" />
 
         <CheckBox Margin="15,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Content="通信時にキャッシュを使用する" FontSize="14" />
+                  Content="通信時にキャッシュを使用する" FontSize="14"
+                  IsChecked="{Binding IsUseInternetCache}" />
 
 
         <CheckBox Margin="15,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Content="ファイルキャッシュを使用する" FontSize="14" />
+                  Content="ファイルキャッシュを使用する" FontSize="14"
+                  IsChecked="{Binding IsUseFileCache}"/>
+        
+        <CheckBox Margin="15,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Content="自動更新を行う" FontSize="14"
+                  IsChecked="{Binding EnableAutoUpdate}"/>
     </Grid>
 </UserControl>
