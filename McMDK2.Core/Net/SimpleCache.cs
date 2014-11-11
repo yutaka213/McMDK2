@@ -15,11 +15,14 @@ namespace McMDK2.Core.Net
 
         public static void AddCache(string url, string content)
         {
-            Caches.Add(new Cache(url, content));
+            if (Define.GetSettings().IsUseInternetCache)
+                Caches.Add(new Cache(url, content));
         }
 
         public static string GetCache(string url)
         {
+            if (!Define.GetSettings().IsUseInternetCache)
+                return null;
             var cache = Caches.SingleOrDefault(w => w.Url == url);
             if (cache == null || (cache != null && cache.UpdatedTime + Expires <= DateTime.Now))
             {
