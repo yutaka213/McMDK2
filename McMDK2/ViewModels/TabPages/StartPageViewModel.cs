@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -72,13 +73,13 @@ namespace McMDK2.ViewModels.TabPages
                     string r = await client.DownloadStringTaskAsync(new Uri(Define.NewsFeedUrl));
 
                     var q = from p in XDocument.Parse(r).Root.Element("channel").Descendants("item")
-                        select new NewsFeeds
-                        {
-                            Title = p.Element("title").Value,
-                            Link = p.Element("link").Value.Replace(Environment.NewLine, ""),
-                            PublishDate = DateToString(p.Element("pubDate").Value),
-                            Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
-                        };
+                            select new NewsFeeds
+                            {
+                                Title = p.Element("title").Value,
+                                Link = p.Element("link").Value.Replace(Environment.NewLine, ""),
+                                PublishDate = DateToString(p.Element("pubDate").Value),
+                                Description = p.Element("description").Value.Replace(" &#160; ", "").Replace(" [&#8230;]", "...")
+                            };
                     int i = 0;
                     this.IsLoading = false;
                     foreach (var item in q)
@@ -221,7 +222,10 @@ namespace McMDK2.ViewModels.TabPages
         {
             if (!String.IsNullOrWhiteSpace(parameter) && (parameter.StartsWith("http://") || parameter.StartsWith("https://")))
             {
-                System.Diagnostics.Process.Start(parameter);
+                if (String.IsNullOrWhiteSpace(Define.GetSettings().BrowserFilePath))
+                    Process.Start(parameter);
+                else
+                    Process.Start(Define.GetSettings().BrowserFilePath, parameter);
             }
         }
         #endregion

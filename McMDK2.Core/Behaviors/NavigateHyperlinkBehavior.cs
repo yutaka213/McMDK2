@@ -27,7 +27,10 @@ namespace McMDK2.Core.Behaviors
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(e.Uri.ToString());
+            if (String.IsNullOrWhiteSpace(Define.GetSettings().BrowserFilePath))
+                Process.Start(e.Uri.ToString());
+            else
+                Process.Start(Define.GetSettings().BrowserFilePath, e.Uri.ToString());
         }
     }
 }
