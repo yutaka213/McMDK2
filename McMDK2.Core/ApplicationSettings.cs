@@ -62,6 +62,34 @@ namespace McMDK2.Core
         }
 
         // ======================================================
+        // Environment settings
+        // ------------------------------------------------------
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string MinecraftDirPath
+        {
+            get { return (string)this["minecraftdirpath"]; }
+            set { this["minecraftdirpath"] = value; }
+        }
+
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string MinecraftServerDirPath
+        {
+            get { return (string)this["minecraftserverdirpath"]; }
+            set { this["minecraftserverdirpath"] = value; }
+        }
+
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public string BukkitServerDirPath
+        {
+            get { return (string)this["bukkitserverdirpath"]; }
+            set { this["bukkitserverdirpath"] = value; }
+        }
+
+
+        // ======================================================
         // Browser setting
         // ------------------------------------------------------
         [UserScopedSetting]

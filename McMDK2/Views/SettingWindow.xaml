@@ -32,6 +32,9 @@
         <i:EventTrigger EventName="Closed">
             <l:DataContextDisposeAction/>
         </i:EventTrigger>
+        <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger, Mode=OneWay}">
+            <l:WindowInteractionMessageAction/>
+        </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
     <Grid Background="{StaticResource WhiteColorBrush}">
@@ -56,6 +59,16 @@
 
             </TreeViewItem>
         </TreeView>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentSettingView}" />
+        <ContentControl Grid.Column="1" Content="{Binding CurrentSettingView}" Margin="0,0,0,35" />
+        <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                Margin="100,10" Height="25" Width="80"
+                Content="OK" FontSize="13"
+                Style="{x:Null}"
+                Command="{Binding OkCommand}" />
+        <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="10,10" Height="25" Width="80"
+                Content="キャンセル" FontSize="13"
+                Style="{x:Null}"
+                Command="{Binding CancelCommand}" />
     </Grid>
 </Window>

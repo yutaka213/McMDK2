@@ -15,6 +15,22 @@
     </i:Interaction.Triggers>
     
     <Grid>
+        <TextBlock Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text=".minecraft パス" FontSize="14" />
+        <TextBox Margin="200,8,10,0" VerticalAlignment="Top" 
+                 Height="20"
+                 Text="{Binding MinecraftDirPath}"/>
         
+        <TextBlock Margin="10,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text=".minecraft_server パス" FontSize="14" />
+        <TextBox Margin="200,38,10,0" VerticalAlignment="Top"
+                 Height="20"
+                 Text="{Binding MinecraftServerPath}" />
+        
+        <TextBlock Margin="10,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Text=".bukkit_server パス" FontSize="14" />
+        <TextBox Margin="200,68,10,0" VerticalAlignment="Top"
+                 Height="20"
+                 Text="{Binding BukkitServerPath}" />
     </Grid>
 </UserControl>

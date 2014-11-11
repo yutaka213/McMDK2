@@ -46,6 +46,58 @@ namespace McMDK2.ViewModels
         }
 
 
+        #region OkCommand
+        private ViewModelCommand _OkCommand;
+
+        public ViewModelCommand OkCommand
+        {
+            get
+            {
+                if (_OkCommand == null)
+                {
+                    _OkCommand = new ViewModelCommand(Ok);
+                }
+                return _OkCommand;
+            }
+        }
+
+        public void Ok()
+        {
+            foreach (var item in this.views)
+            {
+                var configuration = item.Value.DataContext as IConfiguration;
+                if (configuration != null)
+                {
+                    ((IConfiguration)item.Value.DataContext).Apply();
+                }
+            }
+            Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+        }
+        #endregion
+
+
+        #region CancelCommand
+        private ViewModelCommand _CancelCommand;
+
+        public ViewModelCommand CancelCommand
+        {
+            get
+            {
+                if (_CancelCommand == null)
+                {
+                    _CancelCommand = new ViewModelCommand(Cancel);
+                }
+                return _CancelCommand;
+            }
+        }
+
+        public void Cancel()
+        {
+            Messenger.Raise(new WindowActionMessage(WindowAction.Close, "WindowAction"));
+        }
+        #endregion
+
+
         #region SelectedItem変更通知プロパティ
         private object _SelectedItem;
 

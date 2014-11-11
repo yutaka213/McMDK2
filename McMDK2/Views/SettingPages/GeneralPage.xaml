@@ -29,10 +29,12 @@
 
         <CheckBox Margin="15,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                   Content="通信時にキャッシュを使用する" FontSize="14"
+                  ToolTip="通信時にキャッシュを使用することによって、同一の内容の通信を短縮することができ、高速化が期待できます。"
                   IsChecked="{Binding IsUseInternetCache}" />
 
 
         <CheckBox Margin="15,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  ToolTip="ファイルキャッシュを使用することによって、ファイル処理を高速化させることが期待できます。"
                   Content="ファイルキャッシュを使用する" FontSize="14"
                   IsChecked="{Binding IsUseFileCache}"/>
         

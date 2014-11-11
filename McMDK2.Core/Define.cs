@@ -9,7 +9,7 @@ using McMDK2.Core.Log;
 
 namespace McMDK2.Core
 {
-    public class Define
+    public static class Define
     {
 
         public static string FilePath
