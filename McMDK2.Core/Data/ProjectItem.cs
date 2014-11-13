@@ -9,7 +9,7 @@ using McMDK2.Core.Migrations;
 
 namespace McMDK2.Core.Data
 {
-    public class ProjectItem : ICloneable, IMigratable
+    public class ProjectItem : ICloneable
     {
         public string Name { set; get; }
 
@@ -41,11 +41,6 @@ namespace McMDK2.Core.Data
             item.IsCut = this.IsCut;
             item.Children = this.Children.Clone();
             return item;
-        }
-
-        public void Migrate()
-        {
-
         }
     }
 }

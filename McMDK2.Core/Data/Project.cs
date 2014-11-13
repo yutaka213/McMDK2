@@ -21,7 +21,7 @@ namespace McMDK2.Core.Data
             this.UserProperties = new Dictionary<string, object>();
             this.ProjectSettings = new Dictionary<string, object>();
             this.Items = new ObservableCollection<ProjectItem>();
-            this.Version = "1.0.0";
+            this.Version = Define.ProjectXmlVersion;
         }
 
         public string Name { set; get; }

@@ -28,6 +28,15 @@ namespace McMDK2.Core
             }
         }
 
+        /// <summary>
+        /// project.mdk version <para />
+        /// Version can use 1.0.0 only currently available.(McMDK 2.0.0.27)
+        /// </summary>
+        public static string ProjectXmlVersion
+        {
+            get { return "1.0.0"; }
+        }
+
         private static Logger _logger;
         public static Logger GetLogger()
         {
