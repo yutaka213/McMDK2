@@ -37,22 +37,21 @@ namespace McMDK2.ViewModels.TabPages
             var items = this.MainWindowViewModel.SearchItem(w => w.FileType == Define.IdentifierMods);
             foreach (var item in items)
             {
-                var serializer = new DataContractSerializer(typeof(ItemData));
-                using (var reader = XmlReader.Create(item.FilePath))
+                if (FileController.Exists(item.FilePath))
                 {
-                    this.Mods.Add((ItemData)serializer.ReadObject(reader));
+                    var serializer = new DataContractSerializer(typeof(ItemData));
+                    using (var reader = XmlReader.Create(item.FilePath))
+                    {
+                        this.Mods.Add((ItemData)serializer.ReadObject(reader));
+                    }
                 }
             }
 
-            if (!this.MainWindowViewModel.CurrentProject.ProjectSettings.ContainsKey("modinfo"))
-            {
-                System.Windows.MessageBox.Show("hoge");
-            }
             this.McModInfo = JsonConvert.DeserializeObject<ModInfo>(this.MainWindowViewModel.CurrentProject.ProjectSettings["modinfo"].ToString());
             this.ProjectName = this.MainWindowViewModel.CurrentProject.Name;
 
+            this.McVersion = (string)this.MainWindowViewModel.CurrentProject.ProjectSettings["mcversion"];
             this.McVersions = new ObservableCollection<string>();
-            // McVersion is not found on ProjectSettings.
             Task.Run(() =>
             {
                 if (Define.IsOfflineMode)

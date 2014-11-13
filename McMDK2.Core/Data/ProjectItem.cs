@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using McMDK2.Core.Extensions;
+using McMDK2.Core.Migrations;
 
 namespace McMDK2.Core.Data
 {
-    public class ProjectItem : ICloneable
+    public class ProjectItem : ICloneable, IMigratable
     {
         public string Name { set; get; }
 
@@ -40,6 +41,11 @@ namespace McMDK2.Core.Data
             item.IsCut = this.IsCut;
             item.Children = this.Children.Clone();
             return item;
+        }
+
+        public void Migrate()
+        {
+
         }
     }
 }

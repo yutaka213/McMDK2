@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using McMDK2.Core.Extensions;
+using McMDK2.Core.Migrations;
 using Newtonsoft.Json;
+
 
 namespace McMDK2.Core.Data
 {
-    public class Project : ICloneable
+    public class Project : ICloneable, IMigratable
     {
         public Project()
         {
@@ -102,5 +104,9 @@ namespace McMDK2.Core.Data
             return project;
         }
 
+        public void Migrate()
+        {
+
+        }
     }
 }
