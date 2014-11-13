@@ -46,8 +46,11 @@ namespace McMDK2.ViewModels.TabPages
                     }
                 }
             }
-
-            this.McModInfo = JsonConvert.DeserializeObject<ModInfo>(this.MainWindowViewModel.CurrentProject.ProjectSettings["modinfo"].ToString());
+            object modinfo = this.MainWindowViewModel.CurrentProject.ProjectSettings["modinfo"];
+            if (modinfo is ModInfo)
+                this.McModInfo = (ModInfo)modinfo;
+            else
+                this.McModInfo = JsonConvert.DeserializeObject<ModInfo>(modinfo.ToString());
             this.ProjectName = this.MainWindowViewModel.CurrentProject.Name;
 
             this.McVersion = (string)this.MainWindowViewModel.CurrentProject.ProjectSettings["mcversion"];
