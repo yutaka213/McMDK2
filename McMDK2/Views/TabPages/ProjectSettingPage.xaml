@@ -42,7 +42,7 @@
                 <Grid>
                     <TextBlock Text="プロジェクト名" FontSize="15" 
                                Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBox Text="{Binding ProjecName}" FontSize="14"
+                    <TextBox Text="{Binding ProjectName}" FontSize="14"
                              Margin="110,8,10,0" VerticalAlignment="Top"
                              Height="24" />
 
@@ -71,7 +71,7 @@
                     <Grid>
                         <TextBlock Text="Mod ID" FontSize="15"
                                Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox Text="{Binding McModInfo.ModID}" FontSize="14"
+                        <TextBox Text="{Binding McModInfo.ModId}" FontSize="14"
                              Margin="110,8,10,0" VerticalAlignment="Top"
                              Height="24" />
 

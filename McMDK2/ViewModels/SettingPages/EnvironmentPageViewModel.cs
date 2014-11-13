@@ -10,15 +10,81 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
-
+using McMDK2.Core;
 using McMDK2.Models;
+using McMDK2.Plugin;
 
 namespace McMDK2.ViewModels.SettingPages
 {
-    public class EnvironmentPageViewModel : ViewModel
+    public class EnvironmentPageViewModel : ViewModel, IConfiguration
     {
-        public void Initialize()
+        public void Load()
         {
+            this.MinecraftDirPath = Define.GetSettings().MinecraftDirPath;
+            this.MinecraftServerPath = Define.GetSettings().MinecraftServerDirPath;
+            this.BukkitServerPath = Define.GetSettings().BukkitServerDirPath;
         }
+
+        public void Apply()
+        {
+            Define.GetSettings().MinecraftDirPath = this.MinecraftDirPath;
+            Define.GetSettings().MinecraftServerDirPath = this.MinecraftServerPath;
+            Define.GetSettings().BukkitServerDirPath = this.BukkitServerPath;
+        }
+
+
+        #region MinecraftDirPath変更通知プロパティ
+        private string _MinecraftDirPath;
+
+        public string MinecraftDirPath
+        {
+            get
+            { return _MinecraftDirPath; }
+            set
+            {
+                if (_MinecraftDirPath == value)
+                    return;
+                _MinecraftDirPath = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region MinecraftServerPath変更通知プロパティ
+        private string _MinecraftServerPath;
+
+        public string MinecraftServerPath
+        {
+            get
+            { return _MinecraftServerPath; }
+            set
+            {
+                if (_MinecraftServerPath == value)
+                    return;
+                _MinecraftServerPath = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region BukkitServerPath変更通知プロパティ
+        private string _BukkitServerPath;
+
+        public string BukkitServerPath
+        {
+            get
+            { return _BukkitServerPath; }
+            set
+            {
+                if (_BukkitServerPath == value)
+                    return;
+                _BukkitServerPath = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
     }
 }
