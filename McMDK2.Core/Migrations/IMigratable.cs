@@ -8,6 +8,8 @@ namespace McMDK2.Core.Migrations
 {
     public interface IMigratable
     {
+        string Version { get; }
+
         void Migrate();
     }
 }
