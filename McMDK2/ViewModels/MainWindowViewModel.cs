@@ -1026,6 +1026,10 @@ namespace McMDK2.ViewModels
                             json = sr.ReadToEnd();
                         }
                         var obj = JsonConvert.DeserializeObject<Project>(json);
+                        if (Versioning.Compare(obj.Version, Define.ProjectXmlVersion) < 0)
+                        {
+                            obj.Migrate();
+                        }
                         obj.Items = new ObservableCollection<ProjectItem>(); // Items is always clear.
                         this.Title = obj.Name + " - Minecraft Mod Development Kit";
                         string rootpath = obj.Path + "\\";
