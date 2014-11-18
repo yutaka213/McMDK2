@@ -110,7 +110,11 @@ namespace Fireworks.Templates
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;
                 proc.StartInfo.RedirectStandardOutput = true;
-                proc.OutputDataReceived += (a, b) => Define.GetLogger().Info(b.Data);
+                proc.OutputDataReceived += (a, b) =>
+                {
+                    args.ProgressWindow.SetTaskText("Gradle Task -> " + b.Data);
+                    Define.GetLogger().Info(b.Data);
+                };
                 proc.ErrorDataReceived += (a, b) => Define.GetLogger().Error(b.Data);
                 proc.Start();
                 proc.BeginOutputReadLine();
@@ -138,6 +142,7 @@ namespace Fireworks.Templates
         {
             s.SetProgressValue(0);
             s.SetIsIndetermiate(false);
+            s.SetTaskText("ファイルをダウンロードしています... -> " + uri);
             var client = new WebClient();
             client.DownloadProgressChanged += (a, b) => s.SetProgressValue(b.ProgressPercentage);
             await client.DownloadFileTaskAsync(new Uri(uri), Path.Combine(Define.CacheDirectory, Path.GetFileName(uri)));
@@ -160,6 +165,7 @@ namespace Fireworks.Templates
                     if (entry.FullName.EndsWith("/"))
                         continue;
                     entry.ExtractToFile(Path.Combine(path2, entry.FullName));
+                    s.SetTaskText("ファイルを展開しています... -> " + entry.FullName);
                 }
             });
         }

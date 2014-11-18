@@ -151,6 +151,11 @@ namespace McMDK2.ViewModels
             this.ProjectContextMenuItems.Add(item);
         }
 
+        public void SetTaskText(string text)
+        {
+            this.TaskText = text;
+        }
+
         #region Uninitialize
         public void Uninitialize()
         {

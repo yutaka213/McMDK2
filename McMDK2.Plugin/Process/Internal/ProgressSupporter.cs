@@ -16,17 +16,24 @@ namespace McMDK2.Plugin.Process.Internal
         private Delegate_V_S1 Delegate_1 { set; get; }
         private Delegate_V_I1 Delegate_2 { set; get; }
         private Delegate_V_B1 Delegate_3 { set; get; }
+        private Delegate_V_S1 Delegate_4 { set; get; }
 
-        public ProgressSupporter(Delegate_V_S1 p1, Delegate_V_I1 p2, Delegate_V_B1 p3)
+        public ProgressSupporter(Delegate_V_S1 p1, Delegate_V_I1 p2, Delegate_V_B1 p3, Delegate_V_S1 p4)
         {
             this.Delegate_1 = p1;
             this.Delegate_2 = p2;
             this.Delegate_3 = p3;
+            this.Delegate_4 = p4;
         }
 
         public void SetText(string text)
         {
             this.Delegate_1(text);
+        }
+
+        public void SetTaskText(string text)
+        {
+            this.Delegate_4(text);
         }
 
         public void SetProgressValue(int value)

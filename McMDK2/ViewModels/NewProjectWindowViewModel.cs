@@ -277,7 +277,7 @@ namespace McMDK2.ViewModels
                 FileController.CreateDirectory(newProject.Path);
 
                 var template = this.SelectedItem;
-                var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate);
+                var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate, this.MainWindowViewModel.SetTaskText);
                 var im = new IndirectlyMessenger(this.Messenger);
                 var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
 
