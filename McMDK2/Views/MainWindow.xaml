@@ -230,12 +230,16 @@
                            Source="/Resources/action_create_16xSM.png" />
                 </Grid>
             </Button>
-            <Button IsEnabled="{Binding IsLoadedProject}" ToolTip="保存">
+            <Button Command="{Binding SaveItemCommand}"
+                    IsEnabled="{Binding IsLoadedProject}"
+                    ToolTip="保存">
                 <Image Width="16px"
                        Height="16px"
                        Source="/Resources/save_16xLG.png" />
             </Button>
-            <Button IsEnabled="{Binding IsLoadedProject}" ToolTip="全てを保存">
+            <Button Command="{Binding SaveAllItemCommand}"
+                    IsEnabled="{Binding IsLoadedProject}"
+                    ToolTip="全てを保存">
                 <Image Width="16px"
                        Height="16px"
                        Source="/Resources/Saveall_6518.png" />

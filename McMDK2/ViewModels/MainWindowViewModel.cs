@@ -953,6 +953,77 @@ namespace McMDK2.ViewModels
 
         #endregion
 
+        // ##############################################################
+        // ToolBar
+        // ##############################################################
+        #region SaveItemCommand
+        private ViewModelCommand _SaveItemCommand;
+
+        public ViewModelCommand SaveItemCommand
+        {
+            get
+            {
+                if (_SaveItemCommand == null)
+                {
+                    _SaveItemCommand = new ViewModelCommand(SaveItem);
+                }
+                return _SaveItemCommand;
+            }
+        }
+
+        public void SaveItem()
+        {
+            object item = this.Tabs[this.SelectedTabIndex].Content;
+            if (item != null)
+            {
+                if (item is ItemView)
+                {
+                    ((ItemView)item).Save();
+                }
+                if (item is ItemViewEx)
+                {
+                    ((ItemViewEx)item).Save();
+                }
+            }
+        }
+        #endregion
+
+
+        #region SaveAllItemCommand
+        private ViewModelCommand _SaveAllItemCommand;
+
+        public ViewModelCommand SaveAllItemCommand
+        {
+            get
+            {
+                if (_SaveAllItemCommand == null)
+                {
+                    _SaveAllItemCommand = new ViewModelCommand(SaveAllItem);
+                }
+                return _SaveAllItemCommand;
+            }
+        }
+
+        public void SaveAllItem()
+        {
+            foreach (var item in this.Tabs)
+            {
+                object content = item.Content;
+                if (content != null)
+                {
+                    if (content is ItemView)
+                    {
+                        ((ItemView)content).Save();
+                    }
+                    if (content is ItemViewEx)
+                    {
+                        ((ItemViewEx)content).Save();
+                    }
+                }
+            }
+        }
+        #endregion
+
 
         // ##############################################################
         // File(_F)
@@ -1452,7 +1523,6 @@ namespace McMDK2.ViewModels
         // ##############################################################
         // Tool(_T)
         // ##############################################################
-
         #region OpenSettingWindowCommand
         private ViewModelCommand _OpenSettingWindowCommand;
 
