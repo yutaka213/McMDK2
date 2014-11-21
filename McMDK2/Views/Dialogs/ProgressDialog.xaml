@@ -1,29 +1,33 @@
 ﻿<controls:MetroWindow x:Class="McMDK2.Views.Dialogs.ProgressDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
-        xmlns:v="clr-namespace:McMDK2.Views.Dialogs"
-        xmlns:vm="clr-namespace:McMDK2.ViewModels.Dialogs"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        GlowBrush="{DynamicResource WindowGlowBrush}"
-        NonActiveWindowTitleBrush="{DynamicResource WindowTitleColorBrush}"
-        WindowStartupLocation="CenterOwner"
-        TitlebarHeight="0"
-        MinHeight="100" Height="100" MaxHeight="100"
-        MinWidth="400" Width="400" MaxWidth="400"
-        ShowInTaskbar="False">
-    
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+                      xmlns:v="clr-namespace:McMDK2.Views.Dialogs"
+                      xmlns:vm="clr-namespace:McMDK2.ViewModels.Dialogs"
+                      Width="400"
+                      Height="100"
+                      MinWidth="400"
+                      MinHeight="100"
+                      MaxWidth="400"
+                      MaxHeight="100"
+                      GlowBrush="{DynamicResource WindowGlowBrush}"
+                      NonActiveWindowTitleBrush="{DynamicResource WindowTitleColorBrush}"
+                      ShowInTaskbar="False"
+                      TitlebarHeight="0"
+                      WindowStartupLocation="CenterOwner">
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+            <l:LivetCallMethodAction MethodName="Initialize" MethodTarget="{Binding}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
-            <l:DataContextDisposeAction/>
+            <l:DataContextDisposeAction />
         </i:EventTrigger>
         <l:InteractionMessageTrigger MessageKey="WindowAction" Messenger="{Binding Messenger}">
-            <l:WindowInteractionMessageAction  InvokeActionOnlyWhenWindowIsActive="False"/>
+            <l:WindowInteractionMessageAction InvokeActionOnlyWhenWindowIsActive="False" />
         </l:InteractionMessageTrigger>
     </i:Interaction.Triggers>
 
@@ -37,15 +41,16 @@
     </Window.Resources>
 
     <Grid>
-        <controls:MetroProgressBar IsIndeterminate="{Binding IsIndeterminate}"
-                                   Value="{Binding Value}"
-                                   Maximum="100" Minimum="0"
+        <controls:MetroProgressBar Margin="20,20,20,0"
+                                   VerticalAlignment="Top"
                                    Foreground="{StaticResource CloseButtonBackgroundHighlighted}"
-                                   Margin="20,20,20,0"
-                                   VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding Text}"
-                   TextWrapping="Wrap"
+                                   IsIndeterminate="{Binding IsIndeterminate}"
+                                   Maximum="100"
+                                   Minimum="0"
+                                   Value="{Binding Value}" />
+        <TextBlock Margin="20,40,20,10"
+                   Text="{Binding Text}"
                    TextTrimming="CharacterEllipsis"
-                   Margin="20,40,20,10"/>
+                   TextWrapping="Wrap" />
     </Grid>
 </controls:MetroWindow>
