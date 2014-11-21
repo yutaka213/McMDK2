@@ -43,5 +43,13 @@ namespace McMDK2.Plugin
         {
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Save()
+        {
+
+        }
     }
 }

@@ -24,5 +24,10 @@ namespace McMDK2.Plugin
         /// このViewが開かれているタブが閉じられる時に呼ばれます。
         /// </summary>
         public abstract/*virtual*/ void Closing();
+
+        /// <summary>
+        /// 「保存」ボタンが押された時に呼ばれます。
+        /// </summary>
+        public abstract void Save();
     }
 }

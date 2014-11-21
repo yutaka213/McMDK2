@@ -61,6 +61,10 @@ namespace Fireworks.ItemViewers.ViewModels
         {
         }
 
+        public void Save()
+        {
+        }
+
 
         #region ImagePath変更通知プロパティ
         private BitmapImage _ImagePath;

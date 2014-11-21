@@ -23,9 +23,12 @@ namespace McMDK2.ViewModels.TabPages
 {
     public class ModdingPageViewModel : ViewModel, ItemViewEx
     {
+        private string Path = "";
+        private ItemData ItemData;
+
         public ModdingPageViewModel()
         {
-
+            this.ItemData = null;
         }
 
         public ModdingPageViewModel(ModView view)
@@ -55,6 +58,8 @@ namespace McMDK2.ViewModels.TabPages
                         return;
                     }
                     this.ModdingContent = content.View;
+                    this.ModdingContent.ModProperties = obj.Properties;
+                    this.Path = path;
                     this.Loaded = true;
                 }
                 catch (Exception e)
@@ -71,6 +76,24 @@ namespace McMDK2.ViewModels.TabPages
             if (this.ModdingContent != null)
             {
                 this.ModdingContent.Closing();
+            }
+        }
+
+        public void Save()
+        {
+            if (this.ModdingContent != null)
+            {
+                var serializer = new DataContractSerializer(typeof(ItemData));
+                var writer = XmlWriter.Create(this.Path);
+                serializer.WriteObject(writer, new ItemData
+                {
+                    Id = this.ItemData.Id,
+                    Name = this.ItemData.Name,
+                    PluginId = this.ItemData.PluginId,
+                    PluginVersion = this.ItemData.PluginVersion,
+                    Properties = this.ModdingContent.ModProperties
+                });
+                writer.Close();
             }
         }
 

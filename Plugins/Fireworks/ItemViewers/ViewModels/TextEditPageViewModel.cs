@@ -78,15 +78,19 @@ namespace Fireworks.ItemViewers.ViewModels
                 };
                 if (taskDialog.Show() == TaskDialogResult.Yes)
                 {
-                    // Edited
-                    using (var sw = new StreamWriter(this.Path))
-                    {
-                        sw.WriteLine(this.Text);
-                    }
+                    this.Save();
                 }
             }
         }
 
+        public void Save()
+        {
+            // Edited
+            using (var sw = new StreamWriter(this.Path))
+            {
+                sw.WriteLine(this.Text);
+            }
+        }
 
         #region SyntaxHighlighting変更通知プロパティ
         private IHighlightingDefinition _SyntaxHighlighting;
