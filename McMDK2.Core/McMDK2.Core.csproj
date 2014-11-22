@@ -97,7 +97,7 @@
     <Compile Include="Net\SimpleHttp.cs" />
     <Compile Include="Objects\Composition.cs" />
     <Compile Include="Objects\Notification.cs" />
-    <Compile Include="Patcher.cs" />
+    <Compile Include="Utils\Patcher.cs" />
     <Compile Include="Plugin\ContextMenuManager.cs" />
     <Compile Include="Plugin\Internal\DummyPlugin.cs" />
     <Compile Include="Plugin\Internal\IdStore.cs" />

@@ -3,14 +3,39 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace McMDK2.Core
+namespace McMDK2.Core.Utils
 {
-    public class Patcher
+    public static class Patcher
     {
-        public static void ApplyPatch(string dir, string works)
+        /// <param name="command">command must contain {0}.</param>
+        public static void ApplyPatch(string file, string mcp_dir, string command = "-p1 -u -i \"{0}\"", string workingDir = "")
+        {
+            if (!FileController.Exists(file))
+            {
+                return;
+            }
+            FileController.Copy(file, Path.Combine(Define.CacheDirectory, "temp.patch"));
+
+            Define.GetLogger().Info(String.Format("Applying patch from {0}.", file));
+
+            var process = new Process();
+            process.StartInfo.FileName = Path.Combine(mcp_dir, "runtime", "bin", "applydiff.exe");
+            process.StartInfo.Arguments = String.Format(command, Path.Combine(Define.CacheDirectory, "temp.patch"));
+            process.StartInfo.WorkingDirectory = workingDir != "" ? mcp_dir : workingDir;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.OutputDataReceived += (a, b) => Define.GetLogger().Info(b.Data);
+            process.ErrorDataReceived += (a, b) => Define.GetLogger().Error(b.Data);
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+        }
+
+        public static void ApplyPatches(string dir, string works)
         {
             if (!FileController.Exists(dir))
             {

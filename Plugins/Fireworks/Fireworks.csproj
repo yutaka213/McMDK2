@@ -137,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Process\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Items\Views\BlockView.xaml">
