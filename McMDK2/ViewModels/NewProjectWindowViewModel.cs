@@ -432,6 +432,7 @@ namespace McMDK2.ViewModels
                 }
                 // Handled
                 progress.Close();
+                ps.SetTaskText("準備完了");
 
                 DispatcherHelper.UIDispatcher.Invoke(() =>
                 {

@@ -4,11 +4,11 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fireworks.Items;
 using McMDK2.Core;
 using McMDK2.Core.Plugin;
 using McMDK2.Plugin;
 
+using Fireworks.Items;
 using Fireworks.ItemViewers.Views;
 using Fireworks.ItemViewers.ViewModels;
 using Fireworks.Templates;

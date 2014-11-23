@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core
 {
-    public class ValueChecker
+    public static class ValueChecker
     {
         /// <summary>
         /// 配列が全てnullの場合にTrueを返します。
