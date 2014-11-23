@@ -197,9 +197,16 @@ namespace McMDK2.ViewModels
                 saveItems.Add(items[j]);
             }
 
-            Define.GetInternalSettings().RecentProjects = saveItems.ToArray();
-            Define.GetInternalSettings().Save();
-            Define.GetSettings().Save();
+            try
+            {
+                Define.GetInternalSettings().RecentProjects = saveItems.ToArray();
+                Define.GetInternalSettings().Save();
+                Define.GetSettings().Save();
+            }
+            catch (Exception e)
+            {
+                Define.GetLogger().Error(e);
+            }
         }
         #endregion
 
@@ -1252,7 +1259,13 @@ namespace McMDK2.ViewModels
 
         public void CloseProject()
         {
-            this.Tabs.Clear();
+            foreach (var item in this.Tabs)
+            {
+                if (item.Tag != Guids.StartPageGuid)
+                {
+                    this.Tabs.Remove(item);
+                }
+            }
             this.IsLoadedProject = false;
             if (this.CurrentProject != null)
             {

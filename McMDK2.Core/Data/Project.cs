@@ -33,7 +33,8 @@ namespace McMDK2.Core.Data
         /// <summary>
         /// Version can use 1.0.0 only currently available.
         /// </summary>
-        public string Version { private set; get; }
+        [XmlIgnore]
+        public string Version { set; get; }
 
         [XmlIgnore]
         public Dictionary<string, object> UserProperties { private set; get; }
