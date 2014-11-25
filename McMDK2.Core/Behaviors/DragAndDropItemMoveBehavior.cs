@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
     /// <summary>

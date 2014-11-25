@@ -16,6 +16,9 @@ namespace McMDK2.UI.Controls
         /// </summary>
         public string Header { set; get; }
 
+        /// <summary>
+        /// GroupBox内の子要素のリストを取得します。
+        /// </summary>
         public List<UIControl> Children { set; get; }
 
         public GroupBoxControl()

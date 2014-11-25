@@ -11,9 +11,13 @@ using McMDK2.Core.Extensions;
 using McMDK2.Core.Migrations;
 using Newtonsoft.Json;
 
+#pragma warning disable 1591
 
 namespace McMDK2.Core.Data
 {
+    /// <summary>
+    /// McMDK2 Projectのデータを保持します。
+    /// </summary>
     public class Project : ICloneable, IMigratable
     {
         public Project()
@@ -24,10 +28,19 @@ namespace McMDK2.Core.Data
             this.Version = Define.ProjectXmlVersion;
         }
 
+        /// <summary>
+        /// プロジェクト名を設定します。
+        /// </summary>
         public string Name { set; get; }
 
+        /// <summary>
+        /// プロジェクト毎の固有IDを設定します。
+        /// </summary>
         public string Id { set; get; }
 
+        /// <summary>
+        /// プロジェクトファイル(*.mdk)のパスを設定します。
+        /// </summary>
         public string Path { set; get; }
 
         /// <summary>
@@ -46,6 +59,9 @@ namespace McMDK2.Core.Data
         [JsonIgnore]
         public ObservableCollection<ProjectItem> Items { set; get; }
 
+        /// <summary>
+        /// プロジェクトを保存します。
+        /// </summary>
         public void Save()
         {
             using (var sw = new StreamWriter(System.IO.Path.Combine(this.Path, this.Name + ".mmproj")))

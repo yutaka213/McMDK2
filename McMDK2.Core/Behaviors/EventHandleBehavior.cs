@@ -8,10 +8,12 @@ using System.Windows.Input;
 using System.Windows.Interactivity;
 using McMDK2.Core.Behaviors.Internal;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
     /// <summary>
-    /// †神†の降臨
+    /// 文字列によるEventのHookを行います。
     /// </summary>
     public class EventHandleBehavior
     {

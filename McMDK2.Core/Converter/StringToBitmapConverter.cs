@@ -12,8 +12,13 @@ using System.Windows.Media.Imaging;
 using McMDK2.Core.Plugin;
 using McMDK2.Core.Plugin.Internal;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Converter
 {
+    /// <summary>
+    /// 文字列の画像パスから画像を返します。
+    /// </summary>
     public class StringToBitmapConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)

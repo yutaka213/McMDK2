@@ -8,6 +8,8 @@ using System.Windows;
 
 using McMDK2.Core.Win32;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core
 {
     // http://grabacr.net/archives/1585

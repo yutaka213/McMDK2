@@ -16,6 +16,9 @@ namespace McMDK2.Core.Plugin
     {
         private static readonly List<IPlugin> plugins = new List<IPlugin>();
 
+        /// <summary>
+        /// 読み込まれたPluginのReadonlyなリスト
+        /// </summary>
         public static IEnumerable<IPlugin> Plugins
         {
             get
@@ -24,11 +27,17 @@ namespace McMDK2.Core.Plugin
             }
         }
 
+        /// <summary>
+        /// 固有IDからプラグインを取得します。
+        /// </summary>
         public static IPlugin GetPluginFromId(string id)
         {
             return plugins.Single(w => w.Id == id);
         }
 
+        /// <summary>
+        /// プラグインを登録します。
+        /// </summary>
         public static void Register(IPlugin plugin)
         {
             try

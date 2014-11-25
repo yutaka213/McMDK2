@@ -8,8 +8,14 @@ using System.Windows.Media.Imaging;
 
 namespace McMDK2.Core.Utils
 {
+    /// <summary>
+    /// Bitmap.BeginInit() ~ Bitmap.EndInit()までの処理を一括で行います。
+    /// </summary>
     public static class ImageGenerator
     {
+        /// <summary>
+        /// Bitmap.BeginInit() ~ Bitmap.EndInit()までの処理を一括で行います。
+        /// </summary>
         public static object Generate(double height, double width, params string[] images)
         {
             BitmapImage bitmap;

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using McMDK2.Core.Data;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core
 {
     public class ApplicationInternalSettings : ApplicationSettingsBase

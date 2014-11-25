@@ -5,8 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Data
 {
+    /// <summary>
+    /// ContextMenu
+    /// </summary>
     public class ContextMenuItem
     {
         public string Header { set; get; }

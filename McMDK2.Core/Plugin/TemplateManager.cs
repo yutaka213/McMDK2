@@ -16,6 +16,9 @@ namespace McMDK2.Core.Plugin
     {
         private static readonly List<ITemplate> templates = new List<ITemplate>();
 
+        /// <summary>
+        /// 登録されたTemplateのReadonlyなリスト
+        /// </summary>
         public static IEnumerable<ITemplate> Templates
         {
             get
@@ -24,11 +27,17 @@ namespace McMDK2.Core.Plugin
             }
         }
 
+        /// <summary>
+        /// 固有IDからテンプレートを取得します。
+        /// </summary>
         public static ITemplate GetTemplateFromId(string id)
         {
             return templates.Single(w => w.Id == id);
         }
 
+        /// <summary>
+        /// テンプレートを登録します。
+        /// </summary>
         public static void Register(ITemplate template)
         {
             if (templates.Where(w => w.Id == template.Id).ToArray().Length != 0)

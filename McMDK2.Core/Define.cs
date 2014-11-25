@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using McMDK2.Core.Log;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core
 {
     public static class Define

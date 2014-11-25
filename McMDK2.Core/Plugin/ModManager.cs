@@ -16,6 +16,9 @@ namespace McMDK2.Core.Plugin
     {
         private static readonly List<IMod> mods = new List<IMod>();
 
+        /// <summary>
+        /// 読み込まれたModのReadonlyなリスト
+        /// </summary>
         public static IEnumerable<IMod> Mods
         {
             get
@@ -24,11 +27,17 @@ namespace McMDK2.Core.Plugin
             }
         }
 
+        /// <summary>
+        /// 固有IDからModを取得します。
+        /// </summary>
         public static IMod GetModFromId(string id)
         {
             return mods.Single(w => w.Id == id);
         }
 
+        /// <summary>
+        /// Modを登録します。
+        /// </summary>
         public static void Register(IMod mod)
         {
             if (mods.Where(w => w.Id == mod.Id).ToArray().Length != 0)

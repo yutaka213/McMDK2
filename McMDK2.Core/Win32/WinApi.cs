@@ -6,9 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Win32
 {
-    public class WinApi
+    /// <summary>
+    /// For Windows 32 APIs.
+    /// </summary>
+    public static class WinApi
     {
 
         #region Window Place

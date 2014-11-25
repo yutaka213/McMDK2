@@ -9,12 +9,14 @@ using System.Windows.Media;
 
 using McMDK2.UI;
 
+#pragma warning disable 1591
+#pragma warning disable 693
+
 namespace McMDK2.Core.Converter
 {
-    public class StringToObjectConverter
+    public static class StringToObjectConverter
     {
 
-#pragma warning disable 693
         /// <summary>
         /// 文字列から該当するGuiComponentを取得します。
         /// </summary>

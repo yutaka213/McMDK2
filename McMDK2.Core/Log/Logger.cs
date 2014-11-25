@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using McMDK2.Core;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Log
 {
     public class Logger

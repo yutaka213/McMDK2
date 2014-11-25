@@ -7,10 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
     /// <summary>
     /// http://stackoverflow.com/questions/4497825/wpf-mvvm-how-to-handle-double-click-on-treeviewitems-in-the-viewmodel
+    /// マウスWクリックの際のイベントをバインドします。
     /// </summary>
     public class MouseDoubleClickBehavior
     {

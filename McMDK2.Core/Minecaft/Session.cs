@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json.Linq;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Minecaft
 {
     // See this -> launcher.jar/com/mojang/authlib/yggdrasil/YggdrasilMinecraftSessionService.class

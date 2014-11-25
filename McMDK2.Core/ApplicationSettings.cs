@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core
 {
     public class ApplicationSettings : ApplicationSettingsBase

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
     /// <summary>

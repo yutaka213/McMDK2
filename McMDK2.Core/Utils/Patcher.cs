@@ -4,8 +4,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
+#pragma warning disable 1573
+
 namespace McMDK2.Core.Utils
 {
+    /// <summary>
+    /// ApplyDiffを扱う機能を提供します。
+    /// </summary>
     public static class Patcher
     {
         /// <param name="command">command must contain {0}.</param>
@@ -35,6 +40,9 @@ namespace McMDK2.Core.Utils
             process.WaitForExit();
         }
 
+        /// <summary>
+        /// 指定したディレクトリ内の全ての*.patchに対して、処理を実行します。
+        /// </summary>
         public static void ApplyPatches(string dir, string works)
         {
             if (!FileController.Exists(dir))

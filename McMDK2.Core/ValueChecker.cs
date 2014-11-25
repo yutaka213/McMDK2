@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core
 {
+    /// <summary>
+    /// 値のチェック機能を提供します。
+    /// </summary>
     public static class ValueChecker
     {
         /// <summary>

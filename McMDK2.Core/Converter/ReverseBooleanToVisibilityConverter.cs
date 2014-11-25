@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Converter
 {
+    /// <summary>
+    /// !BooleanToVisibilityConverter
+    /// </summary>
     public class ReverseBooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)

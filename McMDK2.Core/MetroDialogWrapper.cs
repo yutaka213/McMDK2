@@ -8,9 +8,11 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core
 {
-    public class MetroDialogWrapper
+    public static class MetroDialogWrapper
     {
         public static async Task<LoginDialogData> ShowLoginDialog(string title, string message, LoginDialogSettings settings = null)
         {

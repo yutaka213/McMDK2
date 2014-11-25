@@ -24,6 +24,9 @@ namespace McMDK2.Core.Plugin
         // viewers(Extension(Including dot '.'), View)
         private static readonly Dictionary<string, UserControl> viewers = new Dictionary<string, UserControl>();
 
+        /// <summary>
+        /// 拡張子から関連付けされたIdentifierを取得します。
+        /// </summary>
         public static string GetIdentifierFromExtension(string extension)
         {
             if (!exts.ContainsKey(extension))
@@ -31,6 +34,9 @@ namespace McMDK2.Core.Plugin
             return exts[extension];
         }
 
+        /// <summary>
+        /// 拡張子から関連付けされたコントロールを取得します。
+        /// </summary>
         public static UserControl GetItemViewFromExtension(string extension)
         {
             if (!viewers.ContainsKey(extension))
@@ -38,6 +44,11 @@ namespace McMDK2.Core.Plugin
             return viewers[extension];
         }
 
+        /// <summary>
+        /// Identifierからアイコンを取得します。
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
         public static string GetIconFromIdentifier(string identifier)
         {
             if (!icons.ContainsKey(identifier))

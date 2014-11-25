@@ -7,8 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Net
 {
+    /// <summary>
+    /// 簡易的なネットワーク接続の機能を提供します。
+    /// </summary>
     public static class SimpleHttp
     {
         /// <summary>
@@ -57,6 +62,9 @@ namespace McMDK2.Core.Net
             return (new StreamReader(response.GetResponseStream())).ReadToEnd();
         }
 
+        /// <summary>
+        /// HTTP PUTを行います。
+        /// </summary>
         public static string Put(string url, string contentType = "application/x-www-form-urlencoded", IEnumerable<KeyValuePair<string, object>> body = null)
         {
             if (url == null)
@@ -78,6 +86,9 @@ namespace McMDK2.Core.Net
             return (new StreamReader(response.GetResponseStream())).ReadToEnd();
         }
 
+        /// <summary>
+        /// HTTP DELETEを行います。
+        /// </summary>
         public static string Delete(string url, string contentType = "application/x-www-form-urlencoded")
         {
             if (url == null)

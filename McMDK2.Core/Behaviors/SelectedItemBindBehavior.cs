@@ -7,8 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
+    /// <summary>
+    /// TreeViewの選択中のアイテムをバインドします。
+    /// </summary>
     public class SelectedItemBindBehavior : Behavior<TreeView>
     {
         public object SelectedItem

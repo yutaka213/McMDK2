@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Minecaft
 {
     public class ApiService

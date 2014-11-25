@@ -18,6 +18,8 @@ using McMDK2.UI.Controls;
 using McMDK2.Core.Converter;
 using McMDK2.Core.Plugin.Internal;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Plugin
 {
     public static class PluginLoader

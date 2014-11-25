@@ -8,9 +8,14 @@ using System.Windows.Documents;
 using System.Windows.Interactivity;
 using System.Windows.Navigation;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Behaviors
 {
     // https://github.com/karno/StarryEyes/blob/master/StarryEyes/Views/Behaviors/NavigateHyperlinkBehavior.cs
+    /// <summary>
+    ///  Hyperlink の動作をバインドします。
+    /// </summary>
     public class NavigateHyperlinkBehavior : Behavior<Hyperlink>
     {
         protected override void OnAttached()

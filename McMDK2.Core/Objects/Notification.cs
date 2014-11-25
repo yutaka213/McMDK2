@@ -2,6 +2,8 @@
 using Livet;
 using Livet.Commands;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Objects
 {
     public delegate void LinkClickedCommand(object sender, object args);

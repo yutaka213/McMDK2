@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core
 {
-    public class FileController
+    /// <summary>
+    /// ファイル操作の機能を提供します
+    /// </summary>
+    public static class FileController
     {
-
+        /// <summary>
+        /// ディレクトリを作成します。
+        /// </summary>
         public static void CreateDirectory(string path)
         {
             if (!Directory.Exists(path))
@@ -18,6 +23,9 @@ namespace McMDK2.Core
             }
         }
 
+        /// <summary>
+        /// 空のファイルを作成します。
+        /// </summary>
         public static void CreateFile(string path)
         {
             if (!File.Exists(path))
@@ -26,6 +34,9 @@ namespace McMDK2.Core
             }
         }
 
+        /// <summary>
+        /// ファイル/ディレクトリを削除します。
+        /// </summary>
         public static void Delete(string path)
         {
             if (path.EndsWith("/") || path.EndsWith("\\"))
@@ -66,6 +77,9 @@ namespace McMDK2.Core
             dirInfo.Delete(true);
         }
 
+        /// <summary>
+        /// ファイル/ディレクトリの存在確認を行います。
+        /// </summary>
         public static bool Exists(string path)
         {
             if (Directory.Exists(path) || File.Exists(path))
@@ -75,6 +89,9 @@ namespace McMDK2.Core
             return false;
         }
 
+        /// <summary>
+        /// ファイル/ディレクトリをコピーします。
+        /// </summary>
         public static void Copy(string source, string dest)
         {
             string dirname = Path.GetDirectoryName(dest);
@@ -115,6 +132,9 @@ namespace McMDK2.Core
             }
         }
 
+        /// <summary>
+        /// ファイル/ディレクトリをリネームします。
+        /// </summary>
         public static void Rename(string oldName, string newName)
         {
             if (File.Exists(oldName))
@@ -128,6 +148,9 @@ namespace McMDK2.Core
             }
         }
 
+        /// <summary>
+        /// ファイルリストを取得します。
+        /// </summary>
         public static IEnumerable<string> GetLists(string path, bool isDirectory = false, bool isSearchAllDirectories = false)
         {
             if (Directory.Exists(path))
@@ -145,6 +168,9 @@ namespace McMDK2.Core
             throw new DirectoryNotFoundException(path);
         }
 
+        /// <summary>
+        /// ファイルを読み込みます。
+        /// </summary>
         public static string LoadFile(string path)
         {
             if (File.Exists(path))

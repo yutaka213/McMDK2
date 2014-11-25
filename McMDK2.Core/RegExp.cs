@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace McMDK2.Core
 {
+    /// <summary>
+    /// 正規表現の簡易的な機能を提供します。
+    /// </summary>
     public static class RegExp
     {
         /// <summary>

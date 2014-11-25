@@ -10,8 +10,14 @@ using System.Windows.Media.Imaging;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
 
+#pragma warning disable 1591
+
 namespace McMDK2.Core.Converter
 {
+    /// <summary>
+    /// ItemTypeを取得し、それによって登録された画像を取得します。
+    /// 画像が設定されていない場合は、規定の画像を返します。
+    /// </summary>
     public class ItemTypeToBitmapConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
