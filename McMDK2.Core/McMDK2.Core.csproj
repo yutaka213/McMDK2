@@ -118,7 +118,13 @@
     <Compile Include="Utils\ImageGenerator.cs" />
     <Compile Include="Utils\Versioning.cs" />
     <Compile Include="ValueChecker.cs" />
-    <Compile Include="Win32\WinApi.cs" />
+    <Compile Include="Win32\GWL.cs" />
+    <Compile Include="Win32\SW.cs" />
+    <Compile Include="Win32\NativeMethods.cs" />
+    <Compile Include="Win32\POINT.cs" />
+    <Compile Include="Win32\RECT.cs" />
+    <Compile Include="Win32\WINDOWPLACEMENT.cs" />
+    <Compile Include="Win32\WS.cs" />
     <Compile Include="WindowSettings.cs" />
   </ItemGroup>
   <ItemGroup>

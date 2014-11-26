@@ -28,9 +28,9 @@ namespace McMDK2.Views.Dialogs
             base.OnSourceInitialized(e);
 
             var hWnd = new WindowInteropHelper(this).Handle;
-            var windowStyle = WinApi.GetWindowLong(hWnd, WinApi.GWL_STYLE);
-            windowStyle &= ~(int)(WinApi.WindowStyles.MAXIMIZEBOX | WinApi.WindowStyles.MINIMIZEBOX);
-            WinApi.SetWindowLong(hWnd, WinApi.GWL_STYLE, windowStyle);
+            var windowStyle = NativeMethods.GetWindowLong(hWnd, (int)GWL.STYLE);
+            windowStyle &= ~(int)(WS.MAXIMIZEBOX | WS.MINIMIZEBOX);
+            NativeMethods.SetWindowLong(hWnd, (int)GWL.STYLE, windowStyle);
         }
     }
 }

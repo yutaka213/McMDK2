@@ -21,11 +21,11 @@ namespace McMDK2.Core
         }
 
         [UserScopedSetting]
-        public WinApi.WINDOWPLACEMENT? Placement
+        public WINDOWPLACEMENT? Placement
         {
             get
             {
-                return this["Placement"] != null ? (WinApi.WINDOWPLACEMENT?)(WinApi.WINDOWPLACEMENT)this["Placement"] : null;
+                return this["Placement"] != null ? (WINDOWPLACEMENT?)(WINDOWPLACEMENT)this["Placement"] : null;
             }
             set
             {

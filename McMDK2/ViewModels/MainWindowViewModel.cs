@@ -1261,7 +1261,7 @@ namespace McMDK2.ViewModels
         {
             foreach (var item in this.Tabs)
             {
-                if (item.Tag != Guids.StartPageGuid)
+                if ((string)item.Tag != Guids.StartPageGuid)
                 {
                     this.Tabs.Remove(item);
                 }

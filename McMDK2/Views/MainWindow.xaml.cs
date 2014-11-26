@@ -46,11 +46,11 @@ namespace McMDK2.Views
             {
                 var hwnd = new WindowInteropHelper(this).Handle;
                 var placement = this.WindowSettings.Placement.Value;
-                placement.length = Marshal.SizeOf(typeof(WinApi.WINDOWPLACEMENT));
-                placement.flags = 0;
-                placement.showCmd = (placement.showCmd == 2/*SW_SHOWMINIMIZED*/) ? 1/*SW_SHOWNORMAL*/ : placement.showCmd;
+                placement.Length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+                placement.Flags = 0;
+                placement.ShowCmd = (placement.ShowCmd == (int)SW.SHOWMINIMIZED) ? (int)SW.SHOWNORMAL : placement.ShowCmd;
 
-                WinApi.SetWindowPlacement(hwnd, ref placement);
+                NativeMethods.SetWindowPlacement(hwnd, ref placement);
             }
         }
 
@@ -60,9 +60,9 @@ namespace McMDK2.Views
 
             if (!e.Cancel)
             {
-                WinApi.WINDOWPLACEMENT placement;
+                WINDOWPLACEMENT placement;
                 var hwnd = new WindowInteropHelper(this).Handle;
-                WinApi.GetWindowPlacement(hwnd, out placement);
+                NativeMethods.GetWindowPlacement(hwnd, out placement);
 
                 this.WindowSettings.Placement = placement;
                 this.WindowSettings.Save();
