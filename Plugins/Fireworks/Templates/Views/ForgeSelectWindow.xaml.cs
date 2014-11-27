@@ -39,9 +39,9 @@ namespace Fireworks.Templates.Views
             base.OnSourceInitialized(e);
 
             var hWnd = new WindowInteropHelper(this).Handle;
-            var windowStyle = WinApi.GetWindowLong(hWnd, WinApi.GWL_STYLE);
+            var windowStyle = NativeMethods.GetWindowLong(hWnd, (int)GWL.STYLE);
             windowStyle &= ~(int)(WS.MAXIMIZEBOX | WS.MINIMIZEBOX | WS.SYSMENU);
-            WinApi.SetWindowLong(hWnd, WinApi.GWL_STYLE, windowStyle);
+            NativeMethods.SetWindowLong(hWnd, (int)GWL.STYLE, windowStyle);
         }
     }
 }
