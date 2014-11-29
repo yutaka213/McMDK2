@@ -40,14 +40,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fml\FmlCommands.cs" />
-    <Compile Include="Forge\InstallCommand.cs" />
+    <Compile Include="Forge\ForgeCommands.cs" />
+    <Compile Include="Forge\InstallCommands.cs" />
+    <Compile Include="Mcp\McpCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mcp\" />
+    <ProjectReference Include="..\McMDK2.Core\McMDK2.Core.csproj">
+      <Project>{e935f123-1b66-4ef2-9790-13fd5340f3be}</Project>
+      <Name>McMDK2.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

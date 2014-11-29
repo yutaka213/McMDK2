@@ -309,6 +309,10 @@
       <Project>{e935f123-1b66-4ef2-9790-13fd5340f3be}</Project>
       <Name>McMDK2.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\McMDK2.Py\McMDK2.Py.csproj">
+      <Project>{0612733b-e22d-4454-96ab-bd3893ff2402}</Project>
+      <Name>McMDK2.Py</Name>
+    </ProjectReference>
     <ProjectReference Include="..\McMDK2.UI\McMDK2.UI.csproj">
       <Project>{90dcab7d-4ddb-4859-886d-f63b08aadcd7}</Project>
       <Name>McMDK2.UI</Name>
