@@ -117,7 +117,7 @@
     <Compile Include="RegExp.cs" />
     <Compile Include="Utils\ImageGenerator.cs" />
     <Compile Include="Utils\Versioning.cs" />
-    <Compile Include="ValueChecker.cs" />
+    <Compile Include="Utils\ValueChecker.cs" />
     <Compile Include="Win32\GWL.cs" />
     <Compile Include="Win32\SW.cs" />
     <Compile Include="Win32\NativeMethods.cs" />

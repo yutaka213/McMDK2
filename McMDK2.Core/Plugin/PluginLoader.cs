@@ -115,7 +115,7 @@ namespace McMDK2.Core.Plugin
             // ReSharper disable PossibleNullReferenceException
             public XmlBasePluginLoader()
             {
-                IEnumerable<string> xmls = FileController.GetLists(Define.PluginDirectory, true);
+                IEnumerable<string> xmls = FileController.GetLists(Define.PluginDirectory, "*", true);
                 foreach (var xml in xmls)
                 {
                     // McMDK Basic Template Folder.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -151,18 +152,18 @@ namespace McMDK2.Core
         /// <summary>
         /// ファイルリストを取得します。
         /// </summary>
-        public static IEnumerable<string> GetLists(string path, bool isDirectory = false, bool isSearchAllDirectories = false)
+        public static IEnumerable<string> GetLists(string path, string filter = "*", bool isDirectory = false, bool isSearchAllDirectories = false)
         {
             if (Directory.Exists(path))
             {
                 if (isDirectory)
                 {
                     if (isSearchAllDirectories)
-                        return Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
+                        return Directory.GetDirectories(path, filter, SearchOption.AllDirectories);
                     return Directory.GetDirectories(path);
                 }
                 if (isSearchAllDirectories)
-                    return Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+                    return Directory.GetFiles(path, filter, SearchOption.AllDirectories);
                 return Directory.GetFiles(path);
             }
             throw new DirectoryNotFoundException(path);
@@ -179,6 +180,71 @@ namespace McMDK2.Core
                 return sr.ReadToEnd();
             }
             throw new FileNotFoundException(path);
+        }
+
+        /// <summary>
+        /// ファイルのハッシュ値を計算します。
+        /// </summary>
+        /// <param name="path">ファイルパス</param>
+        /// <param name="type">ハッシュタイプ</param>
+        /// <returns></returns>
+        public static string GetHashValue(string path, HashType type)
+        {
+            HashAlgorithm hashAlgo = null;
+            switch (type)
+            {
+                case HashType.MD5:
+                    hashAlgo = new MD5CryptoServiceProvider();
+                    break;
+
+                case HashType.RIPEMD160:
+                    hashAlgo = new RIPEMD160Managed();
+                    break;
+
+                case HashType.SHA1:
+                    hashAlgo = new SHA1CryptoServiceProvider();
+                    break;
+
+                case HashType.SHA256:
+                    hashAlgo = new SHA256CryptoServiceProvider();
+                    break;
+
+                case HashType.SHA384:
+                    hashAlgo = new SHA384CryptoServiceProvider();
+                    break;
+
+                case HashType.SHA512:
+                    hashAlgo = new SHA512CryptoServiceProvider();
+                    break;
+
+                default:
+                    hashAlgo = new MD5CryptoServiceProvider();
+                    break;
+            }
+
+            byte[] hash = hashAlgo.ComputeHash(new FileStream(path, FileMode.Open, FileAccess.Read));
+            hashAlgo.Clear();
+
+            var sb = new StringBuilder();
+            foreach (var b in hash)
+                sb.Append(b.ToString("x2"));
+
+            return sb.ToString();
+        }
+
+        public enum HashType
+        {
+            MD5,
+
+            RIPEMD160,
+
+            SHA1,
+
+            SHA256,
+
+            SHA384,
+
+            SHA512
         }
     }
 }

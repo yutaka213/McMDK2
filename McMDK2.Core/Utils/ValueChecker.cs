@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace McMDK2.Core
+namespace McMDK2.Core.Utils
 {
     /// <summary>
     /// 値のチェック機能を提供します。
