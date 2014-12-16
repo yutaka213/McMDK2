@@ -58,6 +58,7 @@ namespace Fireworks
         {
             //テンプレートの登録
             TemplateManager.Register(new StandardTemplate());
+            TemplateManager.Register(new LegacyStandardTemplate());
 #if DEBUG
             TemplateManager.Register(new TestTemplate());
 #endif

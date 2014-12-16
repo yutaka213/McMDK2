@@ -23,16 +23,16 @@ namespace Fireworks.Templates
     /// <summary>
     /// McMDK2 の標準的なプロジェクトのテンプレート
     /// </summary>
-    public class StandardTemplate : ITemplate
+    public class LegacyStandardTemplate : ITemplate
     {
         public string Name
         {
-            get { return "スタンダードプロジェクト(Minecraft Forge ユニバーサル, Gradle)"; }
+            get { return "スタンダードプロジェクト(Minecraft Forge ユニバーサル, Mcp)"; }
         }
 
         public string Id
         {
-            get { return "43ECD3FD-7E29-4968-AF55-4C5ED437E7B3"; }
+            get { return "A520FE62-237C-47A8-BECF-7AF4A561EF1F"; }
         }
 
         public string Dependents
@@ -47,7 +47,7 @@ namespace Fireworks.Templates
 
         public string Description
         {
-            get { return "Minecraft Forge Universalを前提Modとした、Modの作成を行います。" + Environment.NewLine + "Minecraft 1.7以降を対象としたModを作成することができます。"; }
+            get { return "Minecraft Forge Universalを前提Modとした、Modの作成を行います。" + Environment.NewLine + "Minecraft 1.3.2～1.7を対象としたModを作成することができます。"; }
         }
 
         public string TemplateFile
@@ -57,7 +57,7 @@ namespace Fireworks.Templates
 
         public string ProjectType
         {
-            get { return "Gradlw"; }
+            get { return "Mcp"; }
         }
 
         #region PreInitialization

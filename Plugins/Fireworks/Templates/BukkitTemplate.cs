@@ -38,7 +38,12 @@ namespace Fireworks.Templates
 
         public string TemplateFile
         {
-            get { return Id + ";Fireworks.Templates.BukkitTemplate.zip"; }
+            get { return "assembly;Fireworks.Templates.BukkitTemplate.zip"; }
+        }
+
+        public string ProjectType
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public void PreInitialization(PreInitializationArgs args)

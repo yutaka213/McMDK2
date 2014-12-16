@@ -27,6 +27,8 @@ namespace McMDK2.Core.Plugin.Internal
 
         public string TemplateFile { set; get; }
 
+        public string ProjectType { set; get; }
+
         /// <summary>
         /// template.xml Version
         /// </summary>

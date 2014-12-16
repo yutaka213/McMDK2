@@ -93,6 +93,7 @@
     <Compile Include="Templates\BukkitTemplate.cs" />
     <Compile Include="Templates\Models\MinecraftForge.cs" />
     <Compile Include="Templates\ServerTemplate.cs" />
+    <Compile Include="Templates\LegacyStandardTemplate.cs" />
     <Compile Include="Templates\StandardTemplate.cs" />
     <Compile Include="Templates\TestTemplate.cs" />
     <Compile Include="Templates\ViewModels\ForgeSelectWindowViewModel.cs" />

@@ -181,5 +181,12 @@ namespace McMDK2.Core
         public const string IdentifierDirectory = "DIRECTORY";
 
         public const string IdentifierMods = "Mod";
+
+        public enum BuildMode
+        {
+            Gradle,
+
+            Mcp
+        }
     }
 }

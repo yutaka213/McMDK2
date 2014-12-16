@@ -30,9 +30,16 @@ namespace McMDK2.Plugin
 
         /// <summary>
         /// テンプレートのファイル群がまとめられたZIPファイルのパスを取得します。 <para />
-        /// アセンブリ内に埋め込む場合は"ID;FilePath",埋め込まない場合は"FilePath"とします。
+        /// アセンブリ内に埋め込まれたファイルの場合は"assembly;filepath"、<para />
+        /// 埋め込まれていないファイルの場合は"file;filepath" もしくは "filepath" と指定します。
         /// </summary>
         string TemplateFile { get; }
+
+        /// <summary>
+        /// プロジェクトタイプを取得します。<para />
+        /// "Gradle" (1.7以降) もしくは "Mcp" (1.3.2～1.7), "None" (使用しない) のどれかを指定します。<para />
+        /// </summary>
+        string ProjectType { get; }
 
         /// <summary>
         /// 新規プロジェクト作成プロセスの開始直後に呼び出されます。<para />

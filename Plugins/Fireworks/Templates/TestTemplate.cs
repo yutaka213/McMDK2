@@ -42,7 +42,12 @@ namespace Fireworks.Templates
 
         public string TemplateFile
         {
-            get { return Id + ";Fireworks.Templates.TestTemplate.zip"; }
+            get { return "assembly;Fireworks.Templates.TestTemplate.zip"; }
+        }
+
+        public string ProjectType
+        {
+            get { return "None"; }
         }
 
         public void PreInitialization(PreInitializationArgs args)

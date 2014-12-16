@@ -232,8 +232,12 @@ namespace McMDK2.Core
             return sb.ToString();
         }
 
+        /// <summary>
+        /// ハッシュアルゴリズム
+        /// </summary>
         public enum HashType
         {
+#pragma warning disable 1591
             MD5,
 
             RIPEMD160,
@@ -245,6 +249,7 @@ namespace McMDK2.Core
             SHA384,
 
             SHA512
+#pragma warning restore 1591
         }
     }
 }

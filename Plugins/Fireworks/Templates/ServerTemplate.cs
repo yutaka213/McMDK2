@@ -38,7 +38,12 @@ namespace Fireworks.Templates
 
         public string TemplateFile
         {
-            get { return Id + ";Fireworks.Templates.ServerTemplate.zip"; }
+            get { return "assembly;Fireworks.Templates.ServerTemplate.zip"; }
+        }
+
+        public string ProjectType
+        {
+            get { return "Mcp"; }
         }
 
         public void PreInitialization(PreInitializationArgs args)
