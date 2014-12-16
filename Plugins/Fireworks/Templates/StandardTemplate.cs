@@ -7,14 +7,18 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
 using Fireworks.Templates.ViewModels;
 using Fireworks.Templates.Views;
+
 using McMDK2.Core;
 using McMDK2.Core.Utils;
 using McMDK2.Plugin;
 using McMDK2.Plugin.Process;
 using McMDK2.Plugin.Process.Internal;
+
 using Microsoft.WindowsAPICodePack.Dialogs;
+
 using Newtonsoft.Json.Linq;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -57,7 +61,7 @@ namespace Fireworks.Templates
 
         public string ProjectType
         {
-            get { return "Gradlw"; }
+            get { return Define.ProjectTypeGradle; }
         }
 
         #region PreInitialization

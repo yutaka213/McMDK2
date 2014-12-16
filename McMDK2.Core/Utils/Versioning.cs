@@ -12,12 +12,22 @@ namespace McMDK2.Core.Utils
     public static class Versioning
     {
         /// <summary>
-        /// バージョンNoを取得します。
+        /// 4桁のバージョンNoを取得します。   <para />
+        /// 1.2.5の場合は1250が返ります。
         /// </summary>
         /// <param name="p1"></param>
         /// <returns></returns>
         public static int GetVersionNo(string p1)
         {
+            int count = p1.Length - p1.Replace(".", "").Length;
+            if (count == 1)
+            {
+                p1 += ".0";
+            }
+            if (p1.Length == 5)
+            {
+                p1 += "0";
+            }
             return int.Parse(p1.Replace(".", ""));
         }
 

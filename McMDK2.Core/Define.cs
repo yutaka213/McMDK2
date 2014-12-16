@@ -182,11 +182,10 @@ namespace McMDK2.Core
 
         public const string IdentifierMods = "Mod";
 
-        public enum BuildMode
-        {
-            Gradle,
+        public const string ProjectTypeGradle = "Gradle";
 
-            Mcp
-        }
+        public const string ProjectTypeMcp = "Mcp";
+
+        public const string ProjectTypeNone = "None";
     }
 }

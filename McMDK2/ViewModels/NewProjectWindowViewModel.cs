@@ -17,6 +17,7 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+
 using McMDK2.Core.Net;
 using McMDK2.Core.Utils;
 using McMDK2.Plugin;
@@ -29,7 +30,9 @@ using McMDK2.Plugin.Process.Internal;
 using McMDK2.ViewModels.Dialogs;
 using McMDK2.ViewModels.Internal;
 using McMDK2.Views.Dialogs;
+
 using Microsoft.WindowsAPICodePack.Dialogs;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -38,12 +41,14 @@ namespace McMDK2.ViewModels
     public class NewProjectWindowViewModel : ViewModel
     {
         private readonly MainWindowViewModel MainWindowViewModel;
+        private readonly List<string> AllVersions;
 
         public NewProjectWindowViewModel(MainWindowViewModel main)
         {
             this.MainWindowViewModel = main;
             this.Templates = new ObservableCollection<ITemplate>(TemplateManager.Templates);
             this.Versions = new ObservableCollection<string>();
+            this.AllVersions = new List<string>();
             this.ProjectPath = Define.ProjectsDirectory;
         }
 
@@ -64,7 +69,7 @@ namespace McMDK2.ViewModels
                             {
                                 DispatcherHelper.UIDispatcher.Invoke(() =>
                                 {
-                                    this.Versions.Add((string)jobj["id"]);
+                                    this.AllVersions.Add((string)jobj["id"]);
                                 });
                             }
                         }
@@ -77,7 +82,7 @@ namespace McMDK2.ViewModels
                     {
                         DispatcherHelper.UIDispatcher.Invoke(() =>
                         {
-                            this.Versions.Add((string)jobj["Version"]);
+                            this.AllVersions.Add((string)jobj["Version"]);
                         });
                     }
                 }
@@ -117,6 +122,32 @@ namespace McMDK2.ViewModels
                 _SelectedItem = value;
                 this.SelectedItemName = _SelectedItem.Name;
                 this.SelectedItemDescription = _SelectedItem.Description;
+                this.Versions.Clear();
+                if (_SelectedItem.ProjectType == Define.ProjectTypeGradle)
+                {
+                    foreach (var version in this.AllVersions)
+                    {
+                        if (Versioning.GetVersionNo(version) > 1640)
+                        {
+                            this.Versions.Add(version);
+                        }
+                    }
+                }
+                else if (_SelectedItem.ProjectType == Define.ProjectTypeMcp)
+                {
+                    foreach (var version in this.AllVersions)
+                    {
+                        if (1320 <= Versioning.GetVersionNo(version) && Versioning.GetVersionNo(version) <= 1640)
+                        {
+                            this.Versions.Add(version);
+                        }
+                    }
+                }
+                else
+                {
+                    this.Versions = new ObservableCollection<string>(this.AllVersions);
+                }
+
                 RaisePropertyChanged();
                 this.OKCommand.RaiseCanExecuteChanged();
             }
@@ -278,25 +309,6 @@ namespace McMDK2.ViewModels
                 FileController.CreateDirectory(newProject.Path);
 
                 var template = this.SelectedItem;
-                if (Versioning.GetVersionNo(this.ProjectVersion) < 132)
-                {
-                    var taskDialog = new TaskDialog();
-                    taskDialog.Caption = "Invalid Argument";
-                    taskDialog.InstructionText = "不正なバージョンです。";
-                    taskDialog.Text =
-    @"Minecraftのバージョンに、1.3.2より前のものが指定されています。
-このテンプレートでは、Minecraft 1.3.2以降のバージョンにしか対応していません。
-バージョンを1.3.2以上に設定しなおしてから、もう一度試してください。";
-                    taskDialog.Icon = TaskDialogStandardIcon.Information;
-                    taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
-                    taskDialog.Opened += (_sender, _e) =>
-                    {
-                        ((TaskDialog)_sender).Icon = ((TaskDialog)_sender).Icon;
-                    };
-                    taskDialog.Show();
-                    return;
-                }
-
                 var ps = new ProgressSupporter(progress.SetText, progress.SetValue, progress.SetIndeterminate, this.MainWindowViewModel.SetTaskText);
                 var im = new IndirectlyMessenger(this.Messenger);
                 var wts = new WindowTransitionSupporter(im.Raise, im.Raise, im.RaiseAsync, im.RaiseAsync);
@@ -312,6 +324,7 @@ namespace McMDK2.ViewModels
                     return;
                 }
                 // Handled
+                this.SetupProject();
 
                 string root;
                 Stream stream;
@@ -356,6 +369,7 @@ namespace McMDK2.ViewModels
                     Parent = ""
                 };
                 newProject.ProjectSettings["mcversion"] = this.ProjectVersion;
+                newProject.ProjectSettings["buildtype"] = this.SelectedItem.ProjectType;
 
                 var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
                 using (var sw = new StreamWriter(Path.Combine(newProject.Path, "project.mdk")))
@@ -484,6 +498,11 @@ namespace McMDK2.ViewModels
                 return false;
             }
             return true;
+        }
+
+        private void ExtractProject()
+        {
+
         }
 
         private void SetupProject()

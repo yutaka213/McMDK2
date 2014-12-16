@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using McMDK2.Core;
 using McMDK2.Plugin;
 using McMDK2.Plugin.Process;
 
@@ -47,7 +48,7 @@ namespace Fireworks.Templates
 
         public string ProjectType
         {
-            get { return "None"; }
+            get { return Define.ProjectTypeNone; }
         }
 
         public void PreInitialization(PreInitializationArgs args)
