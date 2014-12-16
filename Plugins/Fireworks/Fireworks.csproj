@@ -96,10 +96,6 @@
     <Compile Include="Templates\LegacyStandardTemplate.cs" />
     <Compile Include="Templates\StandardTemplate.cs" />
     <Compile Include="Templates\TestTemplate.cs" />
-    <Compile Include="Templates\ViewModels\ForgeSelectWindowViewModel.cs" />
-    <Compile Include="Templates\Views\ForgeSelectWindow.xaml.cs">
-      <DependentUpon>ForgeSelectWindow.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj">
@@ -140,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Templates\ViewModels\" />
+    <Folder Include="Templates\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Items\Views\BlockView.xaml">
@@ -155,10 +153,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ItemViewers\Views\TextPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Templates\Views\ForgeSelectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
