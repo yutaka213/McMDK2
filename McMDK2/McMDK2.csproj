@@ -88,6 +88,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Guids.cs" />
+    <Compile Include="Models\MinecraftForge.cs" />
     <Compile Include="ViewModels\Dialogs\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\NewDirectoryDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PluginInfoDialogViewModel.cs" />

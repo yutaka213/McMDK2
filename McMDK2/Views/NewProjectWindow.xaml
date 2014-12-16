@@ -133,13 +133,13 @@
             <TextBlock Margin="10,104,0,0"
                        FontSize="14"
                        Foreground="{DynamicResource BlackColorBrush}"
-                       Text="Minecraft" />
+                       Text="Forge" />
             <ComboBox Height="22"
                       Margin="80,102,200,0"
                       VerticalAlignment="Top"
-                      ItemsSource="{Binding Versions}"
+                      ItemsSource="{Binding ForgeVersions}"
                       MaxDropDownHeight="100"
-                      SelectedValue="{Binding ProjectVersion}"
+                      SelectedValue="{Binding ForgeVersion}"
                       Style="{x:Null}" />
             <Button Width="80"
                     Height="22"

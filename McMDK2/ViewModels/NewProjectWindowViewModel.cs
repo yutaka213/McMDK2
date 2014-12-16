@@ -48,6 +48,7 @@ namespace McMDK2.ViewModels
             this.MainWindowViewModel = main;
             this.Templates = new ObservableCollection<ITemplate>(TemplateManager.Templates);
             this.Versions = new ObservableCollection<string>();
+            this.ForgeVersions = new ObservableCollection<MinecraftForge>();
             this.AllVersions = new List<string>();
             this.ProjectPath = Define.ProjectsDirectory;
         }
@@ -114,7 +115,9 @@ namespace McMDK2.ViewModels
         public ITemplate SelectedItem
         {
             get
-            { return _SelectedItem; }
+            {
+                return _SelectedItem;
+            }
             set
             {
                 if (_SelectedItem == value)
@@ -123,6 +126,7 @@ namespace McMDK2.ViewModels
                 this.SelectedItemName = _SelectedItem.Name;
                 this.SelectedItemDescription = _SelectedItem.Description;
                 this.Versions.Clear();
+
                 if (_SelectedItem.ProjectType == Define.ProjectTypeGradle)
                 {
                     foreach (var version in this.AllVersions)
@@ -247,6 +251,20 @@ namespace McMDK2.ViewModels
                 if (_ProjectVersion == value)
                     return;
                 _ProjectVersion = value;
+                this.ForgeVersions.Clear();
+
+                Task.Run(() =>
+                {
+                    var json = JArray.Parse(SimpleHttp.Get(String.Format("https://api.tuyapin.net/mcmdk/2/forge/version/{0}.json", _ProjectVersion)));
+                    foreach (var jobj in json)
+                    {
+                        DispatcherHelper.UIDispatcher.Invoke(() =>
+                        {
+                            this.ForgeVersions.Add(JsonConvert.DeserializeObject<MinecraftForge>(jobj.ToString()));
+                        });
+                    }
+                });
+
                 RaisePropertyChanged();
                 this.OKCommand.RaiseCanExecuteChanged();
             }
@@ -266,6 +284,43 @@ namespace McMDK2.ViewModels
                 if (_Versions == value)
                     return;
                 _Versions = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region ForgeVersion変更通知プロパティ
+        private MinecraftForge _ForgeVersion;
+
+        public MinecraftForge ForgeVersion
+        {
+            get
+            { return _ForgeVersion; }
+            set
+            {
+                if (_ForgeVersion == value)
+                    return;
+                _ForgeVersion = value;
+                RaisePropertyChanged();
+                this.OKCommand.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
+
+
+        #region ForgeVersions変更通知プロパティ
+        private ObservableCollection<MinecraftForge> _ForgeVersions;
+
+        public ObservableCollection<MinecraftForge> ForgeVersions
+        {
+            get
+            { return _ForgeVersions; }
+            set
+            {
+                if (_ForgeVersions == value)
+                    return;
+                _ForgeVersions = value;
                 RaisePropertyChanged();
             }
         }
@@ -493,7 +548,7 @@ namespace McMDK2.ViewModels
 
         public bool CanOK()
         {
-            if (String.IsNullOrWhiteSpace(this.ProjectName) || String.IsNullOrWhiteSpace(this.ProjectVersion) || this.SelectedItem == null)
+            if (String.IsNullOrWhiteSpace(this.ProjectName) || String.IsNullOrWhiteSpace(this.ProjectVersion) || this.SelectedItem == null || this.ForgeVersion == null)
             {
                 return false;
             }
