@@ -8,9 +8,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-using Fireworks.Templates.ViewModels;
-using Fireworks.Templates.Views;
-
 using McMDK2.Core;
 using McMDK2.Core.Utils;
 using McMDK2.Plugin;

@@ -401,7 +401,7 @@ namespace McMDK2.ViewModels
                 if (init.Cancel)
                 {
                     FileController.Delete(newProject.Path);
-                    Cancel = pre.Cancel;
+                    Cancel = init.Cancel;
                     progress.Close();
                     return;
                 }
@@ -469,7 +469,7 @@ namespace McMDK2.ViewModels
                 if (post.Cancel)
                 {
                     FileController.Delete(newProject.Path);
-                    Cancel = pre.Cancel;
+                    Cancel = post.Cancel;
                     progress.Close();
                     return;
                 }
