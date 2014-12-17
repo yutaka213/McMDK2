@@ -8,12 +8,14 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Xml;
+
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+
 using McMDK2.Core;
 using McMDK2.Core.Data;
 using McMDK2.Core.Plugin;
@@ -21,6 +23,7 @@ using McMDK2.Models;
 using McMDK2.Plugin;
 using McMDK2.ViewModels.TabPages;
 using McMDK2.Views.TabPages;
+
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace McMDK2.ViewModels

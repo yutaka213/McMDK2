@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
+
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
@@ -30,7 +31,6 @@ namespace McMDK2.ViewModels
             this.views.Add("Java", new JavaPage());
 
             this.CurrentSettingView = this.views["General"];
-
         }
 
         public void Initialize()

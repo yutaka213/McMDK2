@@ -554,7 +554,8 @@ namespace McMDK2.ViewModels
                 Parent = ""
             };
             newProject.ProjectSettings["mcversion"] = this.ProjectVersion;
-            newProject.ProjectSettings["buildtype"] = this.SelectedItem.ProjectType;
+            newProject.ProjectSettings["buildtype"] = String.IsNullOrWhiteSpace(this.SelectedItem.ProjectType) ? "Gradle" : this.SelectedItem.ProjectType;
+            newProject.ProjectSettings["forgeversion"] = this.ForgeVersion;
 
             var json = JsonConvert.SerializeObject(newProject, Newtonsoft.Json.Formatting.Indented);
             using (var sw = new StreamWriter(Path.Combine(newProject.Path, "project.mdk")))
@@ -590,7 +591,7 @@ namespace McMDK2.ViewModels
                 var proc = new Process();
                 proc.StartInfo.FileName = Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri), "gradlew.bat");
                 proc.StartInfo.WorkingDirectory = Path.Combine(Define.CacheDirectory, Path.GetFileNameWithoutExtension(forge.SrcUri));
-                proc.StartInfo.Arguments = "setupDevWorkspace eclipse";
+                proc.StartInfo.Arguments = "setupDevWorkspace setupDecompWorkspace eclipse";
                 proc.StartInfo.CreateNoWindow = true;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardError = true;

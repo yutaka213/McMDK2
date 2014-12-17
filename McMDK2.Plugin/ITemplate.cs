@@ -38,6 +38,7 @@ namespace McMDK2.Plugin
         /// <summary>
         /// プロジェクトタイプを取得します。<para />
         /// "Gradle" (1.7以降) もしくは "Mcp" (1.3.2～1.7), "None" (使用しない) のどれかを指定します。<para />
+        /// デフォルトは"Gradle"です。
         /// </summary>
         string ProjectType { get; }
 
@@ -53,7 +54,6 @@ namespace McMDK2.Plugin
 
         /// <summary>
         /// 新規プロジェクト作成プロセスの終了直前に呼び出されます。<para />
-        /// FML/MLやBukkitなどのセットアップはここで行うべきです。
         /// </summary>
         void PostInitialization(PostInitializationArgs argsBase);
     }
