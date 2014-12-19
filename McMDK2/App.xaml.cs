@@ -27,6 +27,15 @@ namespace McMDK2
     /// </summary>
     public partial class App : Application
     {
+        private SplashScreen splashScreen;
+
+        public App()
+            : base()
+        {
+            this.splashScreen = new SplashScreen("/Resources/splash.png");
+            this.splashScreen.Show(false);
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherHelper.UIDispatcher = Dispatcher;
@@ -207,6 +216,8 @@ namespace McMDK2
 
             // Load Plugins from PluginDirectory.
             PluginLoader.Load();
+
+            this.splashScreen.Close(new TimeSpan(0));
         }
 
         //集約エラーハンドラ

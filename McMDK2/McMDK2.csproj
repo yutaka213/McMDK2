@@ -268,6 +268,9 @@
     </Content>
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
+    <Resource Include="Resources\splash.png" />
+    <Resource Include="Resources\McMDK_Black.png" />
+    <Resource Include="Resources\McMDK_White.png" />
     <Resource Include="Resources\FindinFiles_6299.png" />
     <Resource Include="Resources\Cloud_16xLG.png" />
     <Resource Include="Resources\package_16xLG.png" />

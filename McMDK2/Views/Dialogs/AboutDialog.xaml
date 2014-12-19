@@ -46,13 +46,20 @@
     </i:Interaction.Triggers>
 
     <Grid>
-        <TextBlock Margin="10,10,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="Segoe UI Light"
-                   FontSize="45"
-                   Foreground="{StaticResource Foreground}"
-                   Text="McMDK" />
+        <!--
+            <TextBlock Margin="10,10,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontFamily="Segoe UI Light"
+            FontSize="45"
+            Foreground="{StaticResource Foreground}"
+            Text="McMDK" />
+        -->
+        <Image Height="50"
+               Margin="10,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Source="/Resources/McMDK_White.png" />
         <TextBlock Margin="10,65,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
@@ -99,19 +106,12 @@
                    FontFamily="Segoe UI Light"
                    FontSize="17"
                    Foreground="{StaticResource Foreground}">
-            <Run>McMDK Home :</Run>
-            <Hyperlink NavigateUri="http://tuyapin.net/mcmdk/">
+            <Run>McMDK :</Run>
+            <Hyperlink NavigateUri="http://mcmdk.tk/">
                 <i:Interaction.Behaviors>
                     <behaviors:NavigateHyperlinkBehavior />
                 </i:Interaction.Behaviors>
-                <TextBlock>http://tuyapin.net/mcmdk/</TextBlock>
-            </Hyperlink>
-            <Run>, McMDK.Web :</Run>
-            <Hyperlink NavigateUri="http://mcmdk.tuyapin.net/">
-                <i:Interaction.Behaviors>
-                    <behaviors:NavigateHyperlinkBehavior />
-                </i:Interaction.Behaviors>
-                <TextBlock>http://mcmdk.tuyapin.net</TextBlock>
+                <TextBlock>http://mcmdk.tk/</TextBlock>
             </Hyperlink>
         </TextBlock>
         <TextBlock Margin="10,150,0,0"
