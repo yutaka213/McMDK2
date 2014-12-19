@@ -1,7 +1,7 @@
 McMDK
 =====
 
-[McMDK](http://tuyapin.net/mcmdk) is Tool for making Mod of [Minecraft](https://minecraft.net/) without programming skill.  
+[McMDK](http://mcmdk.tk/) is Tool for making Mod of [Minecraft](https://minecraft.net/) without programming skill.  
 McMDK supports [Minecraft Forge](http://minecraftforge.net), [CraftBukkit](http://bukkit.org) and more.  
 
 McMDK has plugin system.  
@@ -9,7 +9,7 @@ If you are Minecraft Mod Creator and you can use C# or VB.NET(or .NET supported 
 Otherwise; If you are Minecraft Mod Creator, you can create XML-Based plugin.
 
 ## Documentation
-Read it here: http://tuyapin.net/mcmdk/  
+Read it here: http://mcmdk.tk/  
 
 
 ## Bug Reports
